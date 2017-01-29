@@ -53,8 +53,7 @@
             this.tableLayoutPanel.Controls.Add(this.tbDescription, 1, 4);
             this.tableLayoutPanel.Controls.Add(this.okButton, 1, 5);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel.Location = new System.Drawing.Point(12, 11);
-            this.tableLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 6;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
@@ -63,18 +62,17 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(556, 326);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(417, 265);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // logoPictureBox
             // 
             this.logoPictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.logoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("logoPictureBox.Image")));
-            this.logoPictureBox.Location = new System.Drawing.Point(4, 4);
-            this.logoPictureBox.Margin = new System.Windows.Forms.Padding(4);
+            this.logoPictureBox.Location = new System.Drawing.Point(3, 3);
             this.logoPictureBox.Name = "logoPictureBox";
             this.tableLayoutPanel.SetRowSpan(this.logoPictureBox, 6);
-            this.logoPictureBox.Size = new System.Drawing.Size(175, 318);
+            this.logoPictureBox.Size = new System.Drawing.Size(131, 259);
             this.logoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.logoPictureBox.TabIndex = 12;
             this.logoPictureBox.TabStop = false;
@@ -82,89 +80,87 @@
             // lblProductName
             // 
             this.lblProductName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblProductName.Location = new System.Drawing.Point(191, 0);
-            this.lblProductName.Margin = new System.Windows.Forms.Padding(8, 0, 4, 0);
-            this.lblProductName.MaximumSize = new System.Drawing.Size(0, 21);
+            this.lblProductName.Location = new System.Drawing.Point(143, 0);
+            this.lblProductName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.lblProductName.MaximumSize = new System.Drawing.Size(0, 17);
             this.lblProductName.Name = "lblProductName";
-            this.lblProductName.Size = new System.Drawing.Size(361, 21);
+            this.lblProductName.Size = new System.Drawing.Size(271, 17);
             this.lblProductName.TabIndex = 19;
-            this.lblProductName.Text = "Product Name";
+            this.lblProductName.Text = "HussPiler";
             this.lblProductName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblVersion
             // 
             this.lblVersion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblVersion.Location = new System.Drawing.Point(191, 32);
-            this.lblVersion.Margin = new System.Windows.Forms.Padding(8, 0, 4, 0);
-            this.lblVersion.MaximumSize = new System.Drawing.Size(0, 21);
+            this.lblVersion.Location = new System.Drawing.Point(143, 26);
+            this.lblVersion.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.lblVersion.MaximumSize = new System.Drawing.Size(0, 17);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(361, 21);
+            this.lblVersion.Size = new System.Drawing.Size(271, 17);
             this.lblVersion.TabIndex = 0;
-            this.lblVersion.Text = "Version";
+            this.lblVersion.Text = "Version 0.0";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblCopyright
             // 
             this.lblCopyright.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCopyright.Location = new System.Drawing.Point(191, 64);
-            this.lblCopyright.Margin = new System.Windows.Forms.Padding(8, 0, 4, 0);
-            this.lblCopyright.MaximumSize = new System.Drawing.Size(0, 21);
+            this.lblCopyright.Location = new System.Drawing.Point(143, 52);
+            this.lblCopyright.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.lblCopyright.MaximumSize = new System.Drawing.Size(0, 17);
             this.lblCopyright.Name = "lblCopyright";
-            this.lblCopyright.Size = new System.Drawing.Size(361, 21);
+            this.lblCopyright.Size = new System.Drawing.Size(271, 17);
             this.lblCopyright.TabIndex = 21;
-            this.lblCopyright.Text = "Copyright";
+            this.lblCopyright.Text = "Copyright 2017";
             this.lblCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lblCompanyName
             // 
             this.lblCompanyName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblCompanyName.Location = new System.Drawing.Point(191, 96);
-            this.lblCompanyName.Margin = new System.Windows.Forms.Padding(8, 0, 4, 0);
-            this.lblCompanyName.MaximumSize = new System.Drawing.Size(0, 21);
+            this.lblCompanyName.Location = new System.Drawing.Point(143, 78);
+            this.lblCompanyName.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
+            this.lblCompanyName.MaximumSize = new System.Drawing.Size(0, 17);
             this.lblCompanyName.Name = "lblCompanyName";
-            this.lblCompanyName.Size = new System.Drawing.Size(361, 21);
+            this.lblCompanyName.Size = new System.Drawing.Size(271, 17);
             this.lblCompanyName.TabIndex = 22;
-            this.lblCompanyName.Text = "Company Name";
+            this.lblCompanyName.Text = "Principia College";
             this.lblCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tbDescription
             // 
             this.tbDescription.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDescription.Location = new System.Drawing.Point(191, 132);
-            this.tbDescription.Margin = new System.Windows.Forms.Padding(8, 4, 4, 4);
+            this.tbDescription.Location = new System.Drawing.Point(143, 107);
+            this.tbDescription.Margin = new System.Windows.Forms.Padding(6, 3, 3, 3);
             this.tbDescription.Multiline = true;
             this.tbDescription.Name = "tbDescription";
             this.tbDescription.ReadOnly = true;
             this.tbDescription.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbDescription.Size = new System.Drawing.Size(361, 155);
+            this.tbDescription.Size = new System.Drawing.Size(271, 126);
             this.tbDescription.TabIndex = 23;
             this.tbDescription.TabStop = false;
-            this.tbDescription.Text = "Description";
+            this.tbDescription.Text = "Doesn\'t do much yet";
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.okButton.Location = new System.Drawing.Point(452, 295);
-            this.okButton.Margin = new System.Windows.Forms.Padding(4);
+            this.okButton.Location = new System.Drawing.Point(339, 240);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(100, 27);
+            this.okButton.Size = new System.Drawing.Size(75, 22);
             this.okButton.TabIndex = 24;
             this.okButton.Text = "&OK";
             // 
             // AboutForm
             // 
             this.AcceptButton = this.okButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 348);
+            this.ClientSize = new System.Drawing.Size(435, 283);
             this.Controls.Add(this.tableLayoutPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
-            this.Padding = new System.Windows.Forms.Padding(12, 11, 12, 11);
+            this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;

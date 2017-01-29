@@ -79,6 +79,8 @@ namespace Compiler
                 SOURCE_DIR = @"D:\StudentCompilers\HussPiler\MODS\";
             else if (Directory.Exists(@"C:\Users\john.broere\Desktop\HussPiler"))    // working from lab computer
                 SOURCE_DIR = @"C:\Users\john.broere\Desktop\HussPiler\MODS\";
+            else if (Directory.Exists(@"E:\Documents\GitHub\HussPiler\MODS\"))    // working from Jacob's desktop
+                SOURCE_DIR = @"E:\Documents\GitHub\HussPiler\MODS\";
 
             // set the default source file...change this to help speed up debugging
             SOURCE_FILE = "01_Test.mod";

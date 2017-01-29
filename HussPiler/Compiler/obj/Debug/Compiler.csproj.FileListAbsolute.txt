@@ -1,0 +1,11 @@
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\bin\Debug\Compiler.exe.config
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\bin\Debug\Compiler.exe
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\bin\Debug\Compiler.pdb
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.csprojResolveAssemblyReference.cache
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Forms.AboutForm.resources
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Forms.MainForm.resources
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Properties.Resources.resources
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.csproj.GenerateResource.Cache
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.exe
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.pdb
+E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Forms.GetChar.resources

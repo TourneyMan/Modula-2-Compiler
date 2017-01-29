@@ -17,7 +17,11 @@ namespace Compiler.Forms
 
             // The file manager holds the name of the project
             Text = fm.COMPILER;
-        
+            MASM_Directory_Textbox.Text = fm.MASM_DIR;
+            Source_Directory_Textbox.Text = fm.SOURCE_DIR;
+            Source_File_Textbox.Text = fm.SOURCE_FILE;
+
+
         } // MainForm
 
         /// <summary>
@@ -53,6 +57,65 @@ namespace Compiler.Forms
 
         } // Exit
 
+        /// <summary>
+        /// Open a form to pick a folder for MASM source. Set matching textbox and corresponding variable in the FileManager
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MASM_Directory_Browse_Button_Click(object sender, EventArgs e)
+        {
+            if (masmDirectoryPicker.ShowDialog() == DialogResult.OK) //If the chosen folder is good
+            {
+                MASM_Directory_Textbox.Text = masmDirectoryPicker.SelectedPath; //Set the textbox text
+                fm.MASM_DIR = MASM_Directory_Textbox.Text; //Change FileManager var
+            }
+        }
+
+        /// <summary>
+        /// Open a form to pick a folder for the Source Directory. Set matching textbox and corresponding variable in the FileManager
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Source_Directory_Browse_Button_Click(object sender, EventArgs e)
+        {
+            if (sourceDirectoryPicker.ShowDialog() == DialogResult.OK)
+            {
+                Source_Directory_Textbox.Text = sourceDirectoryPicker.SelectedPath;
+                fm.SOURCE_DIR = Source_Directory_Textbox.Text;
+            }
+        }
+
+        /// <summary>
+        /// Choose a file from the Source Directory. Set matching textbox and corresponding variable in the FileManager
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Source_File_Browse_Button_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog sourceFilePicker = new OpenFileDialog();
+            sourceFilePicker.InitialDirectory = fm.SOURCE_DIR; //Set the initial directory
+
+            if (sourceFilePicker.ShowDialog() == DialogResult.OK)
+            {
+                Source_File_Textbox.Text = System.IO.Path.GetFileName(sourceFilePicker.FileName);
+                fm.SOURCE_FILE = Source_File_Textbox.Text;
+            }
+        }
+
+        /// <summary>
+        /// Open up a form that can parse through the chosen .mod file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Get_A_Char_Button_Click(object sender, EventArgs e)
+        {
+            GetChar getACharForm = new Forms.GetChar();
+
+            try {getACharForm.Show();}
+            catch (Exception excep) {}
+            
+            //Get_A_Char_Button.Enabled = true;
+        }
     } // MainForm class
 
 } // Compiler.Forms namespace
