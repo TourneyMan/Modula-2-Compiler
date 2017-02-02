@@ -9,8 +9,9 @@ namespace Compiler
                         sourceDIR,      // name of source and compilation directory, e.g. "C:\Compiler\MODS\"
                         masmDIR,        // name of binary directory, e.g. "C:\masm32\"
                         sourceFile,     // name of M2 source file, no dir, e.g. "01_Test.mod"
-                        errorLog;       // log string for errors
-        
+                        errorLog,       // log string for errors
+                        tokenList;      // log string for errors
+
         // number of errors encountered
         private int errorCount; 
         
@@ -111,7 +112,7 @@ namespace Compiler
         public void ResetTokenList()
         {
 
-        } // ErrorReset
+        } //ResetTokenList
 
         /**********************************************************************************************************************
             GET AND SET FUNCTIONS
@@ -225,6 +226,14 @@ namespace Compiler
             Filer.WriteStringToFile(ERROR_LOG, SOURCE_DIR + @"error_log.txt");
 
         } // FileErrorLog
+
+        /// <summary>
+        /// Resets the assembly directory as a blank folder
+        /// </summary>
+        public void ResetASMDIR()
+        {
+            Filer.CreateCleanDir((SOURCE_DIR + SOURCE_FILE + COMPILER).Replace(".mod", ""));
+        } // ResetASMDIR
 
     } // FileManager class
 
