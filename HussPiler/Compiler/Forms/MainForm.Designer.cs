@@ -127,13 +127,13 @@
             // 
             // List_Tokens_Button
             // 
-            this.List_Tokens_Button.Enabled = false;
             this.List_Tokens_Button.Location = new System.Drawing.Point(154, 188);
             this.List_Tokens_Button.Name = "List_Tokens_Button";
             this.List_Tokens_Button.Size = new System.Drawing.Size(122, 23);
             this.List_Tokens_Button.TabIndex = 3;
             this.List_Tokens_Button.Text = "List Tokens";
             this.List_Tokens_Button.UseVisualStyleBackColor = true;
+            this.List_Tokens_Button.Click += new System.EventHandler(this.List_Tokens_Button_Click);
             // 
             // Parse_Assemble_Button
             // 

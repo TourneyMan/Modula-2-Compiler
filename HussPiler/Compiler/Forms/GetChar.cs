@@ -33,6 +33,7 @@ namespace Compiler.Forms
             char charToShow = fm.SOURCE_READER.GetNextOneChar();
             if (charToShow == (char)255) { stringToShow = "EOF"; }
             else if (charToShow == ' ') { stringToShow = "SPACE"; }     //Converting characters to corresponding strings
+            else if (charToShow == '\r') { stringToShow = "CARRIAGE RETURN";  }
             else { stringToShow = charToShow.ToString(); }
             Current_Char_Label.Text = "Line: " + fm.SOURCE_READER.LINE_NUMBER + " - " + stringToShow;
         }

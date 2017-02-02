@@ -116,6 +116,14 @@ namespace Compiler.Forms
             
             //Get_A_Char_Button.Enabled = true;
         }
+
+        private void List_Tokens_Button_Click(object sender, EventArgs e)
+        {
+            Filer.CreateCleanDir((fm.SOURCE_DIR + fm.SOURCE_FILE + fm.COMPILER).Replace(".mod", ""));
+            Filer.WriteStringToFile("test", (fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
+            Facade facade = new Facade();
+            facade.ListTokens();
+        }
     } // MainForm class
 
 } // Compiler.Forms namespace

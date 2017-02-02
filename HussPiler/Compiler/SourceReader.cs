@@ -12,7 +12,8 @@ namespace Compiler
 
         private bool    isOpen,             // is the file open yet?
                         endLineLastRead,    // did we reach an end of line on the last read?
-                        endOfFile;          // have we reached the end of the file?
+                        endOfFile,          // have we reached the end of the file?
+                        needNewLine;        // did we just get a new line?
 
         private string  fileName,           // path and file name
                         inputLine;          // the current input line
@@ -25,6 +26,7 @@ namespace Compiler
         /// </summary>
         public SourceReader()
         {
+            needNewLine = false;
             endOfFile = false;
             isOpen = false;             // the file has not been opened yet
             fm.SOURCE_READER = this;    // register the current source reader object with the file mananger
@@ -70,6 +72,7 @@ namespace Compiler
         {
             if (isOpen)
             {
+                needNewLine = false;
                 endOfFile = false;
                 lineNumber = 1; // Reset vars to default vals
                 currentPos = 0;
@@ -94,6 +97,7 @@ namespace Compiler
             inputLine = streamReader.ReadLine();
             lineNumber++;
             currentPos = 0; //Start at the beginning of the line
+            needNewLine = true;
             return true;
         } // GetNextLine
 
@@ -107,13 +111,15 @@ namespace Compiler
             {
                 if (endOfFile) { return EOF_SENTINEL; }
 
-                if (endLineLastRead) { GetNextLine(); }
+                if (needNewLine) { GetNextLine(); }
+
+                if (endLineLastRead) { needNewLine = true;  endLineLastRead = false;  return '\r'; }
 
                 if (inputLine != null && !inputLine.Equals(""))
                 {
                     char returnChar = inputLine[currentPos];
                     if (currentPos == inputLine.Length - 1) { endLineLastRead = true; }
-                    else { currentPos++; endLineLastRead = false; }
+                    else { currentPos++; endLineLastRead = false; needNewLine = false; }
                     return returnChar;
                 }
                 else if (streamReader.Peek() == -1)
@@ -142,7 +148,8 @@ namespace Compiler
         {
             if (isOpen)
             {
-                if (endLineLastRead) { currentPos--; endLineLastRead = false; }
+                if (endLineLastRead) { currentPos--;  endLineLastRead = false; }
+                else if (needNewLine) { needNewLine = false; }
                 else { currentPos -= 2; }
                 if (currentPos < 0) { currentPos = 0; }
             }
