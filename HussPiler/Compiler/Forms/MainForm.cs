@@ -119,9 +119,10 @@ namespace Compiler.Forms
 
         private void List_Tokens_Button_Click(object sender, EventArgs e)
         {
+            new SourceReader();
             Facade facade = new Facade();
             facade.ListTokens();
-            Filer.WriteStringToFile("test", (fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
+            SystemCommand.SysCommand((fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + fm.COMPILER + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
         }
     } // MainForm class
 

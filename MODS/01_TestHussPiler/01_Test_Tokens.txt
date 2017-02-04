@@ -1,0 +1,5 @@
+Token list:
+
+TK	Ln	Type			Lexeme
+
+0	EOF	EOF			-1

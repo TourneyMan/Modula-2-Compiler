@@ -21,7 +21,7 @@ namespace Compiler
             try // to lex the current file and list the tokens
             {
                 fm.ResetASMDIR();          // create a clean assembly directory
-                fm.ResetTokenList();       // reset teken list
+                fm.ResetTokenList();       // reset token list
 
                 fm.SOURCE_READER.Open();   // open current file listed in file manager
                 lexer.ListTokens();        // lex file and list tokens

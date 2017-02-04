@@ -10,7 +10,7 @@ namespace Compiler
                         masmDIR,        // name of binary directory, e.g. "C:\masm32\"
                         sourceFile,     // name of M2 source file, no dir, e.g. "01_Test.mod"
                         errorLog,       // log string for errors
-                        tokenList;      // log string for errors
+                        tokenList;      // giant string to hold what will go into the txt file
 
         // number of errors encountered
         private int errorCount; 
@@ -107,11 +107,11 @@ namespace Compiler
         } // ErrorReset
 
         /// <summary>
-        /// 
+        /// Resets the tokenList
         /// </summary>
         public void ResetTokenList()
         {
-
+            tokenList = "";
         } //ResetTokenList
 
         /**********************************************************************************************************************
@@ -214,6 +214,16 @@ namespace Compiler
 
         } // SOURCE_READER
 
+        /// <summary>
+        /// set or get the tokenList string
+        /// </summary>
+        public string TOKEN_LIST
+        {
+            get { return tokenList; }
+            set { tokenList = value; }
+
+        } // SOURCE_DIR
+
         /**********************************************************************************************************************
             Folder and File FUNCTIONS
         **********************************************************************************************************************/
@@ -233,6 +243,14 @@ namespace Compiler
         public void ResetASMDIR()
         {
             Filer.CreateCleanDir((SOURCE_DIR + SOURCE_FILE + COMPILER).Replace(".mod", ""));
+        } // ResetASMDIR
+
+        /// <summary>
+        /// Writes tokenList to the file that corresponds to the given Source File 
+        /// </summary>
+        public void FileTokenList()
+        {
+            Filer.WriteStringToFile(tokenList, (SOURCE_DIR + SOURCE_FILE).Replace(".mod", "") + COMPILER + "\\" + (SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
         } // ResetASMDIR
 
     } // FileManager class
