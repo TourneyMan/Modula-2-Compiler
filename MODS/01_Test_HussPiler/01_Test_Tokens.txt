@@ -1,0 +1,12 @@
+Token list:
+
+ TK  Ln Type                      Lexeme
+
+  0   1:Token: 16: MODULE          MODULE                                                                                              
+  1   1:Token: 35: ID              Test                                                                                                
+  2   1:Token: 54: SEMI_COLON      ;                                                                                                   
+  3   2:Token: 3 : BEGIN           BEGIN                                                                                               
+  4   3:Token: 9 : END             END                                                                                                 
+  5   3:Token: 35: ID              Test                                                                                                
+  6   3:Token: 43: DOT             .                                                                                                   
+  7   4:Token: 62: EOF             End Of File                                                                                         

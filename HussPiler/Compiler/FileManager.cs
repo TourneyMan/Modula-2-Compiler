@@ -242,7 +242,7 @@ namespace Compiler
         /// </summary>
         public void ResetASMDIR()
         {
-            Filer.CreateCleanDir((SOURCE_DIR + SOURCE_FILE + COMPILER).Replace(".mod", ""));
+            Filer.CreateCleanDir((SOURCE_DIR + SOURCE_FILE + "_" + COMPILER).Replace(".mod", ""));
         } // ResetASMDIR
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Compiler
         /// </summary>
         public void FileTokenList()
         {
-            Filer.WriteStringToFile(tokenList, (SOURCE_DIR + SOURCE_FILE).Replace(".mod", "") + COMPILER + "\\" + (SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
+            Filer.WriteStringToFile(tokenList, (SOURCE_DIR + SOURCE_FILE).Replace(".mod", "") + "_" + COMPILER + "\\" + (SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
         } // ResetASMDIR
 
     } // FileManager class

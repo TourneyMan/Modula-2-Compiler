@@ -122,7 +122,9 @@ namespace Compiler
         /// </summary>
         /// <returns>a formatted string of the current token</returns>
         public override string ToString()
-        { return tokType + "\t" + lexName + "\t\t\t" + lineNumber.ToString() + "\r\n"; } // ToString
+        {
+            return string.Format("{0,3}:Token: {1,-2}: {2,-15} {3,-100}\r\n", lineNumber.ToString(), ((int)tokType).ToString(), tokType, lexName);
+        } // ToString
 
     } // Token
 

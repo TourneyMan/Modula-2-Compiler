@@ -122,7 +122,7 @@ namespace Compiler.Forms
             new SourceReader();
             Facade facade = new Facade();
             facade.ListTokens();
-            SystemCommand.SysCommand((fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + fm.COMPILER + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
+            SystemCommand.SysCommand((fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + "_" + fm.COMPILER + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
         }
     } // MainForm class
 
