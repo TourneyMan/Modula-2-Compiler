@@ -97,8 +97,22 @@ namespace Compiler
             inputLine = streamReader.ReadLine();
             lineNumber++;
             currentPos = 0; //Start at the beginning of the line
-            needNewLine = true;
+            needNewLine = false;
+
+            if (inputLine == null) { return false; }
+            if (inputLine.Equals("")) { return true; }
+
+            for (int i = 0; i < inputLine.Length; i++)
+            {
+                if (inputLine[i] != '\t' && inputLine[i] != ' ' && inputLine[i] != '\r' && inputLine[i] != '\n') { return false; }
+            }
+
             return true;
+            /*inputLine = streamReader.ReadLine();
+            lineNumber++;
+            currentPos = 0; //Start at the beginning of the line
+            needNewLine = true;
+            return true;*/
         } // GetNextLine
 
         /// <summary>
@@ -111,33 +125,31 @@ namespace Compiler
             {
                 if (endOfFile) { return EOF_SENTINEL; }
 
-                if (needNewLine) { GetNextLine(); }
+                else if (endLineLastRead) { needNewLine = true; endLineLastRead = false; return '\r'; }
 
-                if (endLineLastRead) { needNewLine = true;  endLineLastRead = false;  return '\r'; }
 
-                if (inputLine != null && !inputLine.Equals(""))
+                if (needNewLine) { while(GetNextLine()) { } }
+
+
+                if (streamReader.Peek() == -1 && inputLine == null) { endOfFile = true; return EOF_SENTINEL; }
+
+                else
                 {
                     char returnChar = inputLine[currentPos];
                     if (currentPos == inputLine.Length - 1) { endLineLastRead = true; }
                     else { currentPos++; endLineLastRead = false; needNewLine = false; }
                     return returnChar;
                 }
-                else if (streamReader.Peek() == -1)
-                {
-                    endOfFile = true;
-                    return EOF_SENTINEL;
-                }
-                else
+
+
+                /*else
                 {
                     return GetNextOneChar();
-                }
+                }*/
             }
 
             ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Get a Char Form", "Could not get next char because file not open");
             return EOF_SENTINEL;
-
-
-
         } // GetNextOneChar
 
         /// <summary>

@@ -34,6 +34,7 @@ namespace Compiler.Forms
             if (charToShow == (char)255) { stringToShow = "EOF"; }
             else if (charToShow == ' ') { stringToShow = "SPACE"; }     //Converting characters to corresponding strings
             else if (charToShow == '\r') { stringToShow = "CARRIAGE RETURN";  }
+            else if (charToShow == '\t') { stringToShow = "TAB"; }
             else { stringToShow = charToShow.ToString(); }
             Current_Char_Label.Text = "Line: " + fm.SOURCE_READER.LINE_NUMBER + " - " + stringToShow;
         }

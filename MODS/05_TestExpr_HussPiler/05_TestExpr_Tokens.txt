@@ -199,4 +199,7 @@ Token list:
 194  61:Token: 54: SEMI_COLON      ;                                                                                                   
 195  62:Token: 28: WRLN            WRLN                                                                                                
 196  62:Token: 54: SEMI_COLON      ;                                                                                                   
-197  65:Token: 62: EOF             End Of File                                                                                         
+197  64:Token: 9 : END             END                                                                                                 
+198  64:Token: 35: ID              TestExp                                                                                             
+199  64:Token: 43: DOT             .                                                                                                   
+200  65:Token: 62: EOF             End Of File                                                                                         

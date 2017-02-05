@@ -13,7 +13,4 @@ Token list:
   8   4:Token: 54: SEMI_COLON      ;                                                                                                   
   9   5:Token: 28: WRLN            WRLN                                                                                                
  10   5:Token: 54: SEMI_COLON      ;                                                                                                   
- 11   6:Token: 9 : END             END                                                                                                 
- 12   6:Token: 35: ID              HelloWorld                                                                                          
- 13   6:Token: 43: DOT             .                                                                                                   
- 14   7:Token: 62: EOF             End Of File                                                                                         
+ 11   6:Token: 62: EOF             End Of File                                                                                         

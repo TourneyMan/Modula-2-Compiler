@@ -89,7 +89,7 @@ namespace Compiler
 
                 //Individual characters that indicate very specific Token Types
                 else if (nextChar == '(' || nextChar == ')' || nextChar == ';' || nextChar == '.' || nextChar == ':' || nextChar == ',' || nextChar == '"' || nextChar == '+'
-                    || nextChar == '-' || nextChar == '=' || nextChar == '*' || nextChar == '/' || nextChar == '[' || nextChar == ']') 
+                    || nextChar == '-' || nextChar == '=' || nextChar == '*' || nextChar == '/' || nextChar == '[' || nextChar == ']' || nextChar == '<' || nextChar == '>') 
                 {
                     if (!firstChar)
                     {
@@ -143,6 +143,29 @@ namespace Compiler
                             }
                         }
 
+                        else if (nextChar == '<')
+                        {
+                            if (fm.SOURCE_READER.GetNextOneChar() == '=') { return new Token(Token.TOKENTYPE.LESS_THAN_EQ, "<=", fm.SOURCE_READER.LINE_NUMBER); }
+                            else if (fm.SOURCE_READER.GetNextOneChar() == '>') { return new Token(Token.TOKENTYPE.NOT_EQ, "<>", fm.SOURCE_READER.LINE_NUMBER); }
+                            else
+                            {
+                                fm.SOURCE_READER.PushBackOneChar();
+                                fm.SOURCE_READER.GetNextOneChar();
+                                return new Token(Token.TOKENTYPE.LESS_THAN, "<", fm.SOURCE_READER.LINE_NUMBER);
+                            }
+                        }
+
+                        else if (nextChar == '>')
+                        {
+                            if (fm.SOURCE_READER.GetNextOneChar() == '=') { return new Token(Token.TOKENTYPE.GRTR_THAN_EQ, ">=", fm.SOURCE_READER.LINE_NUMBER); }
+                            else
+                            {
+                                fm.SOURCE_READER.PushBackOneChar();
+                                fm.SOURCE_READER.GetNextOneChar();
+                                return new Token(Token.TOKENTYPE.GRTR_THAN, ">", fm.SOURCE_READER.LINE_NUMBER);
+                            }
+                        }
+
                         //Simple, single character tokens
                         else if (nextChar == ')') { return new Token(Token.TOKENTYPE.RIGHT_PAREN, ")", fm.SOURCE_READER.LINE_NUMBER); }
                         else if (nextChar == '.') { return new Token(Token.TOKENTYPE.DOT, ".", fm.SOURCE_READER.LINE_NUMBER); }
@@ -159,25 +182,6 @@ namespace Compiler
 
                 }
 
-                //If we have the start of a string
-                /*else if (nextChar == '"')
-                {
-                    //if (buildString.Equals(""))
-                    //{
-                        while (!endOfToken)
-                        {
-                            nextChar = fm.SOURCE_READER.GetNextOneChar();
-                            if (nextChar != '"') { buildString += nextChar; }
-                            else { return new Token(Token.TOKENTYPE.STRING, buildString, fm.SOURCE_READER.LINE_NUMBER); }
-                        }
-                    /*}
-                    else
-                    {
-                        fm.SOURCE_READER.PushBackOneChar();
-                        fm.SOURCE_READER.GetNextOneChar();
-                        endOfToken = true;
-                    }*/
-                //}
                 else if (firstChar && Char.IsNumber(nextChar))
                 {
                     isInt = true;

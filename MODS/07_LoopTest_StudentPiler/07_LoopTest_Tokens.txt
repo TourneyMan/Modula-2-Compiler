@@ -1,0 +1,52 @@
+TokenList:
+
+ TK  Ln Type                      Lexeme         
+
+  0   1:Token: 16: MODULE          MODULE         
+  1   1:Token: 35: ID              LoopTest       
+  2   1:Token: 54: SEMI_COLON      ;              
+  3   3:Token: 24: VAR             VAR            
+  4   3:Token: 35: ID              i              
+  5   3:Token: 42: COMMA           ,              
+  6   3:Token: 35: ID              j              
+  7   3:Token: 41: COLON           :              
+  8   3:Token: 13: INTEGER         INTEGER        
+  9   3:Token: 54: SEMI_COLON      ;              
+ 10   5:Token: 3 : BEGIN           BEGIN          
+ 11   6:Token: 35: ID              j              
+ 12   6:Token: 40: ASSIGN          :=             
+ 13   6:Token: 38: INT_NUM         10             
+ 14   6:Token: 54: SEMI_COLON      ;              
+ 15   7:Token: 35: ID              i              
+ 16   7:Token: 40: ASSIGN          :=             
+ 17   7:Token: 38: INT_NUM         1              
+ 18   7:Token: 54: SEMI_COLON      ;              
+ 19   8:Token: 14: LOOP            LOOP           
+ 20   9:Token: 12: IF              IF             
+ 21   9:Token: 35: ID              i              
+ 22   9:Token: 56: GRTR_THAN       >              
+ 23   9:Token: 35: ID              j              
+ 24   9:Token: 22: THEN            THEN           
+ 25   9:Token: 10: EXIT            EXIT           
+ 26   9:Token: 54: SEMI_COLON      ;              
+ 27   9:Token: 9 : END             END            
+ 28   9:Token: 54: SEMI_COLON      ;              
+ 29  10:Token: 27: WRINT           WRINT          
+ 30  10:Token: 47: LEFT_PAREN      (              
+ 31  10:Token: 35: ID              i              
+ 32  10:Token: 53: RIGHT_PAREN     )              
+ 33  10:Token: 54: SEMI_COLON      ;              
+ 34  11:Token: 28: WRLN            WRLN           
+ 35  11:Token: 54: SEMI_COLON      ;              
+ 36  12:Token: 35: ID              i              
+ 37  12:Token: 40: ASSIGN          :=             
+ 38  12:Token: 35: ID              i              
+ 39  12:Token: 51: PLUS            +              
+ 40  12:Token: 38: INT_NUM         1              
+ 41  12:Token: 54: SEMI_COLON      ;              
+ 42  13:Token: 9 : END             END            
+ 43  13:Token: 54: SEMI_COLON      ;              
+ 44  14:Token: 9 : END             END            
+ 45  14:Token: 35: ID              LoopTest       
+ 46  14:Token: 43: DOT             .              
+ 47  15:Token: 62: EOF             End Of File    
