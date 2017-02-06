@@ -123,29 +123,23 @@ namespace Compiler
         {
             if (isOpen)
             {
-                if (endOfFile) { return EOF_SENTINEL; }
+                if (endOfFile) { return EOF_SENTINEL; } //If we are done, just keep returning EOF
 
-                else if (endLineLastRead) { needNewLine = true; endLineLastRead = false; return '\r'; }
-
-
-                if (needNewLine) { while(GetNextLine()) { } }
+                else if (endLineLastRead) { needNewLine = true; endLineLastRead = false; return '\r'; } //We need to return \r and prepare for a new line
 
 
-                if (streamReader.Peek() == -1 && inputLine == null) { endOfFile = true; return EOF_SENTINEL; }
+                if (needNewLine) { while(GetNextLine()) { } } //Keep getting the next line until it has something important on it
 
-                else
+
+                if (streamReader.Peek() == -1 && inputLine == null) { endOfFile = true; return EOF_SENTINEL; } //Check if we have reached the end
+
+                else //If the code has gotten here, there are no special cases -- treat as normal char, not at end of line or file
                 {
                     char returnChar = inputLine[currentPos];
                     if (currentPos == inputLine.Length - 1) { endLineLastRead = true; }
                     else { currentPos++; endLineLastRead = false; needNewLine = false; }
                     return returnChar;
                 }
-
-
-                /*else
-                {
-                    return GetNextOneChar();
-                }*/
             }
 
             ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Get a Char Form", "Could not get next char because file not open");
@@ -166,6 +160,15 @@ namespace Compiler
                 if (currentPos < 0) { currentPos = 0; }
             }
             else { ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Get a Char Form", "Could not push back char because file not open"); }
+        } // PushBackOneChar
+
+        /// <summary>
+        /// Prepares the SourceReader so that next time a char is gotten, the char that was returned last is returned again
+        /// </summary>
+        public void CheckSameCharNext()
+        {
+            PushBackOneChar();
+            GetNextOneChar();
         } // PushBackOneChar
 
         /// <summary>

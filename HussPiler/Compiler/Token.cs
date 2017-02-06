@@ -118,7 +118,7 @@ namespace Compiler
         } // Token
         
         /// <summary>
-        /// used for the token list
+        /// Returns nicely formatted information about this Token
         /// </summary>
         /// <returns>a formatted string of the current token</returns>
         public override string ToString()

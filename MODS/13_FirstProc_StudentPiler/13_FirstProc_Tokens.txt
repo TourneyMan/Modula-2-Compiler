@@ -1,0 +1,53 @@
+TokenList:
+
+ TK  Ln Type                      Lexeme         
+
+  0   1:Token: 16: MODULE          MODULE         
+  1   1:Token: 35: ID              FirstProc      
+  2   1:Token: 54: SEMI_COLON      ;              
+  3   3:Token: 24: VAR             VAR            
+  4   3:Token: 35: ID              k              
+  5   3:Token: 41: COLON           :              
+  6   3:Token: 13: INTEGER         INTEGER        
+  7   3:Token: 54: SEMI_COLON      ;              
+  8   8:Token: 20: PROCEDURE       PROCEDURE      
+  9   8:Token: 35: ID              little         
+ 10   8:Token: 47: LEFT_PAREN      (              
+ 11   8:Token: 53: RIGHT_PAREN     )              
+ 12   8:Token: 54: SEMI_COLON      ;              
+ 13  10:Token: 3 : BEGIN           BEGIN          
+ 14  12:Token: 34: WRSTR           WRSTR          
+ 15  12:Token: 47: LEFT_PAREN      (              
+ 16  12:Token: 39: STRING          Hello Procedure!
+ 17  12:Token: 53: RIGHT_PAREN     )              
+ 18  12:Token: 54: SEMI_COLON      ;              
+ 19  13:Token: 28: WRLN            WRLN           
+ 20  13:Token: 54: SEMI_COLON      ;              
+ 21  15:Token: 9 : END             END            
+ 22  15:Token: 35: ID              little         
+ 23  15:Token: 54: SEMI_COLON      ;              
+ 24  20:Token: 3 : BEGIN           BEGIN          
+ 25  21:Token: 35: ID              k              
+ 26  21:Token: 40: ASSIGN          :=             
+ 27  21:Token: 38: INT_NUM         3              
+ 28  21:Token: 54: SEMI_COLON      ;              
+ 29  23:Token: 34: WRSTR           WRSTR          
+ 30  23:Token: 47: LEFT_PAREN      (              
+ 31  23:Token: 39: STRING          K (3) =        
+ 32  23:Token: 53: RIGHT_PAREN     )              
+ 33  23:Token: 54: SEMI_COLON      ;              
+ 34  24:Token: 27: WRINT           WRINT          
+ 35  24:Token: 47: LEFT_PAREN      (              
+ 36  24:Token: 35: ID              k              
+ 37  24:Token: 53: RIGHT_PAREN     )              
+ 38  24:Token: 54: SEMI_COLON      ;              
+ 39  25:Token: 28: WRLN            WRLN           
+ 40  25:Token: 54: SEMI_COLON      ;              
+ 41  27:Token: 35: ID              little         
+ 42  27:Token: 47: LEFT_PAREN      (              
+ 43  27:Token: 53: RIGHT_PAREN     )              
+ 44  27:Token: 54: SEMI_COLON      ;              
+ 45  29:Token: 9 : END             END            
+ 46  29:Token: 35: ID              FirstProc      
+ 47  29:Token: 43: DOT             .              
+ 48  30:Token: 62: EOF             End Of File    

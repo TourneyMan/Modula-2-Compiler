@@ -1,0 +1,187 @@
+TokenList:
+
+ TK  Ln Type                      Lexeme         
+
+  0   1:Token: 16: MODULE          MODULE         
+  1   1:Token: 35: ID              Primes         
+  2   1:Token: 54: SEMI_COLON      ;              
+  3   3:Token: 5 : CONST           CONST          
+  4   4:Token: 35: ID              maxIntInSqrt   
+  5   4:Token: 45: EQUAL           =              
+  6   4:Token: 38: INT_NUM         8              
+  7   4:Token: 54: SEMI_COLON      ;              
+  8   6:Token: 23: TYPE            TYPE           
+  9   7:Token: 35: ID              ListType       
+ 10   7:Token: 45: EQUAL           =              
+ 11   7:Token: 2 : ARRAY           ARRAY          
+ 12   7:Token: 46: LEFT_BRACK      [              
+ 13   7:Token: 38: INT_NUM         2              
+ 14   7:Token: 44: DOT_DOT         ..             
+ 15   7:Token: 38: INT_NUM         50             
+ 16   7:Token: 52: RIGHT_BRACK     ]              
+ 17   7:Token: 18: OF              OF             
+ 18   7:Token: 13: INTEGER         INTEGER        
+ 19   7:Token: 54: SEMI_COLON      ;              
+ 20   9:Token: 24: VAR             VAR            
+ 21  10:Token: 35: ID              aiPrimes       
+ 22  11:Token: 41: COLON           :              
+ 23  11:Token: 35: ID              ListType       
+ 24  11:Token: 54: SEMI_COLON      ;              
+ 25  13:Token: 35: ID              currPrime      
+ 26  13:Token: 42: COMMA           ,              
+ 27  14:Token: 35: ID              mult           
+ 28  14:Token: 42: COMMA           ,              
+ 29  15:Token: 35: ID              index          
+ 30  16:Token: 41: COLON           :              
+ 31  16:Token: 13: INTEGER         INTEGER        
+ 32  16:Token: 54: SEMI_COLON      ;              
+ 33  18:Token: 3 : BEGIN           BEGIN          
+ 34  21:Token: 35: ID              index          
+ 35  21:Token: 40: ASSIGN          :=             
+ 36  21:Token: 38: INT_NUM         2              
+ 37  21:Token: 54: SEMI_COLON      ;              
+ 38  22:Token: 14: LOOP            LOOP           
+ 39  23:Token: 12: IF              IF             
+ 40  23:Token: 35: ID              index          
+ 41  23:Token: 56: GRTR_THAN       >              
+ 42  23:Token: 38: INT_NUM         50             
+ 43  23:Token: 22: THEN            THEN           
+ 44  23:Token: 10: EXIT            EXIT           
+ 45  23:Token: 54: SEMI_COLON      ;              
+ 46  23:Token: 9 : END             END            
+ 47  23:Token: 54: SEMI_COLON      ;              
+ 48  24:Token: 35: ID              aiPrimes       
+ 49  24:Token: 46: LEFT_BRACK      [              
+ 50  24:Token: 35: ID              index          
+ 51  24:Token: 52: RIGHT_BRACK     ]              
+ 52  24:Token: 40: ASSIGN          :=             
+ 53  24:Token: 38: INT_NUM         0              
+ 54  24:Token: 54: SEMI_COLON      ;              
+ 55  25:Token: 35: ID              index          
+ 56  25:Token: 40: ASSIGN          :=             
+ 57  25:Token: 35: ID              index          
+ 58  25:Token: 51: PLUS            +              
+ 59  25:Token: 38: INT_NUM         1              
+ 60  25:Token: 54: SEMI_COLON      ;              
+ 61  26:Token: 9 : END             END            
+ 62  26:Token: 54: SEMI_COLON      ;              
+ 63  29:Token: 35: ID              currPrime      
+ 64  29:Token: 40: ASSIGN          :=             
+ 65  29:Token: 38: INT_NUM         2              
+ 66  29:Token: 54: SEMI_COLON      ;              
+ 67  30:Token: 14: LOOP            LOOP           
+ 68  31:Token: 12: IF              IF             
+ 69  31:Token: 35: ID              currPrime      
+ 70  31:Token: 56: GRTR_THAN       >              
+ 71  31:Token: 35: ID              maxIntInSqrt   
+ 72  31:Token: 22: THEN            THEN           
+ 73  31:Token: 10: EXIT            EXIT           
+ 74  31:Token: 54: SEMI_COLON      ;              
+ 75  31:Token: 9 : END             END            
+ 76  31:Token: 54: SEMI_COLON      ;              
+ 77  32:Token: 35: ID              mult           
+ 78  32:Token: 40: ASSIGN          :=             
+ 79  32:Token: 38: INT_NUM         2              
+ 80  32:Token: 54: SEMI_COLON      ;              
+ 81  33:Token: 14: LOOP            LOOP           
+ 82  34:Token: 12: IF              IF             
+ 83  34:Token: 35: ID              mult           
+ 84  34:Token: 49: MULT            *              
+ 85  34:Token: 35: ID              currPrime      
+ 86  34:Token: 56: GRTR_THAN       >              
+ 87  34:Token: 38: INT_NUM         50             
+ 88  34:Token: 22: THEN            THEN           
+ 89  34:Token: 10: EXIT            EXIT           
+ 90  34:Token: 54: SEMI_COLON      ;              
+ 91  34:Token: 9 : END             END            
+ 92  34:Token: 54: SEMI_COLON      ;              
+ 93  35:Token: 35: ID              aiPrimes       
+ 94  35:Token: 46: LEFT_BRACK      [              
+ 95  35:Token: 35: ID              mult           
+ 96  35:Token: 49: MULT            *              
+ 97  35:Token: 35: ID              currPrime      
+ 98  35:Token: 52: RIGHT_BRACK     ]              
+ 99  35:Token: 40: ASSIGN          :=             
+100  35:Token: 38: INT_NUM         1              
+101  35:Token: 54: SEMI_COLON      ;              
+102  36:Token: 35: ID              mult           
+103  36:Token: 40: ASSIGN          :=             
+104  36:Token: 35: ID              mult           
+105  36:Token: 51: PLUS            +              
+106  36:Token: 38: INT_NUM         1              
+107  36:Token: 54: SEMI_COLON      ;              
+108  37:Token: 9 : END             END            
+109  37:Token: 54: SEMI_COLON      ;              
+110  38:Token: 14: LOOP            LOOP           
+111  39:Token: 35: ID              currPrime      
+112  39:Token: 40: ASSIGN          :=             
+113  39:Token: 35: ID              currPrime      
+114  39:Token: 51: PLUS            +              
+115  39:Token: 38: INT_NUM         1              
+116  39:Token: 54: SEMI_COLON      ;              
+117  40:Token: 12: IF              IF             
+118  40:Token: 35: ID              aiPrimes       
+119  40:Token: 46: LEFT_BRACK      [              
+120  40:Token: 35: ID              currPrime      
+121  40:Token: 52: RIGHT_BRACK     ]              
+122  40:Token: 45: EQUAL           =              
+123  40:Token: 38: INT_NUM         0              
+124  40:Token: 22: THEN            THEN           
+125  40:Token: 10: EXIT            EXIT           
+126  40:Token: 54: SEMI_COLON      ;              
+127  40:Token: 9 : END             END            
+128  40:Token: 54: SEMI_COLON      ;              
+129  41:Token: 9 : END             END            
+130  41:Token: 54: SEMI_COLON      ;              
+131  42:Token: 9 : END             END            
+132  42:Token: 54: SEMI_COLON      ;              
+133  44:Token: 34: WRSTR           WRSTR          
+134  44:Token: 47: LEFT_PAREN      (              
+135  44:Token: 39: STRING          Prime numbers between 2 and 50:
+136  44:Token: 53: RIGHT_PAREN     )              
+137  44:Token: 54: SEMI_COLON      ;              
+138  45:Token: 28: WRLN            WRLN           
+139  45:Token: 54: SEMI_COLON      ;              
+140  48:Token: 35: ID              index          
+141  48:Token: 40: ASSIGN          :=             
+142  48:Token: 38: INT_NUM         2              
+143  48:Token: 54: SEMI_COLON      ;              
+144  49:Token: 14: LOOP            LOOP           
+145  50:Token: 12: IF              IF             
+146  50:Token: 35: ID              index          
+147  50:Token: 56: GRTR_THAN       >              
+148  50:Token: 38: INT_NUM         50             
+149  50:Token: 22: THEN            THEN           
+150  50:Token: 10: EXIT            EXIT           
+151  50:Token: 54: SEMI_COLON      ;              
+152  50:Token: 9 : END             END            
+153  50:Token: 54: SEMI_COLON      ;              
+154  51:Token: 12: IF              IF             
+155  51:Token: 35: ID              aiPrimes       
+156  51:Token: 46: LEFT_BRACK      [              
+157  51:Token: 35: ID              index          
+158  51:Token: 52: RIGHT_BRACK     ]              
+159  51:Token: 45: EQUAL           =              
+160  51:Token: 38: INT_NUM         0              
+161  51:Token: 22: THEN            THEN           
+162  52:Token: 27: WRINT           WRINT          
+163  52:Token: 47: LEFT_PAREN      (              
+164  52:Token: 35: ID              index          
+165  52:Token: 53: RIGHT_PAREN     )              
+166  52:Token: 54: SEMI_COLON      ;              
+167  53:Token: 28: WRLN            WRLN           
+168  53:Token: 54: SEMI_COLON      ;              
+169  54:Token: 9 : END             END            
+170  54:Token: 54: SEMI_COLON      ;              
+171  55:Token: 35: ID              index          
+172  55:Token: 40: ASSIGN          :=             
+173  55:Token: 35: ID              index          
+174  55:Token: 51: PLUS            +              
+175  55:Token: 38: INT_NUM         1              
+176  55:Token: 54: SEMI_COLON      ;              
+177  56:Token: 9 : END             END            
+178  56:Token: 54: SEMI_COLON      ;              
+179  58:Token: 9 : END             END            
+180  58:Token: 35: ID              Primes         
+181  58:Token: 43: DOT             .              
+182  59:Token: 62: EOF             End Of File    

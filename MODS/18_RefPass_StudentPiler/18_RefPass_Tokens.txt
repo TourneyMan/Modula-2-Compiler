@@ -1,0 +1,91 @@
+TokenList:
+
+ TK  Ln Type                      Lexeme         
+
+  0   1:Token: 16: MODULE          MODULE         
+  1   1:Token: 35: ID              RefPass        
+  2   1:Token: 54: SEMI_COLON      ;              
+  3   3:Token: 24: VAR             VAR            
+  4   3:Token: 35: ID              temp           
+  5   3:Token: 41: COLON           :              
+  6   3:Token: 13: INTEGER         INTEGER        
+  7   3:Token: 54: SEMI_COLON      ;              
+  8   8:Token: 20: PROCEDURE       PROCEDURE      
+  9   8:Token: 35: ID              little         
+ 10   8:Token: 47: LEFT_PAREN      (              
+ 11   8:Token: 24: VAR             VAR            
+ 12   8:Token: 35: ID              j              
+ 13   8:Token: 41: COLON           :              
+ 14   8:Token: 13: INTEGER         INTEGER        
+ 15   8:Token: 53: RIGHT_PAREN     )              
+ 16   8:Token: 54: SEMI_COLON      ;              
+ 17  10:Token: 3 : BEGIN           BEGIN          
+ 18  12:Token: 34: WRSTR           WRSTR          
+ 19  12:Token: 47: LEFT_PAREN      (              
+ 20  12:Token: 39: STRING          j =            
+ 21  12:Token: 53: RIGHT_PAREN     )              
+ 22  12:Token: 54: SEMI_COLON      ;              
+ 23  13:Token: 27: WRINT           WRINT          
+ 24  13:Token: 47: LEFT_PAREN      (              
+ 25  13:Token: 35: ID              j              
+ 26  13:Token: 53: RIGHT_PAREN     )              
+ 27  13:Token: 54: SEMI_COLON      ;              
+ 28  14:Token: 28: WRLN            WRLN           
+ 29  14:Token: 54: SEMI_COLON      ;              
+ 30  16:Token: 35: ID              j              
+ 31  16:Token: 40: ASSIGN          :=             
+ 32  16:Token: 38: INT_NUM         4              
+ 33  16:Token: 54: SEMI_COLON      ;              
+ 34  18:Token: 34: WRSTR           WRSTR          
+ 35  18:Token: 47: LEFT_PAREN      (              
+ 36  18:Token: 39: STRING          j =            
+ 37  18:Token: 53: RIGHT_PAREN     )              
+ 38  18:Token: 54: SEMI_COLON      ;              
+ 39  19:Token: 27: WRINT           WRINT          
+ 40  19:Token: 47: LEFT_PAREN      (              
+ 41  19:Token: 35: ID              j              
+ 42  19:Token: 53: RIGHT_PAREN     )              
+ 43  19:Token: 54: SEMI_COLON      ;              
+ 44  20:Token: 28: WRLN            WRLN           
+ 45  20:Token: 54: SEMI_COLON      ;              
+ 46  22:Token: 9 : END             END            
+ 47  22:Token: 35: ID              little         
+ 48  22:Token: 54: SEMI_COLON      ;              
+ 49  27:Token: 3 : BEGIN           BEGIN          
+ 50  28:Token: 35: ID              temp           
+ 51  28:Token: 40: ASSIGN          :=             
+ 52  28:Token: 38: INT_NUM         3              
+ 53  28:Token: 54: SEMI_COLON      ;              
+ 54  30:Token: 34: WRSTR           WRSTR          
+ 55  30:Token: 47: LEFT_PAREN      (              
+ 56  30:Token: 39: STRING          temp =         
+ 57  30:Token: 53: RIGHT_PAREN     )              
+ 58  30:Token: 54: SEMI_COLON      ;              
+ 59  31:Token: 27: WRINT           WRINT          
+ 60  31:Token: 47: LEFT_PAREN      (              
+ 61  31:Token: 35: ID              temp           
+ 62  31:Token: 53: RIGHT_PAREN     )              
+ 63  31:Token: 54: SEMI_COLON      ;              
+ 64  32:Token: 28: WRLN            WRLN           
+ 65  32:Token: 54: SEMI_COLON      ;              
+ 66  34:Token: 35: ID              little         
+ 67  34:Token: 47: LEFT_PAREN      (              
+ 68  34:Token: 35: ID              temp           
+ 69  34:Token: 53: RIGHT_PAREN     )              
+ 70  34:Token: 54: SEMI_COLON      ;              
+ 71  36:Token: 34: WRSTR           WRSTR          
+ 72  36:Token: 47: LEFT_PAREN      (              
+ 73  36:Token: 39: STRING          temp =         
+ 74  36:Token: 53: RIGHT_PAREN     )              
+ 75  36:Token: 54: SEMI_COLON      ;              
+ 76  37:Token: 27: WRINT           WRINT          
+ 77  37:Token: 47: LEFT_PAREN      (              
+ 78  37:Token: 35: ID              temp           
+ 79  37:Token: 53: RIGHT_PAREN     )              
+ 80  37:Token: 54: SEMI_COLON      ;              
+ 81  38:Token: 28: WRLN            WRLN           
+ 82  38:Token: 54: SEMI_COLON      ;              
+ 83  40:Token: 9 : END             END            
+ 84  40:Token: 35: ID              RefPass        
+ 85  40:Token: 43: DOT             .              
+ 86  41:Token: 62: EOF             End Of File    

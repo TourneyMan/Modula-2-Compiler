@@ -117,12 +117,17 @@ namespace Compiler.Forms
             //Get_A_Char_Button.Enabled = true;
         }
 
+        /// <summary>
+        /// Lexes through the chosen .mod file and displays a .txt file showing a list of the Tokens in the file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void List_Tokens_Button_Click(object sender, EventArgs e)
         {
-            new SourceReader();
+            new SourceReader(); //Prepare the SourceReader
             Facade facade = new Facade();
             facade.ListTokens();
-            SystemCommand.SysCommand((fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + "_" + fm.COMPILER + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
+            SystemCommand.SysCommand((fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + "_" + fm.COMPILER + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", "")); //Open the file
         }
     } // MainForm class
 

@@ -1,0 +1,149 @@
+Token list:
+
+ TK  Ln Type                      Lexeme
+
+  0   1:Token: 16: MODULE          MODULE                                                                                              
+  1   1:Token: 35: ID              Towers                                                                                              
+  2   1:Token: 54: SEMI_COLON      ;                                                                                                   
+  3   3:Token: 24: VAR             VAR                                                                                                 
+  4   4:Token: 35: ID              numDisks                                                                                            
+  5   5:Token: 41: COLON           :                                                                                                   
+  6   5:Token: 13: INTEGER         INTEGER                                                                                             
+  7   5:Token: 54: SEMI_COLON      ;                                                                                                   
+  8  10:Token: 20: PROCEDURE       PROCEDURE                                                                                           
+  9  10:Token: 35: ID              TowersOfHanoi                                                                                       
+ 10  21:Token: 47: LEFT_PAREN      (                                                                                                   
+ 11  21:Token: 35: ID              one                                                                                                 
+ 12  21:Token: 42: COMMA           ,                                                                                                   
+ 13  21:Token: 35: ID              two                                                                                                 
+ 14  21:Token: 42: COMMA           ,                                                                                                   
+ 15  21:Token: 35: ID              three                                                                                               
+ 16  21:Token: 41: COLON           :                                                                                                   
+ 17  21:Token: 13: INTEGER         INTEGER                                                                                             
+ 18  21:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 19  21:Token: 54: SEMI_COLON      ;                                                                                                   
+ 20  23:Token: 24: VAR             VAR                                                                                                 
+ 21  24:Token: 35: ID              k                                                                                                   
+ 22  25:Token: 41: COLON           :                                                                                                   
+ 23  25:Token: 13: INTEGER         INTEGER                                                                                             
+ 24  25:Token: 54: SEMI_COLON      ;                                                                                                   
+ 25  27:Token: 3 : BEGIN           BEGIN                                                                                               
+ 26  28:Token: 12: IF              IF                                                                                                  
+ 27  28:Token: 35: ID              one                                                                                                 
+ 28  28:Token: 56: GRTR_THAN       >                                                                                                   
+ 29  28:Token: 35: ID              three                                                                                               
+ 30  28:Token: 22: THEN            THEN                                                                                                
+ 31  29:Token: 27: WRINT           WRINT                                                                                               
+ 32  29:Token: 47: LEFT_PAREN      (                                                                                                   
+ 33  29:Token: 35: ID              one                                                                                                 
+ 34  29:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 35  29:Token: 54: SEMI_COLON      ;                                                                                                   
+ 36  30:Token: 34: WRSTR           WRSTR                                                                                               
+ 37  30:Token: 47: LEFT_PAREN      (                                                                                                   
+ 38  30:Token: 39: STRING           greater than                                                                                       
+ 39  30:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 40  30:Token: 54: SEMI_COLON      ;                                                                                                   
+ 41  31:Token: 27: WRINT           WRINT                                                                                               
+ 42  31:Token: 47: LEFT_PAREN      (                                                                                                   
+ 43  31:Token: 35: ID              three                                                                                               
+ 44  31:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 45  31:Token: 54: SEMI_COLON      ;                                                                                                   
+ 46  32:Token: 28: WRLN            WRLN                                                                                                
+ 47  32:Token: 54: SEMI_COLON      ;                                                                                                   
+ 48  33:Token: 8 : ELSE            ELSE                                                                                                
+ 49  34:Token: 27: WRINT           WRINT                                                                                               
+ 50  34:Token: 47: LEFT_PAREN      (                                                                                                   
+ 51  34:Token: 35: ID              three                                                                                               
+ 52  34:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 53  34:Token: 54: SEMI_COLON      ;                                                                                                   
+ 54  35:Token: 34: WRSTR           WRSTR                                                                                               
+ 55  35:Token: 47: LEFT_PAREN      (                                                                                                   
+ 56  35:Token: 39: STRING           greater than or equal to                                                                           
+ 57  35:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 58  35:Token: 54: SEMI_COLON      ;                                                                                                   
+ 59  36:Token: 27: WRINT           WRINT                                                                                               
+ 60  36:Token: 47: LEFT_PAREN      (                                                                                                   
+ 61  36:Token: 35: ID              one                                                                                                 
+ 62  36:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 63  36:Token: 54: SEMI_COLON      ;                                                                                                   
+ 64  37:Token: 28: WRLN            WRLN                                                                                                
+ 65  37:Token: 54: SEMI_COLON      ;                                                                                                   
+ 66  38:Token: 9 : END             END                                                                                                 
+ 67  38:Token: 54: SEMI_COLON      ;                                                                                                   
+ 68  40:Token: 12: IF              IF                                                                                                  
+ 69  40:Token: 35: ID              one                                                                                                 
+ 70  40:Token: 45: EQUAL           =                                                                                                   
+ 71  40:Token: 35: ID              one                                                                                                 
+ 72  40:Token: 22: THEN            THEN                                                                                                
+ 73  41:Token: 27: WRINT           WRINT                                                                                               
+ 74  41:Token: 47: LEFT_PAREN      (                                                                                                   
+ 75  41:Token: 35: ID              one                                                                                                 
+ 76  41:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 77  41:Token: 54: SEMI_COLON      ;                                                                                                   
+ 78  42:Token: 34: WRSTR           WRSTR                                                                                               
+ 79  42:Token: 47: LEFT_PAREN      (                                                                                                   
+ 80  42:Token: 39: STRING           equals                                                                                             
+ 81  42:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 82  42:Token: 54: SEMI_COLON      ;                                                                                                   
+ 83  43:Token: 27: WRINT           WRINT                                                                                               
+ 84  43:Token: 47: LEFT_PAREN      (                                                                                                   
+ 85  43:Token: 35: ID              one                                                                                                 
+ 86  43:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 87  43:Token: 54: SEMI_COLON      ;                                                                                                   
+ 88  44:Token: 28: WRLN            WRLN                                                                                                
+ 89  44:Token: 54: SEMI_COLON      ;                                                                                                   
+ 90  45:Token: 8 : ELSE            ELSE                                                                                                
+ 91  46:Token: 27: WRINT           WRINT                                                                                               
+ 92  46:Token: 47: LEFT_PAREN      (                                                                                                   
+ 93  46:Token: 35: ID              one                                                                                                 
+ 94  46:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 95  46:Token: 54: SEMI_COLON      ;                                                                                                   
+ 96  47:Token: 34: WRSTR           WRSTR                                                                                               
+ 97  47:Token: 47: LEFT_PAREN      (                                                                                                   
+ 98  47:Token: 39: STRING           is not equal to                                                                                    
+ 99  47:Token: 53: RIGHT_PAREN     )                                                                                                   
+100  47:Token: 54: SEMI_COLON      ;                                                                                                   
+101  48:Token: 27: WRINT           WRINT                                                                                               
+102  48:Token: 47: LEFT_PAREN      (                                                                                                   
+103  48:Token: 35: ID              one                                                                                                 
+104  48:Token: 53: RIGHT_PAREN     )                                                                                                   
+105  48:Token: 54: SEMI_COLON      ;                                                                                                   
+106  49:Token: 28: WRLN            WRLN                                                                                                
+107  49:Token: 54: SEMI_COLON      ;                                                                                                   
+108  50:Token: 9 : END             END                                                                                                 
+109  50:Token: 54: SEMI_COLON      ;                                                                                                   
+110  51:Token: 9 : END             END                                                                                                 
+111  51:Token: 35: ID              TowersOfHanoi                                                                                       
+112  51:Token: 54: SEMI_COLON      ;                                                                                                   
+113  56:Token: 3 : BEGIN           BEGIN                                                                                               
+114  57:Token: 34: WRSTR           WRSTR                                                                                               
+115  57:Token: 47: LEFT_PAREN      (                                                                                                   
+116  57:Token: 39: STRING          Enter the number of disks (0-9 please) and press ENTER:                                             
+117  57:Token: 53: RIGHT_PAREN     )                                                                                                   
+118  57:Token: 54: SEMI_COLON      ;                                                                                                   
+119  58:Token: 28: WRLN            WRLN                                                                                                
+120  58:Token: 54: SEMI_COLON      ;                                                                                                   
+121  59:Token: 34: WRSTR           WRSTR                                                                                               
+122  59:Token: 47: LEFT_PAREN      (                                                                                                   
+123  59:Token: 39: STRING          Input:                                                                                              
+124  59:Token: 53: RIGHT_PAREN     )                                                                                                   
+125  59:Token: 54: SEMI_COLON      ;                                                                                                   
+126  60:Token: 35: ID              numDisks                                                                                            
+127  60:Token: 40: ASSIGN          :=                                                                                                  
+128  60:Token: 32: RDINT           RDINT                                                                                               
+129  60:Token: 47: LEFT_PAREN      (                                                                                                   
+130  60:Token: 53: RIGHT_PAREN     )                                                                                                   
+131  60:Token: 54: SEMI_COLON      ;                                                                                                   
+132  62:Token: 35: ID              TowersOfHanoi                                                                                       
+133  62:Token: 47: LEFT_PAREN      (                                                                                                   
+134  62:Token: 35: ID              numDisks                                                                                            
+135  62:Token: 42: COMMA           ,                                                                                                   
+136  62:Token: 38: INT_NUM         1                                                                                                   
+137  62:Token: 42: COMMA           ,                                                                                                   
+138  62:Token: 38: INT_NUM         3                                                                                                   
+139  62:Token: 53: RIGHT_PAREN     )                                                                                                   
+140  62:Token: 54: SEMI_COLON      ;                                                                                                   
+141  63:Token: 9 : END             END                                                                                                 
+142  63:Token: 35: ID              Towers                                                                                              
+143  63:Token: 43: DOT             .                                                                                                   
+144  64:Token: 62: EOF             End Of File                                                                                         
