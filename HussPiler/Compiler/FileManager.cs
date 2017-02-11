@@ -10,7 +10,8 @@ namespace Compiler
                         masmDIR,        // name of binary directory, e.g. "C:\masm32\"
                         sourceFile,     // name of M2 source file, no dir, e.g. "01_Test.mod"
                         errorLog,       // log string for errors
-                        tokenList;      // giant string to hold what will go into the txt file
+                        tokenList,      // giant string to hold what will go into the token list txt file
+                        symbolList;     // giant string to hold what will go into the symbol list txt file
 
         // number of errors encountered
         private int errorCount; 
@@ -113,6 +114,14 @@ namespace Compiler
         {
             tokenList = "";
         } //ResetTokenList
+
+        /// <summary>
+        /// Resets the symbolList String
+        /// </summary>
+        public void ResetSymbolList()
+        {
+            symbolList = "";
+        } //ResetSymbolList
 
         /**********************************************************************************************************************
             GET AND SET FUNCTIONS
@@ -222,7 +231,17 @@ namespace Compiler
             get { return tokenList; }
             set { tokenList = value; }
 
-        } // SOURCE_DIR
+        } // TOKEN_LIST
+
+        /// <summary>
+        /// set or get the symbolList string
+        /// </summary>
+        public string SYMBOL_LIST
+        {
+            get { return symbolList; }
+            set { symbolList = value; }
+
+        } // SYMBOL_LIST
 
         /**********************************************************************************************************************
             Folder and File FUNCTIONS
@@ -251,7 +270,15 @@ namespace Compiler
         public void FileTokenList()
         {
             Filer.WriteStringToFile(tokenList, (SOURCE_DIR + SOURCE_FILE).Replace(".mod", "") + "_" + COMPILER + "\\" + (SOURCE_FILE + "_Tokens.txt").Replace(".mod", ""));
-        } // ResetASMDIR
+        } // FileTokenList
+
+        /// <summary>
+        /// Writes symbolList to the Test_Symbols file
+        /// </summary>
+        public void FileTestSymbols()
+        {
+            Filer.WriteStringToFile(symbolList, SOURCE_DIR + "TestSym_" + COMPILER + "\\" + ("Test_Symbols.txt"));
+        } // FileTestSymbols
 
     } // FileManager class
 

@@ -82,9 +82,11 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Lexer.cs" />
+    <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceReader.cs" />
+    <Compile Include="SymbolTable.cs" />
     <Compile Include="SystemCommand.cs" />
     <Compile Include="Token.cs" />
     <EmbeddedResource Include="Forms\AboutForm.resx">

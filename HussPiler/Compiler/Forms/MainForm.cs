@@ -7,7 +7,8 @@ namespace Compiler.Forms
     {
         // Track defaults and file locations.
         private FileManager fm = FileManager.Instance;
-        
+        Facade facade = new Facade();
+
         /// <summary>
         /// class constructor
         /// </summary>
@@ -125,9 +126,17 @@ namespace Compiler.Forms
         private void List_Tokens_Button_Click(object sender, EventArgs e)
         {
             new SourceReader(); //Prepare the SourceReader
-            Facade facade = new Facade();
+            
             facade.ListTokens();
             SystemCommand.SysCommand((fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + "_" + fm.COMPILER + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", "")); //Open the file
+        }
+
+        private void Test_Symbols_Button_Click(object sender, EventArgs e)
+        {
+            Filer.CreateCleanDir(fm.SOURCE_DIR + "TestSym_" + fm.COMPILER);
+            facade.TestSymTable();
+            SystemCommand.SysCommand(fm.SOURCE_DIR + "TestSym_" + fm.COMPILER + "\\" + ("Test_Symbols.txt")); //Open the file
+
         }
     } // MainForm class
 

@@ -147,13 +147,13 @@
             // 
             // Test_Symbols_Button
             // 
-            this.Test_Symbols_Button.Enabled = false;
             this.Test_Symbols_Button.Location = new System.Drawing.Point(282, 188);
             this.Test_Symbols_Button.Name = "Test_Symbols_Button";
             this.Test_Symbols_Button.Size = new System.Drawing.Size(122, 23);
             this.Test_Symbols_Button.TabIndex = 6;
             this.Test_Symbols_Button.Text = "Test Symbols";
             this.Test_Symbols_Button.UseVisualStyleBackColor = true;
+            this.Test_Symbols_Button.Click += new System.EventHandler(this.Test_Symbols_Button_Click);
             // 
             // Run_Button
             // 
