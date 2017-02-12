@@ -310,74 +310,95 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         /// <summary>
         /// Adds a symbol to the symbol table
         /// </summary>
-        public void AddASymbol(String nameOfSymbol, Token.TOKENTYPE tokType)
+        public void AddASymbol(String nameOfSymbol, Symbol.SYMBOL_TYPE symType, Symbol.STORE_TYPE stType, Symbol.PARM_TYPE parType)
         {
             Symbol symbolToAdd = new Symbol();
-            if (tokType == Token.TOKENTYPE.INT_NUM)
+            symbolToAdd.symbolType = symType; //Simply take in the symbol, store, and parm type
+            symbolToAdd.paramType = parType;
+            symbolToAdd.storeType = stType;
+
+            //Determine how much memory will be needed by the symbol type
+            //It feels a little weird doing it this way as it makes constant ints not take memory
+            //But that's what the examples did, so I assumed they were right and went with it
+            if (symType == Symbol.SYMBOL_TYPE.TYPE_SIMPLE)   
             {
-                symbolToAdd.symbolType = Symbol.SYMBOL_TYPE.TYPE_SIMPLE;
-                symbolToAdd.paramType = Symbol.PARM_TYPE.LOCAL_VAR;
-                symbolToAdd.storeType = Symbol.STORE_TYPE.TYPE_INT;
                 symbolToAdd.memOffset = TOP_SCOPE.MEM_OFFSET;
                 TOP_SCOPE.MEM_OFFSET += 4;
             }
 
-            if (tokType == Token.TOKENTYPE.REAL_NUM)
-            {
-                symbolToAdd.symbolType = Symbol.SYMBOL_TYPE.TYPE_SIMPLE;
-                symbolToAdd.paramType = Symbol.PARM_TYPE.LOCAL_VAR;
-                symbolToAdd.storeType = Symbol.STORE_TYPE.TYPE_RL;
-                symbolToAdd.memOffset = TOP_SCOPE.MEM_OFFSET;
-                TOP_SCOPE.MEM_OFFSET += 4;
-            }
+            else { symbolToAdd.memOffset = 0; }
 
-            else if (tokType == Token.TOKENTYPE.ID)
-            {
-                symbolToAdd.symbolType = Symbol.SYMBOL_TYPE.TYPE_PROC;
-                symbolToAdd.paramType = Symbol.PARM_TYPE.VAL_PARM;
-                symbolToAdd.storeType = Symbol.STORE_TYPE.STORE_NONE;
-                symbolToAdd.memOffset = 0;
-            }
-
-            //symbolToAdd.
-            //Symbol symbolToAdd = new Symbol(tokType);
-            TOP_SCOPE.SYMBOLS.Add(nameOfSymbol, symbolToAdd);
+            TOP_SCOPE.SYMBOLS.Add(nameOfSymbol, symbolToAdd); //Add the symbol to the table
         } // AddASymbol
 
         /// <summary>
-        /// Retrieves a symbol from the current scope
+        /// Retrieves a symbol corresponding to the name given from the current scope
         /// </summary>
         public Symbol RetrieveSymbolCurrScope(String name)
         {
-            Hashtable table = scopeStack.Peek().SYMBOLS;
+            Hashtable table = ((Scope)scopeStack.Peek()).SYMBOLS; //Only look at the hashtable of the top scope
             if (table.ContainsKey(name))
             {
                 return (Symbol)table[name];
             }
+            return null; //Return null if no symbol with that name exists in the current scope
         } // RetrieveSymbolCurrScope
+
+        /// <summary>
+        /// Retrieves the innermost symbol corresponding to the name given
+        /// </summary>
+        public Symbol RetrieveSymbolInnerScope(String name)
+        {
+            Symbol symbolToReturn = null; //Start with assumption that we have nothing to return
+            Stack tempScopeStack = new Stack(); //Temporarily hold scopes we have looked through
+
+            while (symbolToReturn == null && scopeStack.Count != 0) //Go through scopeStack until we find a symbol by that name or are out of scopes
+            {
+                tempScopeStack.Push(scopeStack.Pop()); //Put scope to check on tempScopeStack
+                Hashtable table = ((Scope)tempScopeStack.Peek()).SYMBOLS;
+                if (table.ContainsKey(name)) //Stop the loop if we find a symbol that matches our criteria
+                {
+                    symbolToReturn = (Symbol)table[name]; 
+                }
+            }
+
+            while (tempScopeStack.Count != 0) //Put all the scopes on the tempScopeStack back on the scope Stack
+            { 
+                scopeStack.Push(tempScopeStack.Pop());
+            }
+
+            return symbolToReturn; //Result
+        } // RetrieveSymbolInnerScope
 
         /// <summary>
         /// Enters a new scope
         /// </summary>
         public void EnterNewScope(String name)
         {
-            if (scopeStack == null)
+            if (scopeStack == null) //If there are no scopes yet, we need to make a scope and then add on our PROC symbol
             {
                 scopeStack = new Stack();
+                scopeStack.Push(new Scope());
+                AddASymbol(name, Symbol.SYMBOL_TYPE.TYPE_PROC, Symbol.STORE_TYPE.STORE_NONE, Symbol.PARM_TYPE.VAL_PARM);
             }
-            scopeStack.Push(new Scope());
-            AddASymbol(name, Token.TOKENTYPE.ID);
+
+            else //Otherwise we make a new PROC symbol and THEN go into our new scope
+            {
+                AddASymbol(name, Symbol.SYMBOL_TYPE.TYPE_PROC, Symbol.STORE_TYPE.STORE_NONE, Symbol.PARM_TYPE.VAL_PARM);
+                scopeStack.Push(new Scope());
+            }
+
         } // EnterNewScope
 
         /// <summary>
-        /// Leaves the current scope
+        /// Leaves the current scope, dumping all the Strings of the Symbols of the scope being left into the FileManager's SYMBOL_LIST String
         /// </summary>
         public bool LeaveScope()
         {
             if (scopeStack != null && scopeStack.Count > 0)
             {
-                Scope leavingScope = (Scope)scopeStack.Pop();
-                foreach (DictionaryEntry entry in leavingScope.SYMBOLS)
+                Scope leavingScope = (Scope)scopeStack.Pop(); //Pop off the scope
+                foreach (DictionaryEntry entry in leavingScope.SYMBOLS) //Dump the scope's Symbols into the SYMBOL_LIST
                 {
                     Symbol symbol = (Symbol)entry.Value;
                     fm.SYMBOL_LIST += string.Format("{0,-20}", entry.Key);
@@ -393,7 +414,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         /// </summary>
         public void DumpSymbolTable()
         {
-            while (LeaveScope()) {}
+            while (LeaveScope()) {} //Simply Leave scopes until we are out of scopes
         } // DumpSymbolTable
 
         /// <summary>

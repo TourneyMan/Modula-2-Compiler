@@ -62,18 +62,34 @@ namespace Compiler
         /// </summary>
         public void TestSymbolTable()
         {
+            ///Test///
             Reset();
-            symTbl.EnterNewScope("newScope");
-            symTbl.AddASymbol("var", Token.TOKENTYPE.INT_NUM);
-            symTbl.AddASymbol("var2", Token.TOKENTYPE.REAL_NUM);
-            symTbl.EnterNewScope("newScope2");
-            symTbl.AddASymbol("var3", Token.TOKENTYPE.REAL_NUM);
+            symTbl.EnterNewScope("HussPiler_Main");
+            symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+            symTbl.AddASymbol("var2", Symbol.SYMBOL_TYPE.TYPE_CONST, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM);
+            symTbl.AddASymbol("var3", Symbol.SYMBOL_TYPE.TYPE_CONST, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM);
+            symTbl.AddASymbol("var4", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+            symTbl.AddASymbol("var5", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+            symTbl.EnterNewScope("Proc1");
+            symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
             symTbl.LeaveScope();
-            symTbl.EnterNewScope("newScope3");
-            symTbl.AddASymbol("var4", Token.TOKENTYPE.REAL_NUM);
-            symTbl.AddASymbol("var5", Token.TOKENTYPE.INT_NUM);
-            symTbl.AddASymbol("var6", Token.TOKENTYPE.INT_NUM);
+            symTbl.EnterNewScope("Proc2");
+            symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+
+            //PARM_TYPE is intentionally wrong -- should be fixed by RetrieveSymbolInnerScope
+            symTbl.AddASymbol("var2", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM);
+            symTbl.EnterNewScope("Proc3");
+
+            //STORE_TYPE is intentionally wrong -- should be fixed by RetrieveSymbolCurrScope
+            symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_CD, Symbol.PARM_TYPE.LOCAL_VAR);
+
+            //Demonstrating that I can retrieve and modify symbols
+            symTbl.RetrieveSymbolInnerScope("var2").paramType = Symbol.PARM_TYPE.LOCAL_VAR;
+            symTbl.RetrieveSymbolCurrScope("var1").storeType = Symbol.STORE_TYPE.TYPE_INT;
+
             symTbl.DumpSymbolTable();
+
+            //Previous test when AddASymbol took a TokenType
             /*symTbl.EnterNewScope("procA");
             symTbl.AddASymbol("var1", Token.TOKENTYPE.INT_NUM);
             symTbl.AddASymbol("var2", Token.TOKENTYPE.INT_NUM);
