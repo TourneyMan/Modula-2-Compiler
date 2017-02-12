@@ -62,11 +62,30 @@ namespace Compiler
         /// </summary>
         public void TestSymbolTable()
         {
-            symTbl.EnterNewScope("procA");
-            symTbl.AddASymbol("var1", Token.TOKENTYPE.INTEGER);
-            symTbl.EnterNewScope("procB");
-            symTbl.EnterNewScope("procC");
+            Reset();
+            symTbl.EnterNewScope("newScope");
+            symTbl.AddASymbol("var", Token.TOKENTYPE.INT_NUM);
+            symTbl.AddASymbol("var2", Token.TOKENTYPE.REAL_NUM);
+            symTbl.EnterNewScope("newScope2");
+            symTbl.AddASymbol("var3", Token.TOKENTYPE.REAL_NUM);
+            symTbl.LeaveScope();
+            symTbl.EnterNewScope("newScope3");
+            symTbl.AddASymbol("var4", Token.TOKENTYPE.REAL_NUM);
+            symTbl.AddASymbol("var5", Token.TOKENTYPE.INT_NUM);
+            symTbl.AddASymbol("var6", Token.TOKENTYPE.INT_NUM);
             symTbl.DumpSymbolTable();
+            /*symTbl.EnterNewScope("procA");
+            symTbl.AddASymbol("var1", Token.TOKENTYPE.INT_NUM);
+            symTbl.AddASymbol("var2", Token.TOKENTYPE.INT_NUM);
+            symTbl.AddASymbol("var3", Token.TOKENTYPE.INT_NUM);
+            symTbl.EnterNewScope("procB");
+            symTbl.AddASymbol("var4", Token.TOKENTYPE.INT_NUM);
+            symTbl.AddASymbol("var5", Token.TOKENTYPE.INT_NUM);
+            symTbl.LeaveScope();
+            symTbl.AddASymbol("var6", Token.TOKENTYPE.INT_NUM);
+            symTbl.EnterNewScope("procC");
+            symTbl.AddASymbol("var7", Token.TOKENTYPE.INT_NUM);
+            symTbl.DumpSymbolTable();*/
         } // TestSymbolTable
 
     } // Parser

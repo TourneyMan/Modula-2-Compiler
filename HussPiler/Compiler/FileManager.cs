@@ -120,7 +120,9 @@ namespace Compiler
         /// </summary>
         public void ResetSymbolList()
         {
-            symbolList = "";
+            SYMBOL_LIST = "                            symbol          storage         parameter       memory\r\n"
+                + "name                 scope  type            type            type            offset\r\n"
+                + "==================== ====== =============== =============== =============== ==========\r\n";
         } //ResetSymbolList
 
         /**********************************************************************************************************************

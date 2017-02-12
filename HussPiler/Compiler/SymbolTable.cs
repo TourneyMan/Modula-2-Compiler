@@ -144,7 +144,8 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
             memOffset = sym.memOffset;
             lowerBound = sym.lowerBound;
             upperBound = sym.upperBound;
-            paramVarList = sym.paramVarList;    //  Warning...shallow copy
+            paramVarList = sym.paramVarList;
+            memOffset = sym.memOffset; //  Warning...shallow copy
         } // Symbol
 
         /// <summary>
@@ -161,9 +162,15 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
             memOffset = sym.memOffset;
             lowerBound = sym.lowerBound;
             upperBound = sym.upperBound;
-            paramVarList = sym.paramVarList;    //  Warning...shallow copy
+            paramVarList = sym.paramVarList;
+            memOffset = sym.memOffset; //  Warning...shallow copy
 
         } // Copy
+
+        public override String ToString()
+        {
+            return string.Format(" {0,-6} {1,-15} {2,-15} {3,-15} {4,-10}\r\n", scopeNumber, symbolType, storeType, paramType, memOffset);
+        }
 
     } // Symbol class
 
@@ -315,6 +322,15 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
                 TOP_SCOPE.MEM_OFFSET += 4;
             }
 
+            if (tokType == Token.TOKENTYPE.REAL_NUM)
+            {
+                symbolToAdd.symbolType = Symbol.SYMBOL_TYPE.TYPE_SIMPLE;
+                symbolToAdd.paramType = Symbol.PARM_TYPE.LOCAL_VAR;
+                symbolToAdd.storeType = Symbol.STORE_TYPE.TYPE_RL;
+                symbolToAdd.memOffset = TOP_SCOPE.MEM_OFFSET;
+                TOP_SCOPE.MEM_OFFSET += 4;
+            }
+
             else if (tokType == Token.TOKENTYPE.ID)
             {
                 symbolToAdd.symbolType = Symbol.SYMBOL_TYPE.TYPE_PROC;
@@ -327,6 +343,18 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
             //Symbol symbolToAdd = new Symbol(tokType);
             TOP_SCOPE.SYMBOLS.Add(nameOfSymbol, symbolToAdd);
         } // AddASymbol
+
+        /// <summary>
+        /// Retrieves a symbol from the current scope
+        /// </summary>
+        public Symbol RetrieveSymbolCurrScope(String name)
+        {
+            Hashtable table = scopeStack.Peek().SYMBOLS;
+            if (table.ContainsKey(name))
+            {
+                return (Symbol)table[name];
+            }
+        } // RetrieveSymbolCurrScope
 
         /// <summary>
         /// Enters a new scope
@@ -342,18 +370,30 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         } // EnterNewScope
 
         /// <summary>
+        /// Leaves the current scope
+        /// </summary>
+        public bool LeaveScope()
+        {
+            if (scopeStack != null && scopeStack.Count > 0)
+            {
+                Scope leavingScope = (Scope)scopeStack.Pop();
+                foreach (DictionaryEntry entry in leavingScope.SYMBOLS)
+                {
+                    Symbol symbol = (Symbol)entry.Value;
+                    fm.SYMBOL_LIST += string.Format("{0,-20}", entry.Key);
+                    fm.SYMBOL_LIST += symbol.ToString();
+                }
+                return true;
+            }
+            return false;
+        } // LeaveScope
+
+        /// <summary>
         /// Populates the string to represent the symbol table
         /// </summary>
         public void DumpSymbolTable()
         {
-            while (scopeStack.Count != 0) {
-                Scope thisScope = (Scope)scopeStack.Pop();
-                foreach (Symbol mySymbol in thisScope.SYMBOLS)
-                {
-                    fm.SYMBOL_LIST += "test";
-                }
-            }
-            fm.SYMBOL_LIST += "dog";
+            while (LeaveScope()) {}
         } // DumpSymbolTable
 
         /// <summary>

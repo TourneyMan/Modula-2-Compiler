@@ -1,0 +1,12 @@
+                            symbol          storage         parameter       memory
+name                 scope  type            type            type            offset
+==================== ====== =============== =============== =============== ==========
+var3                 1      TYPE_SIMPLE     TYPE_RL         LOCAL_VAR       8         
+newScope2            1      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+var5                 2      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       12        
+newScope3            2      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+var6                 2      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       16        
+var4                 2      TYPE_SIMPLE     TYPE_RL         LOCAL_VAR       8         
+var2                 0      TYPE_SIMPLE     TYPE_RL         LOCAL_VAR       12        
+newScope             0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+var                  0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
