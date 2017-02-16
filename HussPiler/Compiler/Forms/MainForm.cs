@@ -65,6 +65,8 @@ namespace Compiler.Forms
         /// <param name="e"></param>
         private void MASM_Directory_Browse_Button_Click(object sender, EventArgs e)
         {
+            masmDirectoryPicker.SelectedPath = fm.MASM_DIR;
+
             if (masmDirectoryPicker.ShowDialog() == DialogResult.OK) //If the chosen folder is good
             {
                 MASM_Directory_Textbox.Text = masmDirectoryPicker.SelectedPath; //Set the textbox text
@@ -79,6 +81,8 @@ namespace Compiler.Forms
         /// <param name="e"></param>
         private void Source_Directory_Browse_Button_Click(object sender, EventArgs e)
         {
+            sourceDirectoryPicker.SelectedPath = fm.SOURCE_DIR;
+
             if (sourceDirectoryPicker.ShowDialog() == DialogResult.OK)
             {
                 Source_Directory_Textbox.Text = sourceDirectoryPicker.SelectedPath;
