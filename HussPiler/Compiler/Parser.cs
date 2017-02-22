@@ -87,7 +87,9 @@ namespace Compiler
             symTbl.RetrieveSymbolInnerScope("var2").paramType = Symbol.PARM_TYPE.LOCAL_VAR;
             symTbl.RetrieveSymbolCurrScope("var1").storeType = Symbol.STORE_TYPE.TYPE_INT;
 
-            symTbl.DumpSymbolTable();
+            symTbl.LeaveScope();
+            symTbl.LeaveScope();
+            symTbl.LeaveScope();
 
             //Previous test when AddASymbol took a TokenType
             /*symTbl.EnterNewScope("procA");

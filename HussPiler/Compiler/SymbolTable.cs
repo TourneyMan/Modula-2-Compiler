@@ -410,14 +410,6 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         } // LeaveScope
 
         /// <summary>
-        /// Populates the string to represent the symbol table
-        /// </summary>
-        public void DumpSymbolTable()
-        {
-            while (LeaveScope()) {} //Simply Leave scopes until we are out of scopes
-        } // DumpSymbolTable
-
-        /// <summary>
         /// get the top scope on the stack and return it
         /// </summary>
         private static Scope TOP_SCOPE
