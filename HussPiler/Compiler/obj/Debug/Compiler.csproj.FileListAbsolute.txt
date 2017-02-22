@@ -9,3 +9,14 @@ E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.csproj.Gener
 E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.exe
 E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.pdb
 E:\Documents\GitHub\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Forms.GetChar.resources
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\bin\Debug\Compiler.exe.config
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.exe
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.pdb
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\bin\Debug\Compiler.exe
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\bin\Debug\Compiler.pdb
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.csprojResolveAssemblyReference.cache
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Forms.AboutForm.resources
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Forms.GetChar.resources
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Forms.MainForm.resources
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.Properties.Resources.resources
+D:\StudentCompilers\HussPiler\HussPiler\Compiler\obj\Debug\Compiler.csproj.GenerateResource.Cache

@@ -1,7 +1,0 @@
-Token list:
-
- TK  Ln Type                      Lexeme
-
-  0   1:Token: 35: ID              good                                                                                                
-  1   2:Token: 39: STRING          should be here                                                                                      
-  2   3:Token: 62: EOF             End Of File                                                                                         
