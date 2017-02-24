@@ -1,0 +1,337 @@
+Token list:
+
+ TK  Ln Type                      Lexeme
+
+  0   1:Token: 16: MODULE          MODULE                                                                                              
+  1   1:Token: 35: ID              Bubble                                                                                              
+  2   1:Token: 54: SEMI_COLON      ;                                                                                                   
+  3   3:Token: 23: TYPE            TYPE                                                                                                
+  4   4:Token: 35: ID              ListType                                                                                            
+  5   4:Token: 45: EQUAL           =                                                                                                   
+  6   4:Token: 2 : ARRAY           ARRAY                                                                                               
+  7   4:Token: 46: LEFT_BRACK      [                                                                                                   
+  8   4:Token: 38: INT_NUM         1                                                                                                   
+  9   4:Token: 44: DOT_DOT         ..                                                                                                  
+ 10   4:Token: 38: INT_NUM         10                                                                                                  
+ 11   4:Token: 52: RIGHT_BRACK     ]                                                                                                   
+ 12   4:Token: 18: OF              OF                                                                                                  
+ 13   4:Token: 13: INTEGER         INTEGER                                                                                             
+ 14   4:Token: 54: SEMI_COLON      ;                                                                                                   
+ 15   6:Token: 24: VAR             VAR                                                                                                 
+ 16   7:Token: 35: ID              thisList                                                                                            
+ 17   7:Token: 41: COLON           :                                                                                                   
+ 18   7:Token: 35: ID              ListType                                                                                            
+ 19   7:Token: 54: SEMI_COLON      ;                                                                                                   
+ 20  12:Token: 20: PROCEDURE       PROCEDURE                                                                                           
+ 21  12:Token: 35: ID              Swap                                                                                                
+ 22  12:Token: 47: LEFT_PAREN      (                                                                                                   
+ 23  12:Token: 24: VAR             VAR                                                                                                 
+ 24  12:Token: 35: ID              a                                                                                                   
+ 25  12:Token: 42: COMMA           ,                                                                                                   
+ 26  12:Token: 35: ID              b                                                                                                   
+ 27  12:Token: 41: COLON           :                                                                                                   
+ 28  12:Token: 13: INTEGER         INTEGER                                                                                             
+ 29  12:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 30  12:Token: 54: SEMI_COLON      ;                                                                                                   
+ 31  13:Token: 24: VAR             VAR                                                                                                 
+ 32  13:Token: 35: ID              temp                                                                                                
+ 33  13:Token: 41: COLON           :                                                                                                   
+ 34  13:Token: 13: INTEGER         INTEGER                                                                                             
+ 35  13:Token: 54: SEMI_COLON      ;                                                                                                   
+ 36  14:Token: 3 : BEGIN           BEGIN                                                                                               
+ 37  15:Token: 35: ID              temp                                                                                                
+ 38  15:Token: 40: ASSIGN          :=                                                                                                  
+ 39  15:Token: 35: ID              a                                                                                                   
+ 40  15:Token: 54: SEMI_COLON      ;                                                                                                   
+ 41  16:Token: 35: ID              a                                                                                                   
+ 42  16:Token: 40: ASSIGN          :=                                                                                                  
+ 43  16:Token: 35: ID              b                                                                                                   
+ 44  16:Token: 54: SEMI_COLON      ;                                                                                                   
+ 45  17:Token: 35: ID              b                                                                                                   
+ 46  17:Token: 40: ASSIGN          :=                                                                                                  
+ 47  17:Token: 35: ID              temp                                                                                                
+ 48  17:Token: 54: SEMI_COLON      ;                                                                                                   
+ 49  18:Token: 9 : END             END                                                                                                 
+ 50  18:Token: 35: ID              Swap                                                                                                
+ 51  18:Token: 54: SEMI_COLON      ;                                                                                                   
+ 52  23:Token: 20: PROCEDURE       PROCEDURE                                                                                           
+ 53  23:Token: 35: ID              Random                                                                                              
+ 54  23:Token: 47: LEFT_PAREN      (                                                                                                   
+ 55  23:Token: 24: VAR             VAR                                                                                                 
+ 56  23:Token: 35: ID              seed                                                                                                
+ 57  23:Token: 41: COLON           :                                                                                                   
+ 58  23:Token: 13: INTEGER         INTEGER                                                                                             
+ 59  23:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 60  23:Token: 54: SEMI_COLON      ;                                                                                                   
+ 61  25:Token: 5 : CONST           CONST                                                                                               
+ 62  26:Token: 35: ID              m                                                                                                   
+ 63  26:Token: 45: EQUAL           =                                                                                                   
+ 64  26:Token: 38: INT_NUM         8192                                                                                                
+ 65  26:Token: 54: SEMI_COLON      ;                                                                                                   
+ 66  27:Token: 35: ID              t                                                                                                   
+ 67  27:Token: 45: EQUAL           =                                                                                                   
+ 68  27:Token: 38: INT_NUM         4361                                                                                                
+ 69  27:Token: 54: SEMI_COLON      ;                                                                                                   
+ 70  28:Token: 35: ID              c                                                                                                   
+ 71  28:Token: 45: EQUAL           =                                                                                                   
+ 72  28:Token: 38: INT_NUM         3899                                                                                                
+ 73  28:Token: 54: SEMI_COLON      ;                                                                                                   
+ 74  30:Token: 24: VAR             VAR                                                                                                 
+ 75  31:Token: 35: ID              temp                                                                                                
+ 76  31:Token: 41: COLON           :                                                                                                   
+ 77  31:Token: 13: INTEGER         INTEGER                                                                                             
+ 78  31:Token: 54: SEMI_COLON      ;                                                                                                   
+ 79  33:Token: 3 : BEGIN           BEGIN                                                                                               
+ 80  34:Token: 35: ID              temp                                                                                                
+ 81  34:Token: 40: ASSIGN          :=                                                                                                  
+ 82  34:Token: 47: LEFT_PAREN      (                                                                                                   
+ 83  34:Token: 35: ID              seed                                                                                                
+ 84  34:Token: 49: MULT            *                                                                                                   
+ 85  34:Token: 35: ID              t                                                                                                   
+ 86  34:Token: 51: PLUS            +                                                                                                   
+ 87  34:Token: 35: ID              c                                                                                                   
+ 88  34:Token: 53: RIGHT_PAREN     )                                                                                                   
+ 89  34:Token: 15: MOD             MOD                                                                                                 
+ 90  34:Token: 35: ID              m                                                                                                   
+ 91  34:Token: 54: SEMI_COLON      ;                                                                                                   
+ 92  35:Token: 35: ID              seed                                                                                                
+ 93  35:Token: 40: ASSIGN          :=                                                                                                  
+ 94  35:Token: 35: ID              temp                                                                                                
+ 95  35:Token: 54: SEMI_COLON      ;                                                                                                   
+ 96  36:Token: 9 : END             END                                                                                                 
+ 97  36:Token: 35: ID              Random                                                                                              
+ 98  36:Token: 54: SEMI_COLON      ;                                                                                                   
+ 99  41:Token: 20: PROCEDURE       PROCEDURE                                                                                           
+100  41:Token: 35: ID              Fill                                                                                                
+101  41:Token: 47: LEFT_PAREN      (                                                                                                   
+102  41:Token: 24: VAR             VAR                                                                                                 
+103  41:Token: 35: ID              list                                                                                                
+104  41:Token: 41: COLON           :                                                                                                   
+105  41:Token: 35: ID              ListType                                                                                            
+106  41:Token: 53: RIGHT_PAREN     )                                                                                                   
+107  41:Token: 54: SEMI_COLON      ;                                                                                                   
+108  43:Token: 5 : CONST           CONST                                                                                               
+109  43:Token: 35: ID              startSeed                                                                                           
+110  43:Token: 45: EQUAL           =                                                                                                   
+111  43:Token: 38: INT_NUM         29                                                                                                  
+112  43:Token: 54: SEMI_COLON      ;                                                                                                   
+113  45:Token: 24: VAR             VAR                                                                                                 
+114  46:Token: 35: ID              index                                                                                               
+115  46:Token: 42: COMMA           ,                                                                                                   
+116  47:Token: 35: ID              seed                                                                                                
+117  48:Token: 41: COLON           :                                                                                                   
+118  48:Token: 13: INTEGER         INTEGER                                                                                             
+119  48:Token: 54: SEMI_COLON      ;                                                                                                   
+120  50:Token: 3 : BEGIN           BEGIN                                                                                               
+121  51:Token: 35: ID              seed                                                                                                
+122  51:Token: 40: ASSIGN          :=                                                                                                  
+123  51:Token: 35: ID              startSeed                                                                                           
+124  51:Token: 54: SEMI_COLON      ;                                                                                                   
+125  52:Token: 35: ID              index                                                                                               
+126  52:Token: 40: ASSIGN          :=                                                                                                  
+127  52:Token: 38: INT_NUM         1                                                                                                   
+128  52:Token: 54: SEMI_COLON      ;                                                                                                   
+129  53:Token: 14: LOOP            LOOP                                                                                                
+130  54:Token: 12: IF              IF                                                                                                  
+131  54:Token: 35: ID              index                                                                                               
+132  54:Token: 56: GRTR_THAN       >                                                                                                   
+133  54:Token: 38: INT_NUM         10                                                                                                  
+134  54:Token: 22: THEN            THEN                                                                                                
+135  54:Token: 10: EXIT            EXIT                                                                                                
+136  54:Token: 54: SEMI_COLON      ;                                                                                                   
+137  54:Token: 9 : END             END                                                                                                 
+138  54:Token: 54: SEMI_COLON      ;                                                                                                   
+139  55:Token: 35: ID              list                                                                                                
+140  55:Token: 46: LEFT_BRACK      [                                                                                                   
+141  55:Token: 35: ID              index                                                                                               
+142  55:Token: 52: RIGHT_BRACK     ]                                                                                                   
+143  55:Token: 40: ASSIGN          :=                                                                                                  
+144  55:Token: 35: ID              seed                                                                                                
+145  55:Token: 51: PLUS            +                                                                                                   
+146  55:Token: 38: INT_NUM         1000                                                                                                
+147  55:Token: 54: SEMI_COLON      ;                                                                                                   
+148  56:Token: 35: ID              Random                                                                                              
+149  56:Token: 47: LEFT_PAREN      (                                                                                                   
+150  56:Token: 35: ID              seed                                                                                                
+151  56:Token: 53: RIGHT_PAREN     )                                                                                                   
+152  56:Token: 54: SEMI_COLON      ;                                                                                                   
+153  57:Token: 35: ID              index                                                                                               
+154  57:Token: 40: ASSIGN          :=                                                                                                  
+155  57:Token: 35: ID              index                                                                                               
+156  57:Token: 51: PLUS            +                                                                                                   
+157  57:Token: 38: INT_NUM         1                                                                                                   
+158  57:Token: 54: SEMI_COLON      ;                                                                                                   
+159  58:Token: 9 : END             END                                                                                                 
+160  58:Token: 54: SEMI_COLON      ;                                                                                                   
+161  59:Token: 9 : END             END                                                                                                 
+162  59:Token: 35: ID              Fill                                                                                                
+163  59:Token: 54: SEMI_COLON      ;                                                                                                   
+164  64:Token: 20: PROCEDURE       PROCEDURE                                                                                           
+165  64:Token: 35: ID              Sort                                                                                                
+166  64:Token: 47: LEFT_PAREN      (                                                                                                   
+167  64:Token: 24: VAR             VAR                                                                                                 
+168  64:Token: 35: ID              list                                                                                                
+169  64:Token: 41: COLON           :                                                                                                   
+170  64:Token: 35: ID              ListType                                                                                            
+171  64:Token: 53: RIGHT_PAREN     )                                                                                                   
+172  64:Token: 54: SEMI_COLON      ;                                                                                                   
+173  65:Token: 24: VAR             VAR                                                                                                 
+174  66:Token: 35: ID              index                                                                                               
+175  66:Token: 42: COMMA           ,                                                                                                   
+176  67:Token: 35: ID              mark                                                                                                
+177  68:Token: 41: COLON           :                                                                                                   
+178  68:Token: 13: INTEGER         INTEGER                                                                                             
+179  68:Token: 54: SEMI_COLON      ;                                                                                                   
+180  70:Token: 3 : BEGIN           BEGIN                                                                                               
+181  71:Token: 14: LOOP            LOOP                                                                                                
+182  72:Token: 35: ID              mark                                                                                                
+183  72:Token: 40: ASSIGN          :=                                                                                                  
+184  72:Token: 38: INT_NUM         0                                                                                                   
+185  72:Token: 54: SEMI_COLON      ;                                                                                                   
+186  73:Token: 35: ID              index                                                                                               
+187  73:Token: 40: ASSIGN          :=                                                                                                  
+188  73:Token: 38: INT_NUM         1                                                                                                   
+189  73:Token: 54: SEMI_COLON      ;                                                                                                   
+190  74:Token: 14: LOOP            LOOP                                                                                                
+191  75:Token: 12: IF              IF                                                                                                  
+192  75:Token: 35: ID              index                                                                                               
+193  75:Token: 56: GRTR_THAN       >                                                                                                   
+194  75:Token: 38: INT_NUM         9                                                                                                   
+195  75:Token: 22: THEN            THEN                                                                                                
+196  75:Token: 10: EXIT            EXIT                                                                                                
+197  75:Token: 54: SEMI_COLON      ;                                                                                                   
+198  75:Token: 9 : END             END                                                                                                 
+199  75:Token: 54: SEMI_COLON      ;                                                                                                   
+200  76:Token: 12: IF              IF                                                                                                  
+201  76:Token: 35: ID              list                                                                                                
+202  76:Token: 46: LEFT_BRACK      [                                                                                                   
+203  76:Token: 35: ID              index                                                                                               
+204  76:Token: 52: RIGHT_BRACK     ]                                                                                                   
+205  76:Token: 56: GRTR_THAN       >                                                                                                   
+206  76:Token: 35: ID              list                                                                                                
+207  76:Token: 46: LEFT_BRACK      [                                                                                                   
+208  76:Token: 35: ID              index                                                                                               
+209  76:Token: 51: PLUS            +                                                                                                   
+210  76:Token: 38: INT_NUM         1                                                                                                   
+211  76:Token: 52: RIGHT_BRACK     ]                                                                                                   
+212  76:Token: 22: THEN            THEN                                                                                                
+213  77:Token: 35: ID              Swap                                                                                                
+214  77:Token: 47: LEFT_PAREN      (                                                                                                   
+215  77:Token: 35: ID              list                                                                                                
+216  77:Token: 46: LEFT_BRACK      [                                                                                                   
+217  77:Token: 35: ID              index                                                                                               
+218  77:Token: 52: RIGHT_BRACK     ]                                                                                                   
+219  77:Token: 42: COMMA           ,                                                                                                   
+220  77:Token: 35: ID              list                                                                                                
+221  77:Token: 46: LEFT_BRACK      [                                                                                                   
+222  77:Token: 35: ID              index                                                                                               
+223  77:Token: 51: PLUS            +                                                                                                   
+224  77:Token: 38: INT_NUM         1                                                                                                   
+225  77:Token: 52: RIGHT_BRACK     ]                                                                                                   
+226  77:Token: 53: RIGHT_PAREN     )                                                                                                   
+227  77:Token: 54: SEMI_COLON      ;                                                                                                   
+228  78:Token: 35: ID              mark                                                                                                
+229  78:Token: 40: ASSIGN          :=                                                                                                  
+230  78:Token: 38: INT_NUM         1                                                                                                   
+231  78:Token: 54: SEMI_COLON      ;                                                                                                   
+232  79:Token: 9 : END             END                                                                                                 
+233  79:Token: 54: SEMI_COLON      ;                                                                                                   
+234  80:Token: 35: ID              index                                                                                               
+235  80:Token: 40: ASSIGN          :=                                                                                                  
+236  80:Token: 35: ID              index                                                                                               
+237  80:Token: 51: PLUS            +                                                                                                   
+238  80:Token: 38: INT_NUM         1                                                                                                   
+239  80:Token: 54: SEMI_COLON      ;                                                                                                   
+240  81:Token: 9 : END             END                                                                                                 
+241  81:Token: 54: SEMI_COLON      ;                                                                                                   
+242  82:Token: 12: IF              IF                                                                                                  
+243  82:Token: 35: ID              mark                                                                                                
+244  82:Token: 45: EQUAL           =                                                                                                   
+245  82:Token: 38: INT_NUM         0                                                                                                   
+246  82:Token: 22: THEN            THEN                                                                                                
+247  82:Token: 10: EXIT            EXIT                                                                                                
+248  82:Token: 54: SEMI_COLON      ;                                                                                                   
+249  82:Token: 9 : END             END                                                                                                 
+250  82:Token: 54: SEMI_COLON      ;                                                                                                   
+251  83:Token: 9 : END             END                                                                                                 
+252  83:Token: 54: SEMI_COLON      ;                                                                                                   
+253  84:Token: 9 : END             END                                                                                                 
+254  84:Token: 35: ID              Sort                                                                                                
+255  84:Token: 54: SEMI_COLON      ;                                                                                                   
+256  89:Token: 20: PROCEDURE       PROCEDURE                                                                                           
+257  89:Token: 35: ID              Print                                                                                               
+258  89:Token: 47: LEFT_PAREN      (                                                                                                   
+259  89:Token: 24: VAR             VAR                                                                                                 
+260  89:Token: 35: ID              list                                                                                                
+261  89:Token: 41: COLON           :                                                                                                   
+262  89:Token: 35: ID              ListType                                                                                            
+263  89:Token: 53: RIGHT_PAREN     )                                                                                                   
+264  89:Token: 54: SEMI_COLON      ;                                                                                                   
+265  90:Token: 24: VAR             VAR                                                                                                 
+266  91:Token: 35: ID              index                                                                                               
+267  91:Token: 41: COLON           :                                                                                                   
+268  91:Token: 13: INTEGER         INTEGER                                                                                             
+269  91:Token: 54: SEMI_COLON      ;                                                                                                   
+270  93:Token: 3 : BEGIN           BEGIN                                                                                               
+271  94:Token: 35: ID              index                                                                                               
+272  94:Token: 40: ASSIGN          :=                                                                                                  
+273  94:Token: 38: INT_NUM         1                                                                                                   
+274  94:Token: 54: SEMI_COLON      ;                                                                                                   
+275  95:Token: 14: LOOP            LOOP                                                                                                
+276  96:Token: 12: IF              IF                                                                                                  
+277  96:Token: 35: ID              index                                                                                               
+278  96:Token: 56: GRTR_THAN       >                                                                                                   
+279  96:Token: 38: INT_NUM         10                                                                                                  
+280  96:Token: 22: THEN            THEN                                                                                                
+281  96:Token: 10: EXIT            EXIT                                                                                                
+282  96:Token: 54: SEMI_COLON      ;                                                                                                   
+283  96:Token: 9 : END             END                                                                                                 
+284  96:Token: 54: SEMI_COLON      ;                                                                                                   
+285  97:Token: 27: WRINT           WRINT                                                                                               
+286  97:Token: 47: LEFT_PAREN      (                                                                                                   
+287  97:Token: 35: ID              list                                                                                                
+288  97:Token: 46: LEFT_BRACK      [                                                                                                   
+289  97:Token: 35: ID              index                                                                                               
+290  97:Token: 52: RIGHT_BRACK     ]                                                                                                   
+291  97:Token: 53: RIGHT_PAREN     )                                                                                                   
+292  97:Token: 54: SEMI_COLON      ;                                                                                                   
+293  98:Token: 28: WRLN            WRLN                                                                                                
+294  98:Token: 54: SEMI_COLON      ;                                                                                                   
+295  99:Token: 35: ID              index                                                                                               
+296  99:Token: 40: ASSIGN          :=                                                                                                  
+297  99:Token: 35: ID              index                                                                                               
+298  99:Token: 51: PLUS            +                                                                                                   
+299  99:Token: 38: INT_NUM         1                                                                                                   
+300  99:Token: 54: SEMI_COLON      ;                                                                                                   
+301 100:Token: 9 : END             END                                                                                                 
+302 100:Token: 54: SEMI_COLON      ;                                                                                                   
+303 101:Token: 9 : END             END                                                                                                 
+304 101:Token: 35: ID              Print                                                                                               
+305 101:Token: 54: SEMI_COLON      ;                                                                                                   
+306 106:Token: 3 : BEGIN           BEGIN                                                                                               
+307 107:Token: 35: ID              Fill                                                                                                
+308 107:Token: 47: LEFT_PAREN      (                                                                                                   
+309 107:Token: 35: ID              thisList                                                                                            
+310 107:Token: 53: RIGHT_PAREN     )                                                                                                   
+311 107:Token: 54: SEMI_COLON      ;                                                                                                   
+312 108:Token: 35: ID              Print                                                                                               
+313 108:Token: 47: LEFT_PAREN      (                                                                                                   
+314 108:Token: 35: ID              thisList                                                                                            
+315 108:Token: 53: RIGHT_PAREN     )                                                                                                   
+316 108:Token: 54: SEMI_COLON      ;                                                                                                   
+317 109:Token: 28: WRLN            WRLN                                                                                                
+318 109:Token: 54: SEMI_COLON      ;                                                                                                   
+319 110:Token: 35: ID              Sort                                                                                                
+320 110:Token: 47: LEFT_PAREN      (                                                                                                   
+321 110:Token: 35: ID              thisList                                                                                            
+322 110:Token: 53: RIGHT_PAREN     )                                                                                                   
+323 110:Token: 54: SEMI_COLON      ;                                                                                                   
+324 111:Token: 35: ID              Print                                                                                               
+325 111:Token: 47: LEFT_PAREN      (                                                                                                   
+326 111:Token: 35: ID              thisList                                                                                            
+327 111:Token: 53: RIGHT_PAREN     )                                                                                                   
+328 111:Token: 54: SEMI_COLON      ;                                                                                                   
+329 112:Token: 9 : END             END                                                                                                 
+330 112:Token: 35: ID              Bubble                                                                                              
+331 112:Token: 43: DOT             .                                                                                                   
+332 113:Token: 62: EOF             End Of File                                                                                         

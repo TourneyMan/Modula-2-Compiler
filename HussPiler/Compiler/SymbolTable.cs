@@ -373,7 +373,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         /// <summary>
         /// Enters a new scope
         /// </summary>
-        public void EnterNewScope(String name)
+        public void EnterProcScope(String name)
         {
             if (scopeStack == null) //If there are no scopes yet, we need to make a scope and then add on our PROC symbol
             {
@@ -393,7 +393,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         /// <summary>
         /// Leaves the current scope, dumping all the Strings of the Symbols of the scope being left into the FileManager's SYMBOL_LIST String
         /// </summary>
-        public bool LeaveScope()
+        public int ExitProcScope()
         {
             if (scopeStack != null && scopeStack.Count > 0)
             {
@@ -404,10 +404,11 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
                     fm.SYMBOL_LIST += string.Format("{0,-20}", entry.Key);
                     fm.SYMBOL_LIST += symbol.ToString();
                 }
-                return true;
+
+                return leavingScope.MEM_OFFSET;
             }
-            return false;
-        } // LeaveScope
+            return -1;
+        } // ExitProcScope
 
         /// <summary>
         /// get the top scope on the stack and return it

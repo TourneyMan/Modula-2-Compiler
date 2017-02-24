@@ -130,7 +130,6 @@ namespace Compiler.Forms
         private void List_Tokens_Button_Click(object sender, EventArgs e)
         {
             new SourceReader(); //Prepare the SourceReader
-            
             facade.ListTokens();
             SystemCommand.SysCommand((fm.SOURCE_DIR + fm.SOURCE_FILE).Replace(".mod", "") + "_" + fm.COMPILER + "\\" + (fm.SOURCE_FILE + "_Tokens.txt").Replace(".mod", "")); //Open the file
         }
@@ -141,6 +140,16 @@ namespace Compiler.Forms
             facade.TestSymTable();
             SystemCommand.SysCommand(fm.SOURCE_DIR + "TestSym_" + fm.COMPILER + "\\" + ("Test_Symbols.txt")); //Open the file
 
+        }
+
+        private void Parse_Assemble_Button_Click(object sender, EventArgs e)
+        {
+            facade.ParseAssemble();
+        }
+
+        private void Run_Button_Click(object sender, EventArgs e)
+        {
+            facade.RunProgram();
         }
     } // MainForm class
 

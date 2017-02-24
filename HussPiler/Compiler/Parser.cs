@@ -12,6 +12,10 @@ namespace Compiler
         private FileManager fm = FileManager.Instance;
         private Lexer lexer = Lexer.Instance;
         private SymbolTable symTbl = SymbolTable.Instance;
+        private Emitter emitter = Emitter.Instance;
+
+        // Store the current token from the tokenizer.
+        static Token curTok;
 
         // The single object instance for this class.
         private static Parser pInstance;
@@ -52,9 +56,91 @@ namespace Compiler
         /// </summary>
         public void Reset()
         {
+            lexer.Reset();
             symTbl.Reset();
+            emitter.Reset();
+            curTok = null;
 
         } // Reset
+
+        /// <summary>
+        /// Match is used to validate that the current token is expected.
+        /// PRE:  The current token has been loaded.
+        /// POST: The current token is verified and the next one loaded. If errors are encountered,
+        ///    an exception is thrown.
+        /// </summary>
+        void Match(Token.TOKENTYPE tokType)
+        {
+            // Have we loaded a token from the tokenizer?
+            if (curTok == null)
+            {
+                throw new Exception("Parser - Match: c_tokCur is null.");
+            }
+
+            // Is the current token the one we expected?
+            if (curTok.tokType == tokType)
+            {
+                // Is this the normal end of the source code file?
+                if (tokType == Token.TOKENTYPE.EOF) { return; } // normal end of file
+
+                // Otherwise load the next token from the tokenizer.
+                curTok = lexer.GetNextToken(); // get the next token
+            }
+            else
+            { // We have the wrong token; bail out gracefully
+                string strMsg = string.Format("Expected {0}; found {1} ('{2}')at source line {3}",
+                    tokType.ToString(), curTok.tokType.ToString(),
+                    curTok.lexName, curTok.lineNumber);
+
+                throw new Exception("Parser - Match: " + strMsg);
+            }
+
+        } // Match
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Parse()
+        {
+            Reset();
+
+            curTok = lexer.GetNextToken();
+
+            symTbl.EnterProcScope(fm.MAIN_PROC);
+
+            emitter.MainProcPreamble();
+
+            Module();
+
+            emitter.MainProcPostamble(symTbl.ExitProcScope());
+
+            emitter.WriteAllFiles();
+
+        } // Parse
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void Module()
+        {
+            Match(Token.TOKENTYPE.MODULE);
+
+            string moduleName = curTok.lexName;
+
+            Match(Token.TOKENTYPE.ID);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+
+            Match(Token.TOKENTYPE.BEGIN);
+            Match(Token.TOKENTYPE.END);
+
+            // The next token should be the module name given at first.
+            if (curTok.lexName != moduleName) throw new Exception("Module name not repeated at close of module.");
+
+            Match(Token.TOKENTYPE.ID);
+            Match(Token.TOKENTYPE.DOT);
+            Match(Token.TOKENTYPE.EOF);
+
+        } // Module
 
         /// <summary>
         /// stub function to test basic functions of our symbol table
@@ -64,21 +150,21 @@ namespace Compiler
         {
             ///Test///
             Reset();
-            symTbl.EnterNewScope("HussPiler_Main");
+            symTbl.EnterProcScope("HussPiler_Main");
             symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
             symTbl.AddASymbol("var2", Symbol.SYMBOL_TYPE.TYPE_CONST, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM);
             symTbl.AddASymbol("var3", Symbol.SYMBOL_TYPE.TYPE_CONST, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM);
             symTbl.AddASymbol("var4", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
             symTbl.AddASymbol("var5", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
-            symTbl.EnterNewScope("Proc1");
+            symTbl.EnterProcScope("Proc1");
             symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
-            symTbl.LeaveScope();
-            symTbl.EnterNewScope("Proc2");
+            symTbl.ExitProcScope();
+            symTbl.EnterProcScope("Proc2");
             symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
 
             //PARM_TYPE is intentionally wrong -- should be fixed by RetrieveSymbolInnerScope
             symTbl.AddASymbol("var2", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM);
-            symTbl.EnterNewScope("Proc3");
+            symTbl.EnterProcScope("Proc3");
 
             //STORE_TYPE is intentionally wrong -- should be fixed by RetrieveSymbolCurrScope
             symTbl.AddASymbol("var1", Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_CD, Symbol.PARM_TYPE.LOCAL_VAR);
@@ -87,9 +173,9 @@ namespace Compiler
             symTbl.RetrieveSymbolInnerScope("var2").paramType = Symbol.PARM_TYPE.LOCAL_VAR;
             symTbl.RetrieveSymbolCurrScope("var1").storeType = Symbol.STORE_TYPE.TYPE_INT;
 
-            symTbl.LeaveScope();
-            symTbl.LeaveScope();
-            symTbl.LeaveScope();
+            symTbl.ExitProcScope();
+            symTbl.ExitProcScope();
+            symTbl.ExitProcScope();
 
             //Previous test when AddASymbol took a TokenType
             /*symTbl.EnterNewScope("procA");

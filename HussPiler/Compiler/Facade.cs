@@ -44,13 +44,54 @@ namespace Compiler
         /// </summary>
         public void TestSymTable()
         {
-            fm.ResetSymbolList();
+            try
+            {
+                fm.ResetSymbolList();
 
-            parser.TestSymbolTable();
+                parser.TestSymbolTable();
 
-            fm.FileTestSymbols();
+                fm.FileTestSymbols();
+            }
+            catch (Exception e)
+            {
+                ErrorHandler.Error(ERROR_CODE.UKNOWN_ERROR,
+                                    "Facade - Test SymTable",
+                                    e.ToString());
+            }
 
         } // TestSymTable
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ParseAssemble()
+        {
+            try
+            {
+                fm.ResetASMDIR();
+
+                fm.SOURCE_READER.Open();
+                parser.Parse();
+                fm.SOURCE_READER.Close();
+
+                fm.FileTokenList();
+                fm.FileSymbolTable();
+
+                RunProgram();
+            }
+            catch (Exception e)
+            {
+                ErrorHandler.Error(ERROR_CODE.UKNOWN_ERROR,
+                                    "Facade - Parse Assemble",
+                                    e.ToString());
+            }
+        } // ParseAssemble
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RunProgram()
+        { SystemCommand.SysCommand(fm.ASM_DIR + "!RUN.cmd"); }
 
     } // Facade class
 

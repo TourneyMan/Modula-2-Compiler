@@ -11,7 +11,11 @@ namespace Compiler
                         sourceFile,     // name of M2 source file, no dir, e.g. "01_Test.mod"
                         errorLog,       // log string for errors
                         tokenList,      // giant string to hold what will go into the token list txt file
-                        symbolList;     // giant string to hold what will go into the symbol list txt file
+                        symbolList,     // giant string to hold what will go into the symbol list txt file
+                        mainProc,       // name of each .mod file's mainProcedure
+                        asmDirectory,   // name of assembly directory
+                        procList,       // string of all procedures
+                        stringConstants;// string of all string constants
 
         // number of errors encountered
         private int errorCount; 
@@ -86,6 +90,12 @@ namespace Compiler
 
             // set the default source file...change this to help speed up debugging
             SOURCE_FILE = "01_Test.mod";
+
+            //set the name of the main procedure
+            MAIN_PROC = "HussPiler_Main";
+
+            //set the name of the assembly directory
+            ASM_DIR = (SOURCE_DIR + SOURCE_FILE + "_" + COMPILER).Replace(".mod", "") + "\\";
 
             // get a copy of a SourceReader to use...there will only be one and it will be accessed through the FileManager
             sourceReader = new SourceReader();
@@ -245,6 +255,46 @@ namespace Compiler
 
         } // SYMBOL_LIST
 
+        /// <summary>
+        /// set or get the mainProc string
+        /// </summary>
+        public string MAIN_PROC
+        {
+            get { return mainProc; }
+            set { mainProc = value; }
+
+        } // MAIN_PROC
+
+        /// <summary>
+        /// set or get the asmDirectory string
+        /// </summary>
+        public string ASM_DIR
+        {
+            get { return asmDirectory; }
+            set { asmDirectory = value; }
+
+        } // MAIN_PROC
+
+        /// <summary>
+        /// set or get the procList string
+        /// </summary>
+        public string PROC_LIST
+        {
+            get { return procList; }
+            set { procList = value; }
+
+        } // PROC_LIST
+
+        /// <summary>
+        /// set or get the stringConstants string
+        /// </summary>
+        public string STRING_CONSTANTS
+        {
+            get { return stringConstants; }
+            set { stringConstants = value; }
+
+        } // STRING_COSTANTS
+
         /**********************************************************************************************************************
             Folder and File FUNCTIONS
         **********************************************************************************************************************/
@@ -275,11 +325,27 @@ namespace Compiler
         } // FileTokenList
 
         /// <summary>
+        /// Writes symbolList to the SymbolTable file that corresponds to the given Source File
+        /// </summary>
+        public void FileSymbolTable()
+        {
+            Filer.WriteStringToFile(symbolList, ASM_DIR + "\\" + (SOURCE_FILE + "_Symbols.txt").Replace(".mod",""));
+        } // FileSymbolTable
+
+        /// <summary>
         /// Writes symbolList to the Test_Symbols file
         /// </summary>
         public void FileTestSymbols()
         {
             Filer.WriteStringToFile(symbolList, SOURCE_DIR + "TestSym_" + COMPILER + "\\" + ("Test_Symbols.txt"));
+        } // FileTestSymbols
+
+        /// <summary>
+        /// Files a file in the given place with the given String
+        /// </summary>
+        public void FileAFile(string stringToFile, string fileName)
+        {
+            Filer.WriteStringToFile(stringToFile, ASM_DIR + fileName);
         } // FileTestSymbols
 
     } // FileManager class

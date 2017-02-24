@@ -137,13 +137,13 @@
             // 
             // Parse_Assemble_Button
             // 
-            this.Parse_Assemble_Button.Enabled = false;
             this.Parse_Assemble_Button.Location = new System.Drawing.Point(410, 188);
             this.Parse_Assemble_Button.Name = "Parse_Assemble_Button";
             this.Parse_Assemble_Button.Size = new System.Drawing.Size(122, 23);
             this.Parse_Assemble_Button.TabIndex = 5;
             this.Parse_Assemble_Button.Text = "Parse/Assemble";
             this.Parse_Assemble_Button.UseVisualStyleBackColor = true;
+            this.Parse_Assemble_Button.Click += new System.EventHandler(this.Parse_Assemble_Button_Click);
             // 
             // Test_Symbols_Button
             // 
@@ -157,13 +157,13 @@
             // 
             // Run_Button
             // 
-            this.Run_Button.Enabled = false;
             this.Run_Button.Location = new System.Drawing.Point(538, 188);
             this.Run_Button.Name = "Run_Button";
             this.Run_Button.Size = new System.Drawing.Size(122, 23);
             this.Run_Button.TabIndex = 7;
             this.Run_Button.Text = "Run";
             this.Run_Button.UseVisualStyleBackColor = true;
+            this.Run_Button.Click += new System.EventHandler(this.Run_Button_Click);
             // 
             // MASM_Directory_Textbox
             // 

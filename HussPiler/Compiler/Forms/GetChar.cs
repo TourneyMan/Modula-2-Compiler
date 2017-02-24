@@ -6,6 +6,7 @@ namespace Compiler.Forms
     public partial class GetChar : Form
     {
         FileManager fm = FileManager.Instance;
+
         public GetChar()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace Compiler.Forms
         {
             String stringToShow = "";
             char charToShow = fm.SOURCE_READER.GetNextOneChar();
-            if (charToShow == (char)255) { stringToShow = "EOF"; }
+            if (charToShow == (char)255) { stringToShow = "EOF"; Get_Next_Button.Enabled = false; Push_Back_Button.Enabled = false; }
             else if (charToShow == ' ') { stringToShow = "SPACE"; }     //Converting characters to corresponding strings
             else if (charToShow == '\r') { stringToShow = "CARRIAGE RETURN";  }
             else if (charToShow == '\t') { stringToShow = "TAB"; }
@@ -68,6 +69,8 @@ namespace Compiler.Forms
         /// <param name="e"></param>
         private void Reset_Button_Click(object sender, EventArgs e)
         {
+            Get_Next_Button.Enabled = true;
+            Push_Back_Button.Enabled = true;
             fm.SOURCE_READER.Reset();
             Get_Next_Button_Click(sender, e);
         }
