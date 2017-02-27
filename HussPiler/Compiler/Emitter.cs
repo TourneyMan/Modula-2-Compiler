@@ -93,6 +93,12 @@ namespace Compiler
 
         /// <summary>
         /// PRE: NONE
+        /// POST: Function call to the newline function located in helper.inc
+        /// </summary>
+        public void WRSTR(string stringToWrite) { procedureStrings[currentProcedure] += "print\t\"" + stringToWrite + "\"\r\n"; } // WRSTR
+
+        /// <summary>
+        /// PRE: NONE
         /// POST: Code emitted to clear the screen
         /// </summary>
         public void CLS() { procedureStrings[currentProcedure] += "cls\r\n"; } // CLS

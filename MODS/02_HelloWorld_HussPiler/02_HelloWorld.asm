@@ -1,5 +1,5 @@
-; HussPiler output for: 01_Test.mod
-; Created: Monday, February 27, 2017 1:24:00 AM
+; HussPiler output for: 02_HelloWorld.mod
+; Created: Monday, February 27, 2017 1:25:35 AM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
@@ -8,10 +8,10 @@
 .stack 1000H
 
 .data
-	include 01_Test_strings.inc	; all string literals
+	include 02_HelloWorld_strings.inc	; all string literals
 
 .code
-	include 01_Test_procs.inc	; all program procedures
+	include 02_HelloWorld_procs.inc	; all program procedures
 	include helper.inc	; includes some helper functions for printing and debugging
 
 start:

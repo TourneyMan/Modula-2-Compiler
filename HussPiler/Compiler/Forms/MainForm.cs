@@ -87,6 +87,7 @@ namespace Compiler.Forms
             {
                 Source_Directory_Textbox.Text = sourceDirectoryPicker.SelectedPath;
                 fm.SOURCE_DIR = Source_Directory_Textbox.Text;
+                fm.ASM_DIR = (fm.SOURCE_DIR + fm.SOURCE_FILE + "_" + fm.COMPILER).Replace(".mod", "") + "\\";
             }
         }
 
@@ -104,6 +105,7 @@ namespace Compiler.Forms
             {
                 Source_File_Textbox.Text = System.IO.Path.GetFileName(sourceFilePicker.FileName);
                 fm.SOURCE_FILE = Source_File_Textbox.Text;
+                fm.ASM_DIR = (fm.SOURCE_DIR + fm.SOURCE_FILE + "_" + fm.COMPILER).Replace(".mod", "") + "\\";
             }
         }
 

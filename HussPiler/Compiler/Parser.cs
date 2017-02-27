@@ -164,9 +164,10 @@ namespace Compiler
         {
             Match(Token.TOKENTYPE.WRSTR);
             Match(Token.TOKENTYPE.LEFT_PAREN);
-            string stringToStore = GetStringFromTokens();
+            string stringToDisplay = GetStringFromTokens();
             Match(Token.TOKENTYPE.RIGHT_PAREN);
             Match(Token.TOKENTYPE.SEMI_COLON);
+            emitter.WRSTR(stringToDisplay);
         } // WRSTRSubmodule
 
         /// <summary>
@@ -180,6 +181,7 @@ namespace Compiler
             int intToStore = GetIntFromTokens();
             Match(Token.TOKENTYPE.RIGHT_PAREN);
             Match(Token.TOKENTYPE.SEMI_COLON);
+            emitter.WRSTR(intToStore.ToString());
         } // WRINTSubmodule
 
         /// <summary>
