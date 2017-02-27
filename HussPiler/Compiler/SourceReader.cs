@@ -26,13 +26,8 @@ namespace Compiler
         /// </summary>
         public SourceReader()
         {
-            needNewLine = false;
-            endOfFile = false;
             isOpen = false;             // the file has not been opened yet
             fm.SOURCE_READER = this;    // register the current source reader object with the file mananger
-            fileName = fm.SOURCE_DIR + fm.SOURCE_FILE;
-            currentPos = 0;
-            lineNumber = 1;
         } // SourceReader
 
         // This (sort of) corresponds to the C# (and C++ and C) end of file "character."
@@ -46,18 +41,23 @@ namespace Compiler
         {
             if (!isOpen)
             {   // Open the text file using a stream reader.
+                fileName = fm.SOURCE_DIR + fm.SOURCE_FILE;
                 if (File.Exists(fileName))
                 {
+                    needNewLine = false;
+                    endOfFile = false;
                     streamReader = new StreamReader(fileName);
                     isOpen = true;
                     inputLine = streamReader.ReadLine();
                     endLineLastRead = false;
+                    currentPos = 0;
+                    lineNumber = 1;
                     return true;
                 }
 
                 else
                 {
-                    ErrorHandler.Error(ERROR_CODE.FILE_OPEN_ERROR, "Get a Char Form", "Directory and file do not create valid file path");
+                    ErrorHandler.Error(ERROR_CODE.FILE_OPEN_ERROR, "Source Reader", "Could not open because directory and file do not create valid file path");
                     return false;
                 }
             }
@@ -79,11 +79,12 @@ namespace Compiler
                 endLineLastRead = false;
                 streamReader.BaseStream.Position = 0; //Setting the streamReader back to the beginning of the file
                 streamReader.DiscardBufferedData();
-                inputLine = streamReader.ReadLine(); 
-
+                inputLine = streamReader.ReadLine();
+                currentPos = 0;
+                lineNumber = 1;
                 return true;
             }
-            ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Get a Char Form", "Could not get next char because file not open");
+
             return false;
 
         } // Reset
@@ -142,7 +143,7 @@ namespace Compiler
                 }
             }
 
-            ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Get a Char Form", "Could not get next char because file not open");
+            ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Source Reader", "Could not get next char because file not open");
             return EOF_SENTINEL;
         } // GetNextOneChar
 
@@ -159,7 +160,7 @@ namespace Compiler
                 else { currentPos -= 2; }
                 if (currentPos < 0) { currentPos = 0; }
             }
-            else { ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Get a Char Form", "Could not push back char because file not open"); }
+            else { ErrorHandler.Error(ERROR_CODE.FILE_NOT_OPEN, "Source Reader", "Could not push back char because file not open"); }
         } // PushBackOneChar
 
         /// <summary>
@@ -185,12 +186,11 @@ namespace Compiler
         {
             try
             {
-                fm.SOURCE_READER = null; //This is no longer the FileManager's Source Reader :(
+                fm.SOURCE_READER = new SourceReader(); //This is no longer the FileManager's Source Reader :(
                 streamReader.Close(); //Close the streamReader
                 return true;
             }
             catch (Exception e) {
-                //ErrorHandler.Error(ERROR_CODE.FILE_CLOSE_ERROR, "Get a Char Form", "Could not close source reader");
                 return false;
             }
 

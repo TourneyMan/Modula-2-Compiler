@@ -1,0 +1,3 @@
+MODULE Test;
+BEGIN
+END Test.
