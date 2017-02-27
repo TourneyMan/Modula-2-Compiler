@@ -119,7 +119,7 @@ namespace Compiler
         } // Parse
 
         /// <summary>
-        /// 
+        /// Reads through .mod file
         /// </summary>
         private void Module()
         {
@@ -131,6 +131,9 @@ namespace Compiler
             Match(Token.TOKENTYPE.SEMI_COLON);
 
             Match(Token.TOKENTYPE.BEGIN);
+
+            while (curTok.tokType != Token.TOKENTYPE.END) { Submodule(); }
+
             Match(Token.TOKENTYPE.END);
 
             // The next token should be the module name given at first.
@@ -141,6 +144,82 @@ namespace Compiler
             Match(Token.TOKENTYPE.EOF);
 
         } // Module
+
+        /// <summary>
+        /// Pre: Expecting a submodule
+        /// Reads in the next submodule
+        /// </summary>
+        private void Submodule()
+        {
+            if (curTok.tokType == Token.TOKENTYPE.WRSTR) { WRSTRSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.WRLN) { WRLNSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.WRINT) { WRINTSubmodule(); }
+        } // Submodule
+
+        /// <summary>
+        /// Pre: Expecting a WRSTR submodule
+        /// Reads in the next WRSTR submodule
+        /// </summary>
+        private void WRSTRSubmodule()
+        {
+            Match(Token.TOKENTYPE.WRSTR);
+            Match(Token.TOKENTYPE.LEFT_PAREN);
+            string stringToStore = GetStringFromTokens();
+            Match(Token.TOKENTYPE.RIGHT_PAREN);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+        } // WRSTRSubmodule
+
+        /// <summary>
+        /// Pre: Expecting a WRINT submodule
+        /// Reads in the next WRINT submodule
+        /// </summary>
+        private void WRINTSubmodule()
+        {
+            Match(Token.TOKENTYPE.WRINT);
+            Match(Token.TOKENTYPE.LEFT_PAREN);
+            int intToStore = GetIntFromTokens();
+            Match(Token.TOKENTYPE.RIGHT_PAREN);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+        } // WRINTSubmodule
+
+        /// <summary>
+        /// Pre: Expecting a WRLN submodule
+        /// Reads in the next WRLN submodule
+        /// </summary>
+        private void WRLNSubmodule()
+        {
+            Match(Token.TOKENTYPE.WRLN);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+            emitter.WRLN();
+        } // WRLNSubmodule
+
+        /// <summary>
+        /// Pre: Expecting a String to form from the upcoming tokens
+        /// WARNING: Currently assumes that your string will not be a concatenation of multiple strings
+        /// Reads in the next Tokens until a String is formed.
+        /// </summary>
+        /// <returns>Returns the formed string</returns>
+        private string GetStringFromTokens()
+        {
+            string stringToReturn = curTok.lexName;
+            Match(Token.TOKENTYPE.STRING);
+            return stringToReturn;
+
+        } // GetStringFromTokens
+
+        /// <summary>
+        /// Pre: Expecting an int to form from the upcoming tokens
+        /// WARNING: Currently assumes that your int will not involve anything but a single int in its formation
+        /// Reads in the next Tokens until a int is formed.
+        /// </summary>
+        /// <returns>Returns the formed int</returns>
+        private int GetIntFromTokens()
+        {
+            int intToReturn = Int32.Parse(curTok.lexName);
+            Match(Token.TOKENTYPE.INT_NUM);
+            return intToReturn;
+
+        } // GetStringFromTokens
 
         /// <summary>
         /// stub function to test basic functions of our symbol table
