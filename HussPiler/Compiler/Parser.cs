@@ -159,6 +159,7 @@ namespace Compiler
             else if (curTok.tokType == Token.TOKENTYPE.WRINT) { WRINTSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.VAR) { VARSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.ID) { IDSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.CONST) { CONSTSubmodule(); }
         } // Submodule
 
         /// <summary>
@@ -259,7 +260,26 @@ namespace Compiler
             }
 
             Match(Token.TOKENTYPE.SEMI_COLON);
-        } // WRLNSubmodule
+        } // IDSubmodule
+
+        /// <summary>
+        /// Pre: Expecting a CONST submodule
+        /// Reads in the next CONST submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void CONSTSubmodule()
+        {
+            Match(Token.TOKENTYPE.CONST);
+
+            while (curTok.tokType == Token.TOKENTYPE.ID) {
+                string symbolName = curTok.lexName;
+                symTbl.AddASymbol(symbolName, Symbol.SYMBOL_TYPE.TYPE_CONST, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM);
+                Match(Token.TOKENTYPE.ID);
+                Match(Token.TOKENTYPE.EQUAL);
+                BuildIntOnTopOfStack();
+                //emitter.AssignTopOfStackToIntVar(symTbl);
+            }
+        } // CONSTSubmodule
 
         /// <summary>
         /// Pre: Expecting a String to form from the upcoming tokens
@@ -277,25 +297,79 @@ namespace Compiler
 
         /// <summary>
         /// Pre: Expecting an int to form from the upcoming tokens
-        /// WARNING: Currently assumes that your int will not involve anything but a single int in its formation
         /// Reads in the next Tokens until a int is formed.
         /// </summary>
         /// <returns>Returns the formed int</returns>
-        private void BuildIntOnTopOfStack()
-        {
-            //If we only have a single number, just put it on the stack
-            if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
-                emitter.PutIntOnTopOfStack(Int32.Parse(curTok.lexName));
-                Match(Token.TOKENTYPE.INT_NUM);
+        private void BuildIntOnTopOfStack() {
+            try {
+                bool expectingEndParen = false;
+                int intsOnRunStack = 0;
+                Stack operationStack = new Stack();
+
+                //While we have a valid operation
+                while (DoesBuildIntContinue(expectingEndParen)) {
+
+                    //If we have a number
+                    if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
+                        emitter.PutIntOnTopOfStack(Int32.Parse(curTok.lexName));
+                        Match(Token.TOKENTYPE.INT_NUM);
+                        intsOnRunStack++;
+                    }
+
+                    //If we have a variable/constant (constants don't work yet)
+                    else if (curTok.tokType == Token.TOKENTYPE.ID)
+                    {
+                        emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset);
+                        Match(Token.TOKENTYPE.ID);
+                        intsOnRunStack++;
+                    }
+
+                    //If we have an operation, push it on operation stack
+                    else if (curTok.tokType == Token.TOKENTYPE.PLUS) { operationStack.Push('+'); Match(Token.TOKENTYPE.PLUS);  }
+                    else if (curTok.tokType == Token.TOKENTYPE.MINUS) { operationStack.Push('-'); Match(Token.TOKENTYPE.MINUS); }
+                    else if (curTok.tokType == Token.TOKENTYPE.MULT) { operationStack.Push('*'); Match(Token.TOKENTYPE.MULT); }
+                    else if (curTok.tokType == Token.TOKENTYPE.DIV) { operationStack.Push('/'); Match(Token.TOKENTYPE.DIV); }
+                    else if (curTok.tokType == Token.TOKENTYPE.MOD) { operationStack.Push('%'); Match(Token.TOKENTYPE.MOD); }
+                    else if (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) { operationStack.Push('('); Match(Token.TOKENTYPE.LEFT_PAREN); }
+
+                    //For right parentheses
+                    else {}
+                }
+
+                while (operationStack.Count != 0) { DoIntOperation((char)operationStack.Pop()); }
+
             }
 
-            //If we only have a single variable, just put it on the stack
-            if (curTok.tokType == Token.TOKENTYPE.ID)
-            {
-                emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset);
-                Match(Token.TOKENTYPE.ID);
+            catch (Exception e) {
+                throw new Exception("Parser - BuildIntOnTopOfStack: Could not read in proper integer expression");
             }
         } // GetStringFromTokens
+
+        /// <summary>
+        /// Determines whether or not an int expression continues
+        /// </summary>
+        /// <returns>Returns the formed int</returns>
+        private bool DoesBuildIntContinue(bool expectingEndParen) {
+            return curTok.tokType == Token.TOKENTYPE.INT_NUM || curTok.tokType == Token.TOKENTYPE.ID ||
+                       curTok.tokType == Token.TOKENTYPE.PLUS || curTok.tokType == Token.TOKENTYPE.MULT ||
+                       curTok.tokType == Token.TOKENTYPE.MINUS || curTok.tokType == Token.TOKENTYPE.DIV ||
+                       curTok.tokType == Token.TOKENTYPE.MOD || curTok.tokType == Token.TOKENTYPE.LEFT_PAREN ||
+                       (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN && expectingEndParen);
+        } //DoesBuildIntContinue
+
+        /// <summary>
+        /// Performs the operation indicated by the passed-in char to the top 2 ints on the run-time stack
+        /// </summary>
+        /// <returns>Returns the formed int</returns>
+        private void DoIntOperation(char curOp)
+        {
+            if (curOp == '+') { emitter.AddTopTwoInts(); }
+            else if (curOp == '-') { emitter.SubTopTwoInts(); }
+            else if (curOp == '*') { emitter.MultTopTwoInts(); }
+            else if (curOp == '/') { emitter.DivTopTwoInts(); }
+            else if (curOp == '%') { emitter.MultTopTwoInts(); }
+            else { throw new Exception("Parser - DoIntOperation: Given char did not correspond to valid operation"); }
+        } //DoIntOperation
 
         /// <summary>
         /// stub function to test basic functions of our symbol table

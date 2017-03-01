@@ -132,12 +132,51 @@ namespace Compiler
         /// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to add the two ints on top of the stack and put the result back on the stack
-        /// WARNING: Untested
         /// </summary>
         public void AddTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "pop\tEBX\r\n" + "add\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "add\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
         } // AddTopTwoInts
+
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to subtract the int on top of the stack from the next int on the stack
+        /// and put the result back on the stack
+        /// </summary>
+        public void SubTopTwoInts()
+        {
+            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "sub\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
+        } // SubTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to multiplies the two ints on top of the stack and put the result back on the stack
+        /// </summary>
+        public void MultTopTwoInts()
+        {
+            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "mul\tEBX\r\n" + "push\tEAX\r\n";
+        } // MultTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to divide the int second-to-top int by the top int on the stack
+        /// and put the result back on the stack
+        /// </summary>
+        public void DivTopTwoInts()
+        {
+            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "div\tEBX\r\n" + "push\tEDX\r\n";
+        } // DivTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to divide the int second-to-top int by the top int on the stack
+        /// and put the mod of the result back on the stack
+        /// </summary>
+        public void ModTopTwoInts()
+        {
+            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "mod\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
+        } // ModTopTwoInts
 
         /// <summary>
         /// PRE: NONE
