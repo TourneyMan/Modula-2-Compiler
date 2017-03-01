@@ -1,5 +1,5 @@
 ; HussPiler output for: 03_WriteInt.mod
-; Created: Monday, February 27, 2017 1:26:58 AM
+; Created: Wednesday, March 1, 2017 1:11:07 AM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc

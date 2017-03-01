@@ -93,9 +93,51 @@ namespace Compiler
 
         /// <summary>
         /// PRE: NONE
-        /// POST: Function call to the newline function located in helper.inc
+        /// POST: Emits assembly code needed to write the given string
         /// </summary>
         public void WRSTR(string stringToWrite) { procedureStrings[currentProcedure] += "print\t\"" + stringToWrite + "\"\r\n"; } // WRSTR
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to pop off an int from the top of the stack and print it
+        /// </summary>
+        public void WriteIntOnTopOfStack() { procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "print\tstr$(EAX)\r\n"; } // WriteIntOnTopOfStack
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to put a given int on top of the stack
+        /// </summary>
+        public void PutIntOnTopOfStack(int intToPutOnStack) {
+            procedureStrings[currentProcedure] += "mov\tEAX,\t" + intToPutOnStack + "\r\npush\tEAX\r\n";
+        } // PutIntOnTopOfStack
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to put a given int variable on top of the stack
+        /// </summary>
+        public void PutIntVarOnTopOfStack(int memOffset)
+        {
+            procedureStrings[currentProcedure] += "mov\tEAX,\t[EBP + " + memOffset + "]\r\npush\tEAX\r\n";
+        } // PutIntVarOnTopOfStack
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to take the assign the indicated int var to the int on the top of the stack
+        /// </summary>
+        public void AssignTopOfStackToIntVar(int memOffset)
+        {
+            procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "mov\t[EBP + " +  memOffset + "],\tEAX\r\n";
+        } // AssignTopOfStackToIntVar
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to add the two ints on top of the stack and put the result back on the stack
+        /// WARNING: Untested
+        /// </summary>
+        public void AddTopTwoInts()
+        {
+            procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "pop\tEBX\r\n" + "add\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
+        } // AddTopTwoInts
 
         /// <summary>
         /// PRE: NONE

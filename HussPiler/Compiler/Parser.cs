@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 namespace Compiler
 {
@@ -130,6 +131,8 @@ namespace Compiler
             Match(Token.TOKENTYPE.ID);
             Match(Token.TOKENTYPE.SEMI_COLON);
 
+            while (curTok.tokType != Token.TOKENTYPE.BEGIN) { Submodule(); }
+
             Match(Token.TOKENTYPE.BEGIN);
 
             while (curTok.tokType != Token.TOKENTYPE.END) { Submodule(); }
@@ -154,6 +157,8 @@ namespace Compiler
             if (curTok.tokType == Token.TOKENTYPE.WRSTR) { WRSTRSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.WRLN) { WRLNSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.WRINT) { WRINTSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.VAR) { VARSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.ID) { IDSubmodule(); }
         } // Submodule
 
         /// <summary>
@@ -178,10 +183,10 @@ namespace Compiler
         {
             Match(Token.TOKENTYPE.WRINT);
             Match(Token.TOKENTYPE.LEFT_PAREN);
-            int intToStore = GetIntFromTokens();
+            BuildIntOnTopOfStack();
             Match(Token.TOKENTYPE.RIGHT_PAREN);
             Match(Token.TOKENTYPE.SEMI_COLON);
-            emitter.WRSTR(intToStore.ToString());
+            emitter.WriteIntOnTopOfStack();
         } // WRINTSubmodule
 
         /// <summary>
@@ -193,6 +198,67 @@ namespace Compiler
             Match(Token.TOKENTYPE.WRLN);
             Match(Token.TOKENTYPE.SEMI_COLON);
             emitter.WRLN();
+        } // WRLNSubmodule
+
+        /// <summary>
+        /// Pre: Expecting a VAR submodule
+        /// Reads in the next VAR submodule, setting needed variables
+        /// </summary>
+        private void VARSubmodule()
+        {
+            Match(Token.TOKENTYPE.VAR);
+
+            //Read in list of Tokens that represent vars, hold them in the stack to be added to the symbol table later
+            Stack tokenStack = new Stack();
+            Boolean expectingComma = false;
+            while (curTok.tokType != Token.TOKENTYPE.COLON) {
+                if (expectingComma) { Match(Token.TOKENTYPE.COMMA); expectingComma = false; }
+                else { tokenStack.Push(curTok); Match(Token.TOKENTYPE.ID); expectingComma = true; }
+            }
+
+            //We are finished adding Tokens to the stack
+            Match(Token.TOKENTYPE.COLON);
+
+            //Read in variable type and add to the symbol table accordingly
+            if (curTok.tokType == Token.TOKENTYPE.INTEGER) {
+                while (tokenStack.Count != 0) {
+                    symTbl.AddASymbol(((Token)tokenStack.Pop()).lexName, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+                }
+                Match(Token.TOKENTYPE.INTEGER);
+            }
+
+            //We only accept INTEGER vars for now
+            else {
+                throw new Exception("Parser - VARSubmodule: Invalid variable type");
+            }
+            Match(Token.TOKENTYPE.SEMI_COLON);
+        } // VARSubmodule
+
+        /// <summary>
+        /// Pre: Expecting an ID submodule
+        /// Reads in the next ID submodule
+        /// </summary>
+        private void IDSubmodule()
+        {
+            //Store info about our ID in question
+            string nameOfId = curTok.lexName;
+            Symbol.STORE_TYPE storeType = symTbl.RetrieveSymbolCurrScope(nameOfId).storeType;
+            int idMemOffset = symTbl.RetrieveSymbolCurrScope(nameOfId).memOffset;
+
+            Match(Token.TOKENTYPE.ID);
+
+            //If we are assigning our id to something (not sure if there will be more options in the future)
+            if (curTok.tokType == Token.TOKENTYPE.ASSIGN) {
+                Match(Token.TOKENTYPE.ASSIGN);
+
+                //If the ID corresponds to an integer variable, build the integer and assign the built int to the var
+                if (storeType == Symbol.STORE_TYPE.TYPE_INT) {
+                    BuildIntOnTopOfStack();
+                    emitter.AssignTopOfStackToIntVar(idMemOffset);
+                }
+            }
+
+            Match(Token.TOKENTYPE.SEMI_COLON);
         } // WRLNSubmodule
 
         /// <summary>
@@ -215,12 +281,20 @@ namespace Compiler
         /// Reads in the next Tokens until a int is formed.
         /// </summary>
         /// <returns>Returns the formed int</returns>
-        private int GetIntFromTokens()
+        private void BuildIntOnTopOfStack()
         {
-            int intToReturn = Int32.Parse(curTok.lexName);
-            Match(Token.TOKENTYPE.INT_NUM);
-            return intToReturn;
+            //If we only have a single number, just put it on the stack
+            if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
+                emitter.PutIntOnTopOfStack(Int32.Parse(curTok.lexName));
+                Match(Token.TOKENTYPE.INT_NUM);
+            }
 
+            //If we only have a single variable, just put it on the stack
+            if (curTok.tokType == Token.TOKENTYPE.ID)
+            {
+                emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset);
+                Match(Token.TOKENTYPE.ID);
+            }
         } // GetStringFromTokens
 
         /// <summary>
