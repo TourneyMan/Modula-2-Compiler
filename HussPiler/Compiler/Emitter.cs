@@ -155,7 +155,7 @@ namespace Compiler
         /// </summary>
         public void MultTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "mul\tEBX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "imul\tEBX\r\n" + "push\tEAX\r\n";
         } // MultTopTwoInts
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Compiler
         /// </summary>
         public void DivTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "div\tEBX\r\n" + "push\tEDX\r\n";
+            procedureStrings[currentProcedure] += "mov\tEDX,\t0\r\n" + "pop\tECX\r\n" + "pop\tEAX\r\n" + "idiv\tECX\r\n" + "push\tEAX\r\n";
         } // DivTopTwoInts
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Compiler
         /// </summary>
         public void ModTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "mod\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "mov\tEDX,\t0\r\n" + "pop\tECX\r\n" + "pop\tEAX\r\n" + "idiv\tECX\r\n" + "push\tEDX\r\n";
         } // ModTopTwoInts
 
         /// <summary>

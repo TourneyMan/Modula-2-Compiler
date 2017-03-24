@@ -302,12 +302,13 @@ namespace Compiler
         /// <returns>Returns the formed int</returns>
         private void BuildIntOnTopOfStack() {
             try {
-                bool expectingEndParen = false;
+                int expectedEndParen = 0;
                 int intsOnRunStack = 0;
+                bool isSignAllowed = true;
                 Stack operationStack = new Stack();
 
                 //While we have a valid operation
-                while (DoesBuildIntContinue(expectingEndParen)) {
+                while (DoesBuildIntContinue(expectedEndParen)) {
 
                     //If we have a number
                     if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
@@ -319,6 +320,7 @@ namespace Compiler
                     //If we have a variable/constant (constants don't work yet)
                     else if (curTok.tokType == Token.TOKENTYPE.ID)
                     {
+                        /*ADD IN: Check if it is a constant. If not, then do this stuff*/
                         emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset);
                         Match(Token.TOKENTYPE.ID);
                         intsOnRunStack++;
@@ -330,31 +332,42 @@ namespace Compiler
                     else if (curTok.tokType == Token.TOKENTYPE.MULT) { operationStack.Push('*'); Match(Token.TOKENTYPE.MULT); }
                     else if (curTok.tokType == Token.TOKENTYPE.DIV) { operationStack.Push('/'); Match(Token.TOKENTYPE.DIV); }
                     else if (curTok.tokType == Token.TOKENTYPE.MOD) { operationStack.Push('%'); Match(Token.TOKENTYPE.MOD); }
-                    else if (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) { operationStack.Push('('); Match(Token.TOKENTYPE.LEFT_PAREN); }
+
+                    else if (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) {
+                        operationStack.Push('('); Match(Token.TOKENTYPE.LEFT_PAREN);
+                        expectedEndParen++;
+                    }
 
                     //For right parentheses
-                    else {}
+                    else {
+                        if (expectedEndParen > 0) {
+                            while ((char)operationStack.Peek() != '(') { DoIntOperation( (char)operationStack.Pop() ); }
+                            operationStack.Pop();
+                            expectedEndParen--;
+                        }
+
+                        else { throw new Exception("Error - Mismatching right parenthesis in integer expression"); }
+                    }
                 }
 
+                //Complete remaining operations
                 while (operationStack.Count != 0) { DoIntOperation((char)operationStack.Pop()); }
 
             }
 
-            catch (Exception e) {
-                throw new Exception("Parser - BuildIntOnTopOfStack: Could not read in proper integer expression");
-            }
+            catch (Exception e) { throw new Exception("Parser - BuildIntOnTopOfStack: Could not read in proper integer expression"); }
         } // GetStringFromTokens
 
         /// <summary>
         /// Determines whether or not an int expression continues
         /// </summary>
         /// <returns>Returns the formed int</returns>
-        private bool DoesBuildIntContinue(bool expectingEndParen) {
+        private bool DoesBuildIntContinue(int expectedEndParen) {
             return curTok.tokType == Token.TOKENTYPE.INT_NUM || curTok.tokType == Token.TOKENTYPE.ID ||
                        curTok.tokType == Token.TOKENTYPE.PLUS || curTok.tokType == Token.TOKENTYPE.MULT ||
                        curTok.tokType == Token.TOKENTYPE.MINUS || curTok.tokType == Token.TOKENTYPE.DIV ||
                        curTok.tokType == Token.TOKENTYPE.MOD || curTok.tokType == Token.TOKENTYPE.LEFT_PAREN ||
-                       (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN && expectingEndParen);
+                       (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN && expectedEndParen > 0);
         } //DoesBuildIntContinue
 
         /// <summary>
@@ -367,7 +380,7 @@ namespace Compiler
             else if (curOp == '-') { emitter.SubTopTwoInts(); }
             else if (curOp == '*') { emitter.MultTopTwoInts(); }
             else if (curOp == '/') { emitter.DivTopTwoInts(); }
-            else if (curOp == '%') { emitter.MultTopTwoInts(); }
+            else if (curOp == '%') { emitter.ModTopTwoInts(); }
             else { throw new Exception("Parser - DoIntOperation: Given char did not correspond to valid operation"); }
         } //DoIntOperation
 

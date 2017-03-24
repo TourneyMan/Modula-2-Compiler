@@ -1,6 +1,6 @@
 MODULE WriteInt ;
 
 BEGIN
-    WRINT(44 + 3 + 5 + 34);
+    WRINT((24 + 4)-(7*3));
     WRLN;
 END WriteInt.
