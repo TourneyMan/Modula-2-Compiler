@@ -276,8 +276,10 @@ namespace Compiler
                 symTbl.AddASymbol(symbolName, Symbol.SYMBOL_TYPE.TYPE_CONST, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM);
                 Match(Token.TOKENTYPE.ID);
                 Match(Token.TOKENTYPE.EQUAL);
-                BuildIntOnTopOfStack();
-                //emitter.AssignTopOfStackToIntVar(symTbl);
+                symTbl.RetrieveSymbolCurrScope(symbolName).constIntValue = Convert.ToInt32(curTok.lexName);
+                Match(Token.TOKENTYPE.INT_NUM);
+                Match(Token.TOKENTYPE.SEMI_COLON);
+
             }
         } // CONSTSubmodule
 
@@ -304,7 +306,8 @@ namespace Compiler
             try {
                 int expectedEndParen = 0;
                 int intsOnRunStack = 0;
-                bool isSignAllowed = true;
+                bool expectingSign = true;
+                bool negatizeNextInt = false;
                 Stack operationStack = new Stack();
 
                 //While we have a valid operation
@@ -313,29 +316,84 @@ namespace Compiler
                     //If we have a number
                     if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
                         emitter.PutIntOnTopOfStack(Int32.Parse(curTok.lexName));
+                        if (negatizeNextInt) { emitter.NegatizeTopInt(); negatizeNextInt = false; }
                         Match(Token.TOKENTYPE.INT_NUM);
                         intsOnRunStack++;
+
+                        if (intsOnRunStack > 1 && ((char)operationStack.Peek() == '*' || (char)operationStack.Peek() == '/' || (char)operationStack.Peek() == '%')) {
+                            DoIntOperation((char)operationStack.Pop());
+                            intsOnRunStack--;
+                        }
+
+                        expectingSign = false;
                     }
 
                     //If we have a variable/constant (constants don't work yet)
                     else if (curTok.tokType == Token.TOKENTYPE.ID)
                     {
-                        /*ADD IN: Check if it is a constant. If not, then do this stuff*/
-                        emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset);
-                        Match(Token.TOKENTYPE.ID);
-                        intsOnRunStack++;
+                        if (symTbl.RetrieveSymbolInnerScope(curTok.lexName) != null)
+                        {
+                            if (symTbl.RetrieveSymbolInnerScope(curTok.lexName).symbolType == Symbol.SYMBOL_TYPE.TYPE_CONST) {
+                                emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolInnerScope(curTok.lexName).constIntValue);
+                            }
+
+                            else { emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolInnerScope(curTok.lexName).memOffset); }
+
+                            if (negatizeNextInt) { emitter.NegatizeTopInt(); negatizeNextInt = false; }
+                            Match(Token.TOKENTYPE.ID);
+                            intsOnRunStack++;
+
+                            if (intsOnRunStack > 1 && ((char)operationStack.Peek() == '*' || (char)operationStack.Peek() == '/' || (char)operationStack.Peek() == '%'))
+                            {
+                                DoIntOperation((char)operationStack.Pop());
+                                intsOnRunStack--;
+                            }
+
+                            expectingSign = false;
+                        }
+                        else { throw new Exception("Error - Variable not declared"); }
                     }
 
                     //If we have an operation, push it on operation stack
-                    else if (curTok.tokType == Token.TOKENTYPE.PLUS) { operationStack.Push('+'); Match(Token.TOKENTYPE.PLUS);  }
-                    else if (curTok.tokType == Token.TOKENTYPE.MINUS) { operationStack.Push('-'); Match(Token.TOKENTYPE.MINUS); }
-                    else if (curTok.tokType == Token.TOKENTYPE.MULT) { operationStack.Push('*'); Match(Token.TOKENTYPE.MULT); }
-                    else if (curTok.tokType == Token.TOKENTYPE.DIV) { operationStack.Push('/'); Match(Token.TOKENTYPE.DIV); }
-                    else if (curTok.tokType == Token.TOKENTYPE.MOD) { operationStack.Push('%'); Match(Token.TOKENTYPE.MOD); }
+                    else if (curTok.tokType == Token.TOKENTYPE.PLUS) {
+                        if (expectingSign) { expectingSign = false; }
+
+                        else {
+                            while (operationStack.Count != 0 && (char)operationStack.Peek() != '(')
+                            {
+                                DoIntOperation((char)operationStack.Pop());
+                                intsOnRunStack--;
+                            }
+                            operationStack.Push('+');
+                            expectingSign = true;
+                        }
+
+                        Match(Token.TOKENTYPE.PLUS);
+                    }
+
+                    else if (curTok.tokType == Token.TOKENTYPE.MINUS) {
+                        if (expectingSign) { negatizeNextInt = true; expectingSign = false; }
+
+                        else {
+                            while (operationStack.Count != 0 && (char)operationStack.Peek() != '(') {
+                                DoIntOperation((char)operationStack.Pop());
+                                intsOnRunStack--;
+                            }
+                            operationStack.Push('-');
+                            expectingSign = true;
+                        }
+
+                        Match(Token.TOKENTYPE.MINUS);
+                    }
+
+                    else if (curTok.tokType == Token.TOKENTYPE.MULT) { operationStack.Push('*'); Match(Token.TOKENTYPE.MULT); expectingSign = true; }
+                    else if (curTok.tokType == Token.TOKENTYPE.DIV) { operationStack.Push('/'); Match(Token.TOKENTYPE.DIV); expectingSign = true; }
+                    else if (curTok.tokType == Token.TOKENTYPE.MOD) { operationStack.Push('%'); Match(Token.TOKENTYPE.MOD); expectingSign = true; }
 
                     else if (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) {
                         operationStack.Push('('); Match(Token.TOKENTYPE.LEFT_PAREN);
                         expectedEndParen++;
+                        expectingSign = true;
                     }
 
                     //For right parentheses
@@ -344,6 +402,7 @@ namespace Compiler
                             while ((char)operationStack.Peek() != '(') { DoIntOperation( (char)operationStack.Pop() ); }
                             operationStack.Pop();
                             expectedEndParen--;
+                            Match(Token.TOKENTYPE.RIGHT_PAREN);
                         }
 
                         else { throw new Exception("Error - Mismatching right parenthesis in integer expression"); }

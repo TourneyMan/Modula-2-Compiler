@@ -122,6 +122,16 @@ namespace Compiler
 
         /// <summary>
         /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to take the top int on the stack, multiply it by -1, and put
+        /// back on the stack
+        /// </summary>
+        public void NegatizeTopInt()
+        {
+            procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "mov\tEBX,\t-1\r\n" + "imul\tEBX\r\n" + "push\tEAX\r\n";
+        } // PutIntVarOnTopOfStack
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to take the assign the indicated int var to the int on the top of the stack
         /// </summary>
         public void AssignTopOfStackToIntVar(int memOffset)

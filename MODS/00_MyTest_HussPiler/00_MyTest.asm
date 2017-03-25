@@ -1,5 +1,5 @@
-; HussPiler output for: 03_WriteInt.mod
-; Created: Friday, March 24, 2017 11:26:29 PM
+; HussPiler output for: 00_MyTest.mod
+; Created: Saturday, March 25, 2017 12:44:32 AM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
@@ -8,10 +8,10 @@
 .stack 1000H
 
 .data
-	include 03_WriteInt_strings.inc	; all string literals
+	include 00_MyTest_strings.inc	; all string literals
 
 .code
-	include 03_WriteInt_procs.inc	; all program procedures
+	include 00_MyTest_procs.inc	; all program procedures
 	include helper.inc	; includes some helper functions for printing and debugging
 
 start:
