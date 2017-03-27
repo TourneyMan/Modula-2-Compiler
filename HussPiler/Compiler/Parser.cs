@@ -306,107 +306,15 @@ namespace Compiler
             try {
                 int expectedEndParen = 0;
                 int intsOnRunStack = 0;
-                bool expectingSign = true;
-                bool negatizeNextInt = false;
                 Stack operationStack = new Stack();
+
+                //All expressions start with an integer of some shape or form
+                BuildIntegerPortion(ref expectedEndParen, ref intsOnRunStack, ref operationStack);
 
                 //While we have a valid operation
                 while (DoesBuildIntContinue(expectedEndParen)) {
-
-                    //If we have a number
-                    if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
-                        emitter.PutIntOnTopOfStack(Int32.Parse(curTok.lexName));
-                        if (negatizeNextInt) { emitter.NegatizeTopInt(); negatizeNextInt = false; }
-                        Match(Token.TOKENTYPE.INT_NUM);
-                        intsOnRunStack++;
-
-                        if (intsOnRunStack > 1 && ((char)operationStack.Peek() == '*' || (char)operationStack.Peek() == '/' || (char)operationStack.Peek() == '%')) {
-                            DoIntOperation((char)operationStack.Pop());
-                            intsOnRunStack--;
-                        }
-
-                        expectingSign = false;
-                    }
-
-                    //If we have a variable/constant (constants don't work yet)
-                    else if (curTok.tokType == Token.TOKENTYPE.ID)
-                    {
-                        if (symTbl.RetrieveSymbolInnerScope(curTok.lexName) != null)
-                        {
-                            if (symTbl.RetrieveSymbolInnerScope(curTok.lexName).symbolType == Symbol.SYMBOL_TYPE.TYPE_CONST) {
-                                emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolInnerScope(curTok.lexName).constIntValue);
-                            }
-
-                            else { emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolInnerScope(curTok.lexName).memOffset); }
-
-                            if (negatizeNextInt) { emitter.NegatizeTopInt(); negatizeNextInt = false; }
-                            Match(Token.TOKENTYPE.ID);
-                            intsOnRunStack++;
-
-                            if (intsOnRunStack > 1 && ((char)operationStack.Peek() == '*' || (char)operationStack.Peek() == '/' || (char)operationStack.Peek() == '%'))
-                            {
-                                DoIntOperation((char)operationStack.Pop());
-                                intsOnRunStack--;
-                            }
-
-                            expectingSign = false;
-                        }
-                        else { throw new Exception("Error - Variable not declared"); }
-                    }
-
-                    //If we have an operation, push it on operation stack
-                    else if (curTok.tokType == Token.TOKENTYPE.PLUS) {
-                        if (expectingSign) { expectingSign = false; }
-
-                        else {
-                            while (operationStack.Count != 0 && (char)operationStack.Peek() != '(')
-                            {
-                                DoIntOperation((char)operationStack.Pop());
-                                intsOnRunStack--;
-                            }
-                            operationStack.Push('+');
-                            expectingSign = true;
-                        }
-
-                        Match(Token.TOKENTYPE.PLUS);
-                    }
-
-                    else if (curTok.tokType == Token.TOKENTYPE.MINUS) {
-                        if (expectingSign) { negatizeNextInt = true; expectingSign = false; }
-
-                        else {
-                            while (operationStack.Count != 0 && (char)operationStack.Peek() != '(') {
-                                DoIntOperation((char)operationStack.Pop());
-                                intsOnRunStack--;
-                            }
-                            operationStack.Push('-');
-                            expectingSign = true;
-                        }
-
-                        Match(Token.TOKENTYPE.MINUS);
-                    }
-
-                    else if (curTok.tokType == Token.TOKENTYPE.MULT) { operationStack.Push('*'); Match(Token.TOKENTYPE.MULT); expectingSign = true; }
-                    else if (curTok.tokType == Token.TOKENTYPE.DIV) { operationStack.Push('/'); Match(Token.TOKENTYPE.DIV); expectingSign = true; }
-                    else if (curTok.tokType == Token.TOKENTYPE.MOD) { operationStack.Push('%'); Match(Token.TOKENTYPE.MOD); expectingSign = true; }
-
-                    else if (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) {
-                        operationStack.Push('('); Match(Token.TOKENTYPE.LEFT_PAREN);
-                        expectedEndParen++;
-                        expectingSign = true;
-                    }
-
-                    //For right parentheses
-                    else {
-                        if (expectedEndParen > 0) {
-                            while ((char)operationStack.Peek() != '(') { DoIntOperation( (char)operationStack.Pop() ); }
-                            operationStack.Pop();
-                            expectedEndParen--;
-                            Match(Token.TOKENTYPE.RIGHT_PAREN);
-                        }
-
-                        else { throw new Exception("Error - Mismatching right parenthesis in integer expression"); }
-                    }
+                    BuildOperatorPortion(ref expectedEndParen, ref intsOnRunStack, ref operationStack);
+                    BuildIntegerPortion(ref expectedEndParen, ref intsOnRunStack, ref operationStack);
                 }
 
                 //Complete remaining operations
@@ -416,6 +324,102 @@ namespace Compiler
 
             catch (Exception e) { throw new Exception("Parser - BuildIntOnTopOfStack: Could not read in proper integer expression"); }
         } // GetStringFromTokens
+
+        /// <summary>
+        /// Builds the portion of an integer expression that does not involve operator Tokens
+        /// </summary>
+        private void BuildIntegerPortion(ref int expectedEndParen, ref int intsOnRunStack, ref Stack operationStack) {
+
+            //Assume we won't negatize our result
+            bool negatizeNextInt = false;
+
+            //First, search for potential left parentheses and add them on if they are there
+            while (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) {
+                operationStack.Push('(');
+                Match(Token.TOKENTYPE.LEFT_PAREN);
+                expectedEndParen++;
+            }
+
+            //Integers can lead with a plus or minus sign -- we need to negaitize when we have a leading negative
+            if (curTok.tokType == Token.TOKENTYPE.PLUS || curTok.tokType == Token.TOKENTYPE.MINUS) {
+                if (curTok.tokType == Token.TOKENTYPE.MINUS) { negatizeNextInt = true; }
+                Match(curTok.tokType);
+            }
+
+            //Next we expect some kind integer itself
+            if (curTok.tokType == Token.TOKENTYPE.INT_NUM || curTok.tokType == Token.TOKENTYPE.ID) {
+                if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
+                    emitter.PutIntOnTopOfStack(Int32.Parse(curTok.lexName));
+                    Match(Token.TOKENTYPE.INT_NUM);
+                }
+
+                //We have an ID we recognize
+                else if (symTbl.RetrieveSymbolInnerScope(curTok.lexName) != null) {
+
+                    //We have a constant
+                    if (symTbl.RetrieveSymbolInnerScope(curTok.lexName).symbolType == Symbol.SYMBOL_TYPE.TYPE_CONST) {
+                        emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolInnerScope(curTok.lexName).constIntValue);
+                    }
+
+                    //We have a variable
+                    else { emitter.PutIntVarOnTopOfStack(symTbl.RetrieveSymbolInnerScope(curTok.lexName).memOffset); }
+                    Match(Token.TOKENTYPE.ID);
+                }
+
+                //ID not recognized
+                else { throw new Exception("Error - Variable used, but not declared"); }
+
+                if (negatizeNextInt) { emitter.NegatizeTopInt(); }
+                intsOnRunStack++;
+
+                //If we added a *, /, or % recently to operations, take care of that immediately 
+                if (intsOnRunStack > 1 && ((char)operationStack.Peek() == '*' || (char)operationStack.Peek() == '/' || (char)operationStack.Peek() == '%')) {
+                    DoIntOperation((char)operationStack.Pop());
+                    intsOnRunStack--;
+                }
+            }
+
+            else { throw new Exception("Error - Invalid expression"); }
+
+            //Allow for right parentheses here
+            while (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN && DoesBuildIntContinue(expectedEndParen)) {
+                if (expectedEndParen > 0) {
+                    while ((char)operationStack.Peek() != '(') { DoIntOperation((char)operationStack.Pop()); }
+                    operationStack.Pop();
+                    expectedEndParen--;
+                    Match(Token.TOKENTYPE.RIGHT_PAREN);
+                }
+                else { throw new Exception("Error - Mismatching right parenthesis in integer expression"); }
+            }
+        }
+
+        /// <summary>
+        /// Builds the portion of an integer expression that involves reading in operator Tokens
+        /// </summary>
+        private void BuildOperatorPortion(ref int expectedEndParen, ref int intsOnRunStack, ref Stack operationStack) {
+
+            //If we have an operation, push it on operation stack
+            if (curTok.tokType == Token.TOKENTYPE.PLUS || curTok.tokType == Token.TOKENTYPE.MINUS || curTok.tokType == Token.TOKENTYPE.MULT ||
+             curTok.tokType == Token.TOKENTYPE.DIV || curTok.tokType == Token.TOKENTYPE.MOD) {
+
+                if (curTok.tokType == Token.TOKENTYPE.PLUS || curTok.tokType == Token.TOKENTYPE.MINUS) {
+                    while (operationStack.Count != 0 && (char)operationStack.Peek() != '(') {
+                        DoIntOperation((char)operationStack.Pop());
+                        intsOnRunStack--;
+                    }
+                }
+
+                if (curTok.tokType == Token.TOKENTYPE.PLUS) { operationStack.Push('+'); }
+                else if (curTok.tokType == Token.TOKENTYPE.MINUS) { operationStack.Push('-'); }
+                else if (curTok.tokType == Token.TOKENTYPE.MULT) { operationStack.Push('*'); }
+                else if (curTok.tokType == Token.TOKENTYPE.DIV) { operationStack.Push('/'); }
+                else if (curTok.tokType == Token.TOKENTYPE.MOD) { operationStack.Push('%'); }
+
+                Match(curTok.tokType);
+            }
+
+            else { throw new Exception("Error - Expected operator"); }
+        }
 
         /// <summary>
         /// Determines whether or not an int expression continues
