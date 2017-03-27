@@ -189,6 +189,97 @@ namespace Compiler
         } // ModTopTwoInts
 
         /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to check if the top two ints on the stack are equal and puts the boolean result on the stack
+        /// </summary>
+        public void EqualsTopTwoInts(int relNum)
+        {
+            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" +  "je\trel_true_" + relNum + "\r\n"
+             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+        } // EqualsTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to check if the top two ints on the stack are not equal and puts the boolean result on the stack
+        /// </summary>
+        public void NotEqualsTopTwoInts(int relNum)
+        {
+            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jne\trel_true_" + relNum + "\r\n"
+             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+        } // NotEqualsTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to check if the second to top int on the stack is greater than
+        /// the top int on the and puts the boolean result on the stack
+        /// </summary>
+        public void GreaterTopTwoInts(int relNum)
+        {
+            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jg\trel_true_" + relNum + "\r\n"
+             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+        } // GreaterTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to check if the second to top int on the stack is greater than
+        /// or equal to the top int on the and puts the boolean result on the stack
+        /// </summary>
+        public void GreaterEqTopTwoInts(int relNum)
+        {
+            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jge\trel_true_" + relNum + "\r\n"
+             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+        } // GreaterEqTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to check if the second to top int on the stack is less than
+        /// the top int on the and puts the boolean result on the stack
+        /// </summary>
+        public void LessTopTwoInts(int relNum)
+        {
+            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jl\trel_true_" + relNum + "\r\n"
+             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+        } // LessTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to check if the second to top int on the stack is less than
+        /// the top int on the and puts the boolean result on the stack
+        /// </summary>
+        public void LessEqTopTwoInts(int relNum)
+        {
+            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jle\trel_true_" + relNum + "\r\n"
+             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+        } // LessTopTwoInts
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed for an if statement
+        /// </summary>
+        public void IfStatement(int ifNum)
+        {
+            procedureStrings[currentProcedure] += "mov\tEAX,\t1\r\n" + "pop\tECX\r\n" +"cmp\tEAX,\tECX\r\n" + "jne\telse_" + ifNum + "\r\n";
+        } // IfStatement
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed for an else statement
+        /// </summary>
+        public void ElseStatement(int ifNum)
+        {
+            procedureStrings[currentProcedure] += "jmp\tend_if_" + ifNum + "\r\n" + "else_" + ifNum + ":\r\n";
+        } // ElseStatement
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed for an else statement
+        /// </summary>
+        public void EndIf(int ifNum)
+        {
+            procedureStrings[currentProcedure] += "end_if_" + ifNum + ":\r\n";
+        } // EndIf
+
+        /// <summary>
         /// PRE: NONE
         /// POST: Code emitted to clear the screen
         /// </summary>

@@ -1,12 +1,16 @@
-MODULE WriteInt ;
+MODULE IfTest;
 
-CONST
-	lowest = 3;
-	hi = 7;
-	middle = 7;
+VAR k, l : INTEGER;
 
 BEGIN
-    WRINT(-3);
-    WRLN;
+    k := 14 ;
+    l := 15 ;
 	
-END WriteInt.
+    IF k <= l THEN
+        WRINT(1);	(* True Case *)
+        WRLN;
+    ELSE
+        WRINT(0);	(* False Case *)
+        WRLN;
+    END;
+END IfTest.

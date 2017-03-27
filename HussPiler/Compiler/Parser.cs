@@ -17,6 +17,7 @@ namespace Compiler
 
         // Store the current token from the tokenizer.
         static Token curTok;
+        private static int expectedEndTokens = 0;
 
         // The single object instance for this class.
         private static Parser pInstance;
@@ -124,6 +125,7 @@ namespace Compiler
         /// </summary>
         private void Module()
         {
+
             Match(Token.TOKENTYPE.MODULE);
 
             string moduleName = curTok.lexName;
@@ -135,7 +137,7 @@ namespace Compiler
 
             Match(Token.TOKENTYPE.BEGIN);
 
-            while (curTok.tokType != Token.TOKENTYPE.END) { Submodule(); }
+            while (curTok.tokType != Token.TOKENTYPE.END || expectedEndTokens > 0) { Submodule(); }
 
             Match(Token.TOKENTYPE.END);
 
@@ -160,6 +162,9 @@ namespace Compiler
             else if (curTok.tokType == Token.TOKENTYPE.VAR) { VARSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.ID) { IDSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.CONST) { CONSTSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.IF) { IFSubmodule(); expectedEndTokens++; }
+            else if (curTok.tokType == Token.TOKENTYPE.ELSE) { ELSESubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.END) { ENDSubmodule(); expectedEndTokens--; }
         } // Submodule
 
         /// <summary>
@@ -284,6 +289,73 @@ namespace Compiler
         } // CONSTSubmodule
 
         /// <summary>
+        /// Pre: Expecting a IF submodule
+        /// Reads in the next IF submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void IFSubmodule()
+        {
+            Match(Token.TOKENTYPE.IF);
+            BuildBooleanOnTopOfStack();
+            Match(Token.TOKENTYPE.THEN);
+            emitter.IfStatement(0);
+
+        } // IFSubmodule
+
+        /// <summary>
+        /// Pre: Expecting an ELSE submodule
+        /// Reads in the next ELSE submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void ELSESubmodule()
+        {
+            Match(Token.TOKENTYPE.ELSE);
+            emitter.ElseStatement(0);
+
+        } // ELSESubmodule
+
+        /// <summary>
+        /// Pre: Expecting an END submodule
+        /// Reads in the next END submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void ENDSubmodule()
+        {
+            Match(Token.TOKENTYPE.END);
+            emitter.EndIf(0);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+        } // ELNDSubmodule
+
+        /// <summary>
+        /// Pre: Expecting an boolean to form from the upcoming tokens
+        /// Reads in the next Tokens until a boolean is formed.
+        /// </summary>
+        private void BuildBooleanOnTopOfStack() {
+            BuildRelationalBoolean();
+        } // BuildBooleanOnTopOfStack
+
+        /// <summary>
+        /// Pre: Expecting a relational boolean to form from the upcoming tokens
+        /// Reads in the next Tokens until a boolean is formed.
+        /// </summary>
+        private void BuildRelationalBoolean()
+        {
+            
+            BuildIntOnTopOfStack();
+            Token.TOKENTYPE relType = curTok.tokType;
+            Match(relType);
+            BuildIntOnTopOfStack();
+
+            if (relType == Token.TOKENTYPE.EQUAL) { emitter.EqualsTopTwoInts(0); }
+            else if (relType == Token.TOKENTYPE.NOT_EQ) { emitter.NotEqualsTopTwoInts(0); }
+            else if (relType == Token.TOKENTYPE.GRTR_THAN) { emitter.GreaterTopTwoInts(0); }
+            else if (relType == Token.TOKENTYPE.GRTR_THAN_EQ) { emitter.GreaterEqTopTwoInts(0); }
+            else if (relType == Token.TOKENTYPE.LESS_THAN) { emitter.LessTopTwoInts(0); }
+            else if (relType == Token.TOKENTYPE.LESS_THAN_EQ) { emitter.LessEqTopTwoInts(0); }
+
+        } // BuildRelationalBoolean
+
+        /// <summary>
         /// Pre: Expecting a String to form from the upcoming tokens
         /// WARNING: Currently assumes that your string will not be a concatenation of multiple strings
         /// Reads in the next Tokens until a String is formed.
@@ -301,7 +373,6 @@ namespace Compiler
         /// Pre: Expecting an int to form from the upcoming tokens
         /// Reads in the next Tokens until a int is formed.
         /// </summary>
-        /// <returns>Returns the formed int</returns>
         private void BuildIntOnTopOfStack() {
             try {
                 int expectedEndParen = 0;
@@ -483,18 +554,6 @@ namespace Compiler
             symTbl.ExitProcScope();
 
             //Previous test when AddASymbol took a TokenType
-            /*symTbl.EnterNewScope("procA");
-            symTbl.AddASymbol("var1", Token.TOKENTYPE.INT_NUM);
-            symTbl.AddASymbol("var2", Token.TOKENTYPE.INT_NUM);
-            symTbl.AddASymbol("var3", Token.TOKENTYPE.INT_NUM);
-            symTbl.EnterNewScope("procB");
-            symTbl.AddASymbol("var4", Token.TOKENTYPE.INT_NUM);
-            symTbl.AddASymbol("var5", Token.TOKENTYPE.INT_NUM);
-            symTbl.LeaveScope();
-            symTbl.AddASymbol("var6", Token.TOKENTYPE.INT_NUM);
-            symTbl.EnterNewScope("procC");
-            symTbl.AddASymbol("var7", Token.TOKENTYPE.INT_NUM);
-            symTbl.DumpSymbolTable();*/
         } // TestSymbolTable
 
     } // Parser

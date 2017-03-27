@@ -233,8 +233,9 @@ namespace Compiler
             //Less, Less/Equals, or NotEquasl
             else if (nextChar == '<')
             {
-                if (fm.SOURCE_READER.GetNextOneChar() == '=') { return new Token(Token.TOKENTYPE.LESS_THAN_EQ, "<=", fm.SOURCE_READER.LINE_NUMBER); }
-                else if (fm.SOURCE_READER.GetNextOneChar() == '>') { return new Token(Token.TOKENTYPE.NOT_EQ, "<>", fm.SOURCE_READER.LINE_NUMBER); }
+                nextChar = fm.SOURCE_READER.GetNextOneChar();
+                if (nextChar == '=') { return new Token(Token.TOKENTYPE.LESS_THAN_EQ, "<=", fm.SOURCE_READER.LINE_NUMBER); }
+                else if (nextChar == '>') { return new Token(Token.TOKENTYPE.NOT_EQ, "<>", fm.SOURCE_READER.LINE_NUMBER); }
                 else
                 {
                     fm.SOURCE_READER.CheckSameCharNext();
