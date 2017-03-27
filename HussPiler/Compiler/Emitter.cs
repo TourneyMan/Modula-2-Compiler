@@ -280,6 +280,33 @@ namespace Compiler
         } // EndIf
 
         /// <summary>
+        /// PRE: None
+        /// POST: Emits the assembly code needed to begin a loop
+        /// </summary>
+        public void LoopBegin(int ifNum)
+        {
+            procedureStrings[currentProcedure] += "loop_begin_" + ifNum + ":\r\n";
+        } // LoopBegin
+
+        /// <summary>
+        /// PRE: None
+        /// POST: Emits the assembly code needed to exit a loop
+        /// </summary>
+        public void ExitLoop(int ifNum)
+        {
+            procedureStrings[currentProcedure] += "\tjmp\t\tloop_end_" + ifNum + "\r\n";
+        } // ExitLoop
+
+        /// <summary>
+        /// PRE: None
+        /// POST: Emits the assembly code needed to end a loop
+        /// </summary>
+        public void LoopEnd(int ifNum)
+        {
+            procedureStrings[currentProcedure] += "\tjmp\t\tloop_begin_" + ifNum + "\r\n" + "loop_end_" + ifNum + ":\r\n";
+        } // LoopEnd
+
+        /// <summary>
         /// PRE: NONE
         /// POST: Code emitted to clear the screen
         /// </summary>

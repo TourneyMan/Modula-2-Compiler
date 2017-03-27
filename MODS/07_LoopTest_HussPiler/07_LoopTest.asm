@@ -1,5 +1,5 @@
-; HussPiler output for: 01_Test.mod
-; Created: Monday, March 27, 2017 1:07:20 PM
+; HussPiler output for: 07_LoopTest.mod
+; Created: Monday, March 27, 2017 1:14:44 PM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
@@ -8,16 +8,16 @@
 .stack 1000H
 
 .data
-	include 01_Test_strings.inc	; all string literals
+	include 07_LoopTest_strings.inc	; all string literals
 
 .code
-	include 01_Test_procs.inc	; all program procedures
+	include 07_LoopTest_procs.inc	; all program procedures
 	include helper.inc	; includes some helper functions for printing and debugging
 
 start:
 
 	cls
-	sub	ESP,8	; Room for main proc local vars
+	sub	ESP,16	; Room for main proc local vars
 	call HussPiler_Main
 	inkey
 	exit

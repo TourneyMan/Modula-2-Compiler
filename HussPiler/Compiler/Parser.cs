@@ -17,7 +17,12 @@ namespace Compiler
 
         // Store the current token from the tokenizer.
         static Token curTok;
-        private static int expectedEndTokens = 0;
+        private static Stack controlStructureStack = new Stack();
+        private static Stack ifNumStack = new Stack();
+        private static int ifNum = 0;
+        private static Stack loopNumStack = new Stack();
+        private static int loopNum = 0;
+        private static int relNum = 0;
 
         // The single object instance for this class.
         private static Parser pInstance;
@@ -125,7 +130,6 @@ namespace Compiler
         /// </summary>
         private void Module()
         {
-
             Match(Token.TOKENTYPE.MODULE);
 
             string moduleName = curTok.lexName;
@@ -137,7 +141,7 @@ namespace Compiler
 
             Match(Token.TOKENTYPE.BEGIN);
 
-            while (curTok.tokType != Token.TOKENTYPE.END || expectedEndTokens > 0) { Submodule(); }
+            while (curTok.tokType != Token.TOKENTYPE.END || controlStructureStack.Count > 0) { Submodule(); }
 
             Match(Token.TOKENTYPE.END);
 
@@ -162,9 +166,11 @@ namespace Compiler
             else if (curTok.tokType == Token.TOKENTYPE.VAR) { VARSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.ID) { IDSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.CONST) { CONSTSubmodule(); }
-            else if (curTok.tokType == Token.TOKENTYPE.IF) { IFSubmodule(); expectedEndTokens++; }
+            else if (curTok.tokType == Token.TOKENTYPE.IF) { IFSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.ELSE) { ELSESubmodule(); }
-            else if (curTok.tokType == Token.TOKENTYPE.END) { ENDSubmodule(); expectedEndTokens--; }
+            else if (curTok.tokType == Token.TOKENTYPE.END) { ENDSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.LOOP) { LOOPSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.EXIT) { EXITSubmodule(); }
         } // Submodule
 
         /// <summary>
@@ -295,10 +301,13 @@ namespace Compiler
         /// ******************INCOMPLETE***************** ///
         private void IFSubmodule()
         {
+            controlStructureStack.Push("if");
+            ifNumStack.Push(ifNum);
+            ifNum++;
             Match(Token.TOKENTYPE.IF);
             BuildBooleanOnTopOfStack();
             Match(Token.TOKENTYPE.THEN);
-            emitter.IfStatement(0);
+            emitter.IfStatement((int)ifNumStack.Peek());
 
         } // IFSubmodule
 
@@ -310,7 +319,7 @@ namespace Compiler
         private void ELSESubmodule()
         {
             Match(Token.TOKENTYPE.ELSE);
-            emitter.ElseStatement(0);
+            emitter.ElseStatement((int)ifNumStack.Peek());
 
         } // ELSESubmodule
 
@@ -322,9 +331,38 @@ namespace Compiler
         private void ENDSubmodule()
         {
             Match(Token.TOKENTYPE.END);
-            emitter.EndIf(0);
+            string controlStructure = (string) controlStructureStack.Pop();
+
+            if (controlStructure.Equals("if")) { emitter.EndIf((int)ifNumStack.Pop()); }
+            else if (controlStructure.Equals("loop")) { emitter.LoopEnd((int)loopNumStack.Pop()); }
+
             Match(Token.TOKENTYPE.SEMI_COLON);
-        } // ELNDSubmodule
+        } // ENDSubmodule
+
+        /// <summary>
+        /// Pre: Expecting a LOOP submodule
+        /// Reads in the next LOOP submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void LOOPSubmodule()
+        {
+            controlStructureStack.Push("loop");
+            loopNumStack.Push(loopNum);
+            loopNum++;
+            emitter.LoopBegin((int)loopNumStack.Peek());
+            Match(Token.TOKENTYPE.LOOP);
+        } // LOOPSubmodule
+
+        /// <summary>
+        /// Pre: Expecting an EXIT submodule
+        /// Reads in the next EXIT submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void EXITSubmodule() {
+            emitter.ExitLoop((int)loopNumStack.Peek());
+            Match(Token.TOKENTYPE.EXIT);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+        } // EXITSubmodule
 
         /// <summary>
         /// Pre: Expecting an boolean to form from the upcoming tokens
@@ -346,13 +384,14 @@ namespace Compiler
             Match(relType);
             BuildIntOnTopOfStack();
 
-            if (relType == Token.TOKENTYPE.EQUAL) { emitter.EqualsTopTwoInts(0); }
-            else if (relType == Token.TOKENTYPE.NOT_EQ) { emitter.NotEqualsTopTwoInts(0); }
-            else if (relType == Token.TOKENTYPE.GRTR_THAN) { emitter.GreaterTopTwoInts(0); }
-            else if (relType == Token.TOKENTYPE.GRTR_THAN_EQ) { emitter.GreaterEqTopTwoInts(0); }
-            else if (relType == Token.TOKENTYPE.LESS_THAN) { emitter.LessTopTwoInts(0); }
-            else if (relType == Token.TOKENTYPE.LESS_THAN_EQ) { emitter.LessEqTopTwoInts(0); }
+            if (relType == Token.TOKENTYPE.EQUAL) { emitter.EqualsTopTwoInts(relNum); }
+            else if (relType == Token.TOKENTYPE.NOT_EQ) { emitter.NotEqualsTopTwoInts(relNum); }
+            else if (relType == Token.TOKENTYPE.GRTR_THAN) { emitter.GreaterTopTwoInts(relNum); }
+            else if (relType == Token.TOKENTYPE.GRTR_THAN_EQ) { emitter.GreaterEqTopTwoInts(relNum); }
+            else if (relType == Token.TOKENTYPE.LESS_THAN) { emitter.LessTopTwoInts(relNum); }
+            else if (relType == Token.TOKENTYPE.LESS_THAN_EQ) { emitter.LessEqTopTwoInts(relNum); }
 
+            relNum++;
         } // BuildRelationalBoolean
 
         /// <summary>
