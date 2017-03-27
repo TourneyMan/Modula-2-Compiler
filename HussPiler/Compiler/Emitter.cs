@@ -89,26 +89,26 @@ namespace Compiler
         /// PRE: NONE
         /// POST: Function call to the newline function located in helper.inc
         /// </summary>
-        public void WRLN() { procedureStrings[currentProcedure] += "call\tnwln\r\n"; } // WRLN
+        public void WRLN() { procedureStrings[currentProcedure] += "\tcall\tnwln\r\n"; } // WRLN
 
         /// <summary>
         /// PRE: NONE
         /// POST: Emits assembly code needed to write the given string
         /// </summary>
-        public void WRSTR(string stringToWrite) { procedureStrings[currentProcedure] += "print\t\"" + stringToWrite + "\"\r\n"; } // WRSTR
+        public void WRSTR(string stringToWrite) { procedureStrings[currentProcedure] += "\tprint\t\"" + stringToWrite + "\"\r\n"; } // WRSTR
 
         /// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to pop off an int from the top of the stack and print it
         /// </summary>
-        public void WriteIntOnTopOfStack() { procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "print\tstr$(EAX)\r\n"; } // WriteIntOnTopOfStack
+        public void WriteIntOnTopOfStack() { procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tprint\tstr$(EAX)\r\n"; } // WriteIntOnTopOfStack
 
         /// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to put a given int on top of the stack
         /// </summary>
         public void PutIntOnTopOfStack(int intToPutOnStack) {
-            procedureStrings[currentProcedure] += "mov\tEAX,\t" + intToPutOnStack + "\r\npush\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + intToPutOnStack + "\r\n" + "\tpush\tEAX\r\n";
         } // PutIntOnTopOfStack
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace Compiler
         /// </summary>
         public void PutIntVarOnTopOfStack(int memOffset)
         {
-            procedureStrings[currentProcedure] += "mov\tEAX,\t[EBP + " + memOffset + "]\r\npush\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, [EBP + " + memOffset + "]\r\n" + "\tpush\tEAX\r\n";
         } // PutIntVarOnTopOfStack
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Compiler
         /// </summary>
         public void NegatizeTopInt()
         {
-            procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "mov\tEBX,\t-1\r\n" + "imul\tEBX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tmov\t\tEBX, -1\r\n" + "\timul\t\tEBX\r\n" + "\tpush\tEAX\r\n";
         } // PutIntVarOnTopOfStack
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Compiler
         /// </summary>
         public void AssignTopOfStackToIntVar(int memOffset)
         {
-            procedureStrings[currentProcedure] += "pop\tEAX\r\n" + "mov\t[EBP + " +  memOffset + "],\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tmov\t\t[EBP + " +  memOffset + "], EAX\r\n";
         } // AssignTopOfStackToIntVar
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Compiler
         /// </summary>
         public void AddTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "add\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tEBX\r\n" + "\tpop\t\tEAX\r\n" + "\tadd\t\tEAX, EBX\r\n" + "\tpush\tEAX\r\n";
         } // AddTopTwoInts
 
 
@@ -156,7 +156,7 @@ namespace Compiler
         /// </summary>
         public void SubTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "sub\tEAX,\tEBX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tEBX\r\n" + "\tpop\t\tEAX\r\n" + "\tsub\t\tEAX, EBX\r\n" + "\tpush\t\tEAX\r\n";
         } // SubTopTwoInts
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Compiler
         /// </summary>
         public void MultTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "pop\tEBX\r\n" + "pop\tEAX\r\n" + "imul\tEBX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tEBX\r\n" + "\tpop\t\tEAX\r\n" + "\timul\tEBX\r\n" + "\tpush\tEAX\r\n";
         } // MultTopTwoInts
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Compiler
         /// </summary>
         public void DivTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "mov\tEDX,\t0\r\n" + "pop\tECX\r\n" + "pop\tEAX\r\n" + "idiv\tECX\r\n" + "push\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tmov\t\tEDX, 0\r\n" + "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tidiv\tECX\r\n" + "\tpush\tEAX\r\n";
         } // DivTopTwoInts
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Compiler
         /// </summary>
         public void ModTopTwoInts()
         {
-            procedureStrings[currentProcedure] += "mov\tEDX,\t0\r\n" + "pop\tECX\r\n" + "pop\tEAX\r\n" + "idiv\tECX\r\n" + "push\tEDX\r\n";
+            procedureStrings[currentProcedure] += "\tmov\t\tEDX, 0\r\n" + "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tidiv\tECX\r\n" + "\tpush\tEDX\r\n";
         } // ModTopTwoInts
 
         /// <summary>
@@ -194,8 +194,8 @@ namespace Compiler
         /// </summary>
         public void EqualsTopTwoInts(int relNum)
         {
-            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" +  "je\trel_true_" + relNum + "\r\n"
-             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tje\t\trel_true_" + relNum + "\r\n"
+             + "\tpush\t0\r\n" + "\tjmp\t\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "\tpush\t1\r\n" + "rel_done_" + relNum + ":\r\n";
         } // EqualsTopTwoInts
 
         /// <summary>
@@ -204,8 +204,8 @@ namespace Compiler
         /// </summary>
         public void NotEqualsTopTwoInts(int relNum)
         {
-            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jne\trel_true_" + relNum + "\r\n"
-             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tjne\t\trel_true_" + relNum + "\r\n"
+             + "\tpush\t0\r\n" + "\tjmp\t\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "\tpush\t1\r\n" + "rel_done_" + relNum + ":\r\n";
         } // NotEqualsTopTwoInts
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace Compiler
         /// </summary>
         public void GreaterTopTwoInts(int relNum)
         {
-            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jg\trel_true_" + relNum + "\r\n"
-             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tjg\t\trel_true_" + relNum + "\r\n"
+             + "\tpush\t0\r\n" + "\tjmp\t\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "\tpush\t1\r\n" + "rel_done_" + relNum + ":\r\n";
         } // GreaterTopTwoInts
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Compiler
         /// </summary>
         public void GreaterEqTopTwoInts(int relNum)
         {
-            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jge\trel_true_" + relNum + "\r\n"
-             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tjge\t\trel_true_" + relNum + "\r\n"
+             + "\tpush\t0\r\n" + "\tjmp\t\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "\tpush\t1\r\n" + "rel_done_" + relNum + ":\r\n";
         } // GreaterEqTopTwoInts
 
         /// <summary>
@@ -237,8 +237,8 @@ namespace Compiler
         /// </summary>
         public void LessTopTwoInts(int relNum)
         {
-            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jl\trel_true_" + relNum + "\r\n"
-             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tjl\t\trel_true_" + relNum + "\r\n"
+             + "\tpush\t0\r\n" + "\tjmp\t\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "\tpush\t1\r\n" + "rel_done_" + relNum + ":\r\n";
         } // LessTopTwoInts
 
         /// <summary>
@@ -248,8 +248,8 @@ namespace Compiler
         /// </summary>
         public void LessEqTopTwoInts(int relNum)
         {
-            procedureStrings[currentProcedure] += "pop\tECX\r\n" + "pop\tEAX\r\n" + "cmp\tEAX,\tECX\r\n" + "jle\trel_true_" + relNum + "\r\n"
-             + "push\t0\r\n" + "jmp\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "push\t1\r\n" + "rel_done_" + relNum + ":\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tjle\t\trel_true_" + relNum + "\r\n"
+             + "\tpush\t0\r\n" + "\tjmp\t\trel_done_" + relNum + "\r\n" + "rel_true_" + relNum + ":\r\n" + "\tpush\t1\r\n" + "rel_done_" + relNum + ":\r\n";
         } // LessTopTwoInts
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Compiler
         /// </summary>
         public void IfStatement(int ifNum)
         {
-            procedureStrings[currentProcedure] += "mov\tEAX,\t1\r\n" + "pop\tECX\r\n" +"cmp\tEAX,\tECX\r\n" + "jne\telse_" + ifNum + "\r\n";
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, 1\r\n" + "\tpop\t\tECX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tjne\t\telse_" + ifNum + "\r\n";
         } // IfStatement
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Compiler
         /// </summary>
         public void ElseStatement(int ifNum)
         {
-            procedureStrings[currentProcedure] += "jmp\tend_if_" + ifNum + "\r\n" + "else_" + ifNum + ":\r\n";
+            procedureStrings[currentProcedure] += "\tjmp\t\tend_if_" + ifNum + "\r\n" + "else_" + ifNum + ":\r\n";
         } // ElseStatement
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Compiler
         /// PRE: NONE
         /// POST: Code emitted to clear the screen
         /// </summary>
-        public void CLS() { procedureStrings[currentProcedure] += "cls\r\n"; } // CLS
+        public void CLS() { procedureStrings[currentProcedure] += "\tcls\r\n"; } // CLS
 
         // #########################################################################################
         // FILE HANDLER METHODS   FILE HANDLER METHODS   FILE HANDLER METHODS   FILE HANDLER METHODS   

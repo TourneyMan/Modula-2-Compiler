@@ -1,3 +1,17 @@
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+i                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+i                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
+bad                  0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       12        
+good                 0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       16        
+middle               0      TYPE_CONST      TYPE_INT        VAL_PARM        0         
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+lowest               0      TYPE_CONST      TYPE_INT        VAL_PARM        0         
+hi                   0      TYPE_CONST      TYPE_INT        VAL_PARM        0         
+ugly                 0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
 k                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       12        
 HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
 l                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         

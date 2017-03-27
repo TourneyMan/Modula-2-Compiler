@@ -5,11 +5,11 @@ HussPiler_Main PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
-mov	EAX,	42
-push	EAX
-pop	EAX
-print	str$(EAX)
-call	nwln
+	mov		EAX, 42
+	push	EAX
+	pop		EAX
+	print	str$(EAX)
+	call	nwln
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

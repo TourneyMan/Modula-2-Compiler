@@ -1,5 +1,5 @@
 ; HussPiler output for: 04_WriteVar.mod
-; Created: Friday, March 24, 2017 11:26:37 PM
+; Created: Sunday, March 26, 2017 11:47:10 PM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
