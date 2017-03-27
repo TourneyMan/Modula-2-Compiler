@@ -301,14 +301,26 @@ namespace Compiler
         /// ******************INCOMPLETE***************** ///
         private void IFSubmodule()
         {
+            //To keep track of our if and what labels it should have in the asm code
             controlStructureStack.Push("if");
             ifNumStack.Push(ifNum);
             ifNum++;
+
+            //Match the structure and build the boolean
             Match(Token.TOKENTYPE.IF);
             BuildBooleanOnTopOfStack();
             Match(Token.TOKENTYPE.THEN);
             emitter.IfStatement((int)ifNumStack.Peek());
 
+            //To keep track of what control level this if statement is on
+            int baseControlStackCount = controlStructureStack.Count;
+
+            //Generate asm code until we hit the else or end or the if statement
+            while ((curTok.tokType != Token.TOKENTYPE.ELSE || controlStructureStack.Count > baseControlStackCount) &&
+             (curTok.tokType != Token.TOKENTYPE.END || controlStructureStack.Count > baseControlStackCount)) { Submodule(); }
+
+            //Create an else label even if there is no else in the modulo-2 code
+            emitter.ElseStatement((int)ifNumStack.Peek());
         } // IFSubmodule
 
         /// <summary>
@@ -318,9 +330,8 @@ namespace Compiler
         /// ******************INCOMPLETE***************** ///
         private void ELSESubmodule()
         {
+            //Else label has already been created in the 'if' submodule
             Match(Token.TOKENTYPE.ELSE);
-            emitter.ElseStatement((int)ifNumStack.Peek());
-
         } // ELSESubmodule
 
         /// <summary>
@@ -331,8 +342,11 @@ namespace Compiler
         private void ENDSubmodule()
         {
             Match(Token.TOKENTYPE.END);
+
+            //Determine what kind of control structure we are ending
             string controlStructure = (string) controlStructureStack.Pop();
 
+            //Output the appropriate asm code to end that structure
             if (controlStructure.Equals("if")) { emitter.EndIf((int)ifNumStack.Pop()); }
             else if (controlStructure.Equals("loop")) { emitter.LoopEnd((int)loopNumStack.Pop()); }
 
@@ -346,9 +360,12 @@ namespace Compiler
         /// ******************INCOMPLETE***************** ///
         private void LOOPSubmodule()
         {
+            //To keep track of which loop number this loop is for
             controlStructureStack.Push("loop");
             loopNumStack.Push(loopNum);
             loopNum++;
+
+            //Asm code to make label for beginning of loop
             emitter.LoopBegin((int)loopNumStack.Peek());
             Match(Token.TOKENTYPE.LOOP);
         } // LOOPSubmodule
@@ -359,6 +376,7 @@ namespace Compiler
         /// </summary>
         /// ******************INCOMPLETE***************** ///
         private void EXITSubmodule() {
+            //Asm code to jump to end of loop
             emitter.ExitLoop((int)loopNumStack.Peek());
             Match(Token.TOKENTYPE.EXIT);
             Match(Token.TOKENTYPE.SEMI_COLON);

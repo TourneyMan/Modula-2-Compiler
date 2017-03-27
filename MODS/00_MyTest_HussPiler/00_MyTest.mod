@@ -1,13 +1,16 @@
-MODULE test;
+MODULE IfTest;
 
-CONST
-	cn1 = 3;
-	cn2 = 5;
+VAR k, l : INTEGER;
 
 BEGIN
-
-	 WRINT (cn1);
-    WRLN;
-	 WRINT (cn2);
-    WRLN;
-END test.
+    k := 4 ;
+    l := 5 ;
+	
+    IF k > l THEN
+        WRINT(k);	(* True Case *)
+        WRLN;
+    ELSE
+        WRINT(l);	(* False Case *)
+        WRLN;
+    END;
+END IfTest.

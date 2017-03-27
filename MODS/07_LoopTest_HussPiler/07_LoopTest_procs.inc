@@ -32,6 +32,8 @@ rel_done_0:
 	cmp		EAX, ECX
 	jne		else_0
 	jmp		loop_end_0
+	jmp		end_if_0
+else_0:
 end_if_0:
 	mov		EAX, [EBP + 12]
 	push	EAX

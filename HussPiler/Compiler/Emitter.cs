@@ -148,7 +148,6 @@ namespace Compiler
             procedureStrings[currentProcedure] += "\tpop\t\tEBX\r\n" + "\tpop\t\tEAX\r\n" + "\tadd\t\tEAX, EBX\r\n" + "\tpush\tEAX\r\n";
         } // AddTopTwoInts
 
-
         /// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to subtract the int on top of the stack from the next int on the stack

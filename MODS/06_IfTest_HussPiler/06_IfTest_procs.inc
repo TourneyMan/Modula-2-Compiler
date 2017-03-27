@@ -20,29 +20,29 @@ HussPiler_Main PROC	; Procedure definition
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_0
+	jg		rel_true_1
 	push	0
-	jmp		rel_done_0
-rel_true_0:
+	jmp		rel_done_1
+rel_true_1:
 	push	1
-rel_done_0:
+rel_done_1:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_0
+	jne		else_1
 	mov		EAX, [EBP + 12]
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	jmp		end_if_0
-else_0:
+	jmp		end_if_1
+else_1:
 	mov		EAX, [EBP + 8]
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-end_if_0:
+end_if_1:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
