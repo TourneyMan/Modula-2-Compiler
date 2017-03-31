@@ -16,7 +16,7 @@ HussPiler_Main PROC	; Procedure definition
 	print	str$(EAX)
 	call	nwln
 	print	"Enter an integer: "
-	call	ReadInt
+	mov		EAX, sval(input())
 	push	EAX
 	pop		EAX
 	mov		[EBP + 8], EAX

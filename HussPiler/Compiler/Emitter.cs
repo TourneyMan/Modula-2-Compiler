@@ -306,6 +306,15 @@ namespace Compiler
         } // LoopEnd
 
         /// <summary>
+        /// PRE: None
+        /// POST: Emits the assembly code needed to read in an int from the user and push it on the stack
+        /// </summary>
+        public void ReadInt()
+        {
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, sval(input())\r\n" + "\tpush\tEAX\r\n";
+        } // ReadInt
+
+        /// <summary>
         /// PRE: NONE
         /// POST: Code emitted to clear the screen
         /// </summary>

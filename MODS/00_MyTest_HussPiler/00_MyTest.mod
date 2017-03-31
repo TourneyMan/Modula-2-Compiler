@@ -1,16 +1,24 @@
-MODULE IfTest;
+MODULE ReadTest;
 
-VAR k, l : INTEGER;
+VAR x, y : INTEGER;
 
 BEGIN
-    k := 4 ;
-    l := 5 ;
+
+	x := 10;
+	WRSTR("X = ");
+	WRINT(x);
+	WRLN;
 	
-    IF k > l THEN
-        WRINT(k);	(* True Case *)
-        WRLN;
-    ELSE
-        WRINT(l);	(* False Case *)
-        WRLN;
-    END;
-END IfTest.
+	(* Prompt for user input *)
+    WRSTR ("Enter an integer: ");
+	y := 4;
+    
+	(* Add user input to value of x and print out result *)
+	WRINT(x);
+	WRSTR (" + ");
+	WRINT(y);
+	WRSTR (" = ");
+	WRINT(x + y);
+	WRLN;
+
+END ReadTest.

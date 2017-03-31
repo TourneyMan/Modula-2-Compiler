@@ -11,7 +11,7 @@ BEGIN
 	
 	(* Prompt for user input *)
     WRSTR ("Enter an integer: ");
-	y := 4;
+	y := RDINT();
     
 	(* Add user input to value of x and print out result *)
 	WRINT(x);

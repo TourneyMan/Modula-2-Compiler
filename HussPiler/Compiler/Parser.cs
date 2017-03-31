@@ -171,6 +171,7 @@ namespace Compiler
             else if (curTok.tokType == Token.TOKENTYPE.END) { ENDSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.LOOP) { LOOPSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.EXIT) { EXITSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.RDINT) { RDINTSubmodule(); }
         } // Submodule
 
         /// <summary>
@@ -383,6 +384,20 @@ namespace Compiler
         } // EXITSubmodule
 
         /// <summary>
+        /// Pre: Expecting an RDINT submodule
+        /// Reads in the next RDINT submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void RDINTSubmodule()
+        {
+            //Asm code to read in an int
+            Match(Token.TOKENTYPE.RDINT);
+            Match(Token.TOKENTYPE.LEFT_PAREN);
+            emitter.ReadInt();
+            Match(Token.TOKENTYPE.RIGHT_PAREN);
+        } // RDINTSubmodule
+
+        /// <summary>
         /// Pre: Expecting an boolean to form from the upcoming tokens
         /// Reads in the next Tokens until a boolean is formed.
         /// </summary>
@@ -475,11 +490,14 @@ namespace Compiler
             }
 
             //Next we expect some kind integer itself
-            if (curTok.tokType == Token.TOKENTYPE.INT_NUM || curTok.tokType == Token.TOKENTYPE.ID) {
+            if (curTok.tokType == Token.TOKENTYPE.INT_NUM || curTok.tokType == Token.TOKENTYPE.ID || curTok.tokType == Token.TOKENTYPE.RDINT) {
                 if (curTok.tokType == Token.TOKENTYPE.INT_NUM) {
                     emitter.PutIntOnTopOfStack(Int32.Parse(curTok.lexName));
                     Match(Token.TOKENTYPE.INT_NUM);
                 }
+                
+                //The int is to be read in
+                else if (curTok.tokType == Token.TOKENTYPE.RDINT) { RDINTSubmodule(); }
 
                 //We have an ID we recognize
                 else if (symTbl.RetrieveSymbolInnerScope(curTok.lexName) != null) {
