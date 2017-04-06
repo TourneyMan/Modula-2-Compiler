@@ -1,24 +1,7 @@
-MODULE ReadTest;
-
-VAR x, y : INTEGER;
-
+MODULE LoopIf;
 BEGIN
-
-	x := 10;
-	WRSTR("X = ");
-	WRINT(x);
-	WRLN;
+    WRSTR ("OR test:             should be 24:          ");
+    IF (5 > 3) OR ( 5 < 3 ) THEN
+        WRINT ( 24 ) ; WRLN ;  END ;
 	
-	(* Prompt for user input *)
-    WRSTR ("Enter an integer: ");
-	y := 4;
-    
-	(* Add user input to value of x and print out result *)
-	WRINT(x);
-	WRSTR (" + ");
-	WRINT(y);
-	WRSTR (" = ");
-	WRINT(x + y);
-	WRLN;
-
-END ReadTest.
+END LoopIf.

@@ -253,6 +253,39 @@ namespace Compiler
 
         /// <summary>
         /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to use the AND operator on the two booleans on top of the stack
+        /// Puts result on stack
+        /// </summary>
+        public void AndOperator(int logNum) {
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, 0\r\n" + "\tje\t\tlog_false_early_" + logNum + "\r\n"
+             + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, 0\r\n" + "\tje\t\tlog_false_" + logNum + "\r\n" + "\tpush\t1\r\n" + "\tjmp\t\tlog_done_" + logNum + "\r\n"
+             + "log_false_early_" + logNum + ":\r\n" + "\tpop\t\tEAX\r\n" + "log_false_" + logNum + ":\r\n" + "\tpush\t0\r\n" + "log_done_" + logNum + ":\r\n";
+        } // AndOperator
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to use the OR operator on the two booleans on top of the stack
+        /// Puts result on stack
+        /// </summary>
+        public void OrOperator(int logNum) {
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, 1\r\n" + "\tje\t\tlog_true_early_" + logNum + "\r\n"
+             + "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, 1\r\n" + "\tje\t\tlog_true_" + logNum + "\r\n" + "\tpush\t0\r\n" + "\tjmp\t\tlog_done_" + logNum + "\r\n"
+             + "log_true_early_" + logNum + ":\r\n" + "\tpop\t\tEAX\r\n" + "log_true_" + logNum + ":\r\n" + "\tpush\t1\r\n" + "log_done_" + logNum + ":\r\n";
+        } // OrOperator
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to use the NOT operator on the boolean on top of the stack
+        /// Puts result on stack
+        /// </summary>
+        public void NotOperator(int logNum)
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, 1\r\n" +  "\tje\t\tlog_true_" + logNum + "\r\n"
+             + "\tpush\t0\r\n" + "\tjmp\t\tlog_done_" + logNum + "\r\n" + "log_true_" + logNum + ":\r\n" + "\tpush\t1\r\n" + "log_done_" + logNum + ":\r\n";
+        } // NotOperator
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed for an if statement
         /// </summary>
         public void IfStatement(int ifNum)

@@ -23,6 +23,8 @@ namespace Compiler
         private static Stack loopNumStack = new Stack();
         private static int loopNum = 0;
         private static int relNum = 0;
+        private static int logNum = 0;
+        Stack boolOpStack = new Stack();
 
         // The single object instance for this class.
         private static Parser pInstance;
@@ -172,6 +174,7 @@ namespace Compiler
             else if (curTok.tokType == Token.TOKENTYPE.LOOP) { LOOPSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.EXIT) { EXITSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.RDINT) { RDINTSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.CLS) { CLSSubmodule(); }
         } // Submodule
 
         /// <summary>
@@ -211,6 +214,17 @@ namespace Compiler
             Match(Token.TOKENTYPE.WRLN);
             Match(Token.TOKENTYPE.SEMI_COLON);
             emitter.WRLN();
+        } // WRLNSubmodule
+
+        /// <summary>
+        /// Pre: Expecting a CLS submodule
+        /// Reads in the next CLS submodule
+        /// </summary>
+        private void CLSSubmodule()
+        {
+            Match(Token.TOKENTYPE.CLS);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+            emitter.CLS();
         } // WRLNSubmodule
 
         /// <summary>
@@ -402,21 +416,73 @@ namespace Compiler
         /// Reads in the next Tokens until a boolean is formed.
         /// </summary>
         private void BuildBooleanOnTopOfStack() {
-            BuildRelationalBoolean();
+            boolOpStack = new Stack();
+
+            while (curTok.tokType != Token.TOKENTYPE.THEN)
+            {
+                //If operator, add it to the stack
+                if (curTok.tokType == Token.TOKENTYPE.NOT) { boolOpStack.Push('!'); Match(Token.TOKENTYPE.NOT);  }
+                else if (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) { boolOpStack.Push('('); Match(Token.TOKENTYPE.LEFT_PAREN); }
+                else if (curTok.tokType == Token.TOKENTYPE.AND) { boolOpStack.Push('&'); Match(Token.TOKENTYPE.AND); }
+
+                //Evaluate as we go... if it's another or, we can evaluate the other one that's now ready
+                else if (curTok.tokType == Token.TOKENTYPE.OR) {
+                    if (boolOpStack.Count > 0 && (char)boolOpStack.Peek() == '|') { emitter.NotOperator(logNum); logNum++; }
+                    else { boolOpStack.Push('|'); }
+                    Match(Token.TOKENTYPE.OR);
+                }
+
+                else {
+                    BuildRelationalBoolean();
+
+                    //Do all operations we are now ready to do
+                    while (boolOpStack.Count > 0 && ((char)boolOpStack.Peek() == '!' || (char)boolOpStack.Peek() == '&'))
+                    {
+                        if ((char)boolOpStack.Peek() == '!') { boolOpStack.Pop(); emitter.NotOperator(logNum); logNum++; }
+                        else if ((char)boolOpStack.Peek() == '&') { boolOpStack.Pop(); emitter.AndOperator(logNum); logNum++; }
+                    }
+
+                    //Get rid of excess Parentheses
+                    while (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN) {
+                        Match(Token.TOKENTYPE.RIGHT_PAREN);
+                        if ((char)boolOpStack.Pop() != '(') { throw new Exception("Parser - Match: Inappropriate use of parentheses"); }
+                    }
+                }
+            }
+
+            //Do Operations still on stack
+            while (boolOpStack.Count > 0) {
+                char nextChar = (char) boolOpStack.Pop();
+                if (nextChar == '!') { emitter.NotOperator(logNum); logNum++; }
+                else if (nextChar == '|') { emitter.OrOperator(logNum); logNum++; }
+                else if (nextChar == '&') { emitter.AndOperator(logNum); logNum++; }
+            }
         } // BuildBooleanOnTopOfStack
 
         /// <summary>
         /// Pre: Expecting a relational boolean to form from the upcoming tokens
         /// Reads in the next Tokens until a boolean is formed.
         /// </summary>
-        private void BuildRelationalBoolean()
-        {
-            
+        private void BuildRelationalBoolean() {
+
+            //Taking care of potential parentheses
+            int relBoolLeftParenCount = 0;
+            while (curTok.tokType == Token.TOKENTYPE.LEFT_PAREN) { Match(Token.TOKENTYPE.LEFT_PAREN); relBoolLeftParenCount++; }
+
             BuildIntOnTopOfStack();
+
+            //Could be a mis-appropriated parenthesis
+            while (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN) {
+                if (relBoolLeftParenCount == 0 && (char)boolOpStack.Peek() == '(') { boolOpStack.Pop(); Match(Token.TOKENTYPE.RIGHT_PAREN); }
+            }
+
             Token.TOKENTYPE relType = curTok.tokType;
             Match(relType);
             BuildIntOnTopOfStack();
 
+            while (relBoolLeftParenCount != 0) { Match(Token.TOKENTYPE.RIGHT_PAREN);  relBoolLeftParenCount--; }
+
+            //Make comparison
             if (relType == Token.TOKENTYPE.EQUAL) { emitter.EqualsTopTwoInts(relNum); }
             else if (relType == Token.TOKENTYPE.NOT_EQ) { emitter.NotEqualsTopTwoInts(relNum); }
             else if (relType == Token.TOKENTYPE.GRTR_THAN) { emitter.GreaterTopTwoInts(relNum); }
@@ -528,14 +594,20 @@ namespace Compiler
             else { throw new Exception("Error - Invalid expression"); }
 
             //Allow for right parentheses here
-            while (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN && DoesBuildIntContinue(expectedEndParen)) {
-                if (expectedEndParen > 0) {
-                    while ((char)operationStack.Peek() != '(') { DoIntOperation((char)operationStack.Pop()); }
-                    operationStack.Pop();
-                    expectedEndParen--;
-                    Match(Token.TOKENTYPE.RIGHT_PAREN);
+            while (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN) {
+                if (DoesBuildIntContinue(expectedEndParen))
+                {
+                    if (expectedEndParen > 0)
+                    {
+                        while ((char)operationStack.Peek() != '(') { DoIntOperation((char)operationStack.Pop()); }
+                        operationStack.Pop();
+                        expectedEndParen--;
+                        Match(Token.TOKENTYPE.RIGHT_PAREN);
+                    }
+                    else { throw new Exception("Error - Mismatching right parenthesis in integer expression"); }
                 }
-                else { throw new Exception("Error - Mismatching right parenthesis in integer expression"); }
+                //else if (boolOpStack.Count > 0 && (char)boolOpStack.Peek() == '(') { boolOpStack.Pop(); } //Good for popping off left parens
+                else { break; }
             }
         }
 

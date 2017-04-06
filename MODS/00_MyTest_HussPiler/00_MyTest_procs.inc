@@ -1,49 +1,65 @@
-; These are all the procedures for 08_ReadTest.mod. Main is first.
+; These are all the procedures for 00_MyTest.mod. Main is first.
 
 ;============== BEGIN PROCEDURE ============
 HussPiler_Main PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
-	mov		EAX, 10
+	print	"OR test:             should be 24:          "
+	mov		EAX, 5
 	push	EAX
+	mov		EAX, 3
+	push	EAX
+	pop		ECX
 	pop		EAX
-	mov		[EBP + 12], EAX
-	print	"X = "
-	mov		EAX, [EBP + 12]
+	cmp		EAX, ECX
+	jg		rel_true_0
+	push	0
+	jmp		rel_done_0
+rel_true_0:
+	push	1
+rel_done_0:
+	mov		EAX, 5
+	push	EAX
+	mov		EAX, 3
+	push	EAX
+	pop		ECX
+	pop		EAX
+	cmp		EAX, ECX
+	jl		rel_true_1
+	push	0
+	jmp		rel_done_1
+rel_true_1:
+	push	1
+rel_done_1:
+	pop		EAX
+	cmp		EAX, 1
+	je		log_true_early_0
+	pop		EAX
+	cmp		EAX, 1
+	je		log_true_0
+	push	0
+	jmp		log_done_0
+log_true_early_0:
+	pop		EAX
+log_true_0:
+	push	1
+log_done_0:
+	mov		EAX, 1
+	pop		ECX
+	cmp		EAX, ECX
+	jne		else_0
+	mov		EAX, 24
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"Enter an integer: "
-	call	ReadInt
-	push	EAX
-	pop		EAX
-	mov		[EBP + 8], EAX
-	mov		EAX, [EBP + 12]
-	push	EAX
-	pop		EAX
-	print	str$(EAX)
-	print	" + "
-	mov		EAX, [EBP + 8]
-	push	EAX
-	pop		EAX
-	print	str$(EAX)
-	print	" = "
-	mov		EAX, [EBP + 12]
-	push	EAX
-	mov		EAX, [EBP + 8]
-	push	EAX
-	pop		EBX
-	pop		EAX
-	add		EAX, EBX
-	push	EAX
-	pop		EAX
-	print	str$(EAX)
-	call	nwln
+	jmp		end_if_0
+else_0:
+end_if_0:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	16
+	ret	8
 HussPiler_Main endp
 ;=============== END PROCEDURE =============
