@@ -332,6 +332,32 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         } // AddASymbol
 
         /// <summary>
+        /// Adds a symbol to the symbol table (with beginning and end indices for arrays)
+        /// </summary>
+        public void AddASymbol(String nameOfSymbol, Symbol.SYMBOL_TYPE symType, Symbol.STORE_TYPE stType, Symbol.PARM_TYPE parType, int lowerBound, int upperBound)
+        {
+            Symbol symbolToAdd = new Symbol();
+            symbolToAdd.symbolType = symType; //Simply take in the symbol, store, and parm type
+            symbolToAdd.paramType = parType;
+            symbolToAdd.storeType = stType;
+            symbolToAdd.lowerBound = lowerBound;
+            symbolToAdd.upperBound = upperBound;
+
+            //Determine how much memory will be needed by the symbol type
+            //It feels a little weird doing it this way as it makes constant ints not take memory
+            //But that's what the examples did, so I assumed they were right and went with it
+            if (symType == Symbol.SYMBOL_TYPE.TYPE_ARRAY)
+            {
+                symbolToAdd.memOffset = TOP_SCOPE.MEM_OFFSET;
+                TOP_SCOPE.MEM_OFFSET += (upperBound - lowerBound + 1) * 4;
+            }
+
+            else { symbolToAdd.memOffset = 0; }
+
+            TOP_SCOPE.SYMBOLS.Add(nameOfSymbol, symbolToAdd); //Add the symbol to the table
+        } // AddASymbol
+
+        /// <summary>
         /// Retrieves a symbol corresponding to the name given from the current scope
         /// </summary>
         public Symbol RetrieveSymbolCurrScope(String name)

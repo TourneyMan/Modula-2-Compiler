@@ -175,6 +175,7 @@ namespace Compiler
             else if (curTok.tokType == Token.TOKENTYPE.EXIT) { EXITSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.RDINT) { RDINTSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.CLS) { CLSSubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.TYPE) { TYPESubmodule(); }
         } // Submodule
 
         /// <summary>
@@ -235,30 +236,51 @@ namespace Compiler
         {
             Match(Token.TOKENTYPE.VAR);
 
-            //Read in list of Tokens that represent vars, hold them in the stack to be added to the symbol table later
-            Stack tokenStack = new Stack();
-            Boolean expectingComma = false;
-            while (curTok.tokType != Token.TOKENTYPE.COLON) {
-                if (expectingComma) { Match(Token.TOKENTYPE.COMMA); expectingComma = false; }
-                else { tokenStack.Push(curTok); Match(Token.TOKENTYPE.ID); expectingComma = true; }
-            }
-
-            //We are finished adding Tokens to the stack
-            Match(Token.TOKENTYPE.COLON);
-
-            //Read in variable type and add to the symbol table accordingly
-            if (curTok.tokType == Token.TOKENTYPE.INTEGER) {
-                while (tokenStack.Count != 0) {
-                    symTbl.AddASymbol(((Token)tokenStack.Pop()).lexName, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+            while (curTok.tokType == Token.TOKENTYPE.ID)
+            {
+                //Read in list of Tokens that represent vars, hold them in the stack to be added to the symbol table later
+                Stack tokenStack = new Stack();
+                Boolean expectingComma = false;
+                while (curTok.tokType != Token.TOKENTYPE.COLON) {
+                    if (expectingComma) { Match(Token.TOKENTYPE.COMMA); expectingComma = false; }
+                    else { tokenStack.Push(curTok); Match(Token.TOKENTYPE.ID); expectingComma = true; }
                 }
-                Match(Token.TOKENTYPE.INTEGER);
+
+                //We are finished adding Tokens to the stack
+                Match(Token.TOKENTYPE.COLON);
+
+                //Read in variable type and add to the symbol table accordingly
+                if (curTok.tokType == Token.TOKENTYPE.INTEGER) {
+                    while (tokenStack.Count != 0) {
+                        symTbl.AddASymbol(((Token)tokenStack.Pop()).lexName, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+                    }
+                    Match(Token.TOKENTYPE.INTEGER);
+                }
+
+                //Read in variable type and add to the symbol table accordingly
+                else if (curTok.tokType == Token.TOKENTYPE.ID)
+                {
+                    //Get the base symbol to base these vars off of
+                    Symbol sym = symTbl.RetrieveSymbolInnerScope(curTok.lexName);
+                    if (sym == null) { throw new Exception("Parser - VARSubmodule: Invalid variable type"); }
+
+                    //Make a var for each ID given, using sym as a template
+                    while (tokenStack.Count != 0) {
+                        if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_TYPE_ARRAY) {
+                            symTbl.AddASymbol(((Token)tokenStack.Pop()).lexName, Symbol.SYMBOL_TYPE.TYPE_ARRAY,
+                                Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR, sym.lowerBound, sym.upperBound);
+                        }
+                    }
+                    Match(Token.TOKENTYPE.ID);
+                }
+
+                //We only accept INTEGER vars for now
+                else {
+                    throw new Exception("Parser - VARSubmodule: Invalid variable type");
+                }
+                Match(Token.TOKENTYPE.SEMI_COLON);
             }
 
-            //We only accept INTEGER vars for now
-            else {
-                throw new Exception("Parser - VARSubmodule: Invalid variable type");
-            }
-            Match(Token.TOKENTYPE.SEMI_COLON);
         } // VARSubmodule
 
         /// <summary>
@@ -410,6 +432,49 @@ namespace Compiler
             emitter.ReadInt();
             Match(Token.TOKENTYPE.RIGHT_PAREN);
         } // RDINTSubmodule
+
+        /// <summary>
+        /// Pre: Expecting an TYPE submodule
+        /// Reads in the next TYPE submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void TYPESubmodule()
+        {
+            try {
+                Match(Token.TOKENTYPE.TYPE);
+
+                while (curTok.tokType == Token.TOKENTYPE.ID)
+                {
+                    //Get the name of the new type
+                    string typeName = curTok.lexName;
+                    Match(Token.TOKENTYPE.ID);
+                    Match(Token.TOKENTYPE.EQUAL);
+
+                    if (curTok.tokType == Token.TOKENTYPE.ARRAY) {
+                        Match(Token.TOKENTYPE.ARRAY);
+
+                        //Store the start and end indices of this type of array
+                        Match(Token.TOKENTYPE.LEFT_BRACK);
+                        int arrayStart = Convert.ToInt32(curTok.lexName);
+                        Match(Token.TOKENTYPE.INT_NUM);
+                        Match(Token.TOKENTYPE.DOT_DOT);
+                        int arrayEnd = Convert.ToInt32(curTok.lexName);
+                        Match(Token.TOKENTYPE.INT_NUM);
+                        Match(Token.TOKENTYPE.RIGHT_BRACK);
+                        Match(Token.TOKENTYPE.OF);
+                        Match(Token.TOKENTYPE.INTEGER);
+                        Match(Token.TOKENTYPE.SEMI_COLON);
+
+                        //Create a symbol used to define this type of variable later on
+                        symTbl.AddASymbol(typeName, Symbol.SYMBOL_TYPE.TYPE_TYPE_ARRAY, Symbol.STORE_TYPE.STORE_NONE, Symbol.PARM_TYPE.VAL_PARM);
+                        symTbl.RetrieveSymbolCurrScope(typeName).lowerBound = arrayStart;
+                        symTbl.RetrieveSymbolCurrScope(typeName).upperBound = arrayEnd;
+                    }
+                }
+            }
+
+            catch (Exception e) { throw new Exception("Parser - TYPESubmodule: Invalid type definition"); }
+        } // TYPESubmodule
 
         /// <summary>
         /// Pre: Expecting an boolean to form from the upcoming tokens

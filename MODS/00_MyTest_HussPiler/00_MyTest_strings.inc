@@ -1,2 +1,2 @@
 ;===== string constants for the program: ======
-str0 db  'OR AND test(5.09):   should be  1:          ',0
+str0 db  'Hello world!',0
