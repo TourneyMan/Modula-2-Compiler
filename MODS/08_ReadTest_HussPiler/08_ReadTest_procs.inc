@@ -9,13 +9,13 @@ HussPiler_Main PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 12], EAX
-	print	"X = "
+	print	OFFSET str0 
 	mov		EAX, [EBP + 12]
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"Enter an integer: "
+	print	OFFSET str1 
 	mov		EAX, sval(input())
 	push	EAX
 	pop		EAX
@@ -24,12 +24,12 @@ HussPiler_Main PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
-	print	" + "
+	print	OFFSET str2 
 	mov		EAX, [EBP + 8]
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
-	print	" = "
+	print	OFFSET str3 
 	mov		EAX, [EBP + 12]
 	push	EAX
 	mov		EAX, [EBP + 8]

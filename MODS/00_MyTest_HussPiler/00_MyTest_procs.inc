@@ -5,8 +5,10 @@ HussPiler_Main PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
-	print	OFFSET str0 
-	call	nwln
+	mov		EAX, 11
+	push	EAX
+	pop		EAX
+	mov		[EBP + 88], EAX
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

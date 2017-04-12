@@ -46,12 +46,12 @@ loop_begin_0:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_3
+	je		rel_true_1
 	push	0
-	jmp		rel_done_3
-rel_true_3:
+	jmp		rel_done_1
+rel_true_1:
 	push	1
-rel_done_3:
+rel_done_1:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -231,12 +231,12 @@ loop_end_0:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_4
+	jg		rel_true_2
 	push	0
-	jmp		rel_done_4
-rel_true_4:
+	jmp		rel_done_2
+rel_true_2:
 	push	1
-rel_done_4:
+rel_done_2:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -270,12 +270,12 @@ end_if_2:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_5
+	jg		rel_true_3
 	push	0
-	jmp		rel_done_5
-rel_true_5:
+	jmp		rel_done_3
+rel_true_3:
 	push	1
-rel_done_5:
+rel_done_3:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -309,12 +309,12 @@ end_if_3:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_6
+	jg		rel_true_4
 	push	0
-	jmp		rel_done_6
-rel_true_6:
+	jmp		rel_done_4
+rel_true_4:
 	push	1
-rel_done_6:
+rel_done_4:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -333,12 +333,12 @@ else_4:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jle		rel_true_7
+	jle		rel_true_5
 	push	0
-	jmp		rel_done_7
-rel_true_7:
+	jmp		rel_done_5
+rel_true_5:
 	push	1
-rel_done_7:
+rel_done_5:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -380,12 +380,12 @@ end_if_4:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jl		rel_true_8
+	jl		rel_true_6
 	push	0
-	jmp		rel_done_8
-rel_true_8:
+	jmp		rel_done_6
+rel_true_6:
 	push	1
-rel_done_8:
+rel_done_6:
 	mov		EAX, [EBP + 24]
 	push	EAX
 	mov		EAX, [EBP + 20]
@@ -411,25 +411,25 @@ rel_done_8:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jge		rel_true_9
+	jge		rel_true_7
 	push	0
-	jmp		rel_done_9
-rel_true_9:
+	jmp		rel_done_7
+rel_true_7:
 	push	1
-rel_done_9:
+rel_done_7:
 	pop		EAX
 	cmp		EAX, 0
-	je		log_false_early_2
+	je		log_false_early_0
 	pop		EAX
 	cmp		EAX, 0
-	je		log_false_2
+	je		log_false_0
 	push	1
-	jmp		log_done_2
-log_false_early_2:
+	jmp		log_done_0
+log_false_early_0:
 	pop		EAX
-log_false_2:
+log_false_0:
 	push	0
-log_done_2:
+log_done_0:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -448,12 +448,12 @@ else_6:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jle		rel_true_10
+	jle		rel_true_8
 	push	0
-	jmp		rel_done_10
-rel_true_10:
+	jmp		rel_done_8
+rel_true_8:
 	push	1
-rel_done_10:
+rel_done_8:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -494,12 +494,12 @@ end_if_6:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_11
+	jg		rel_true_9
 	push	0
-	jmp		rel_done_11
-rel_true_11:
+	jmp		rel_done_9
+rel_true_9:
 	push	1
-rel_done_11:
+rel_done_9:
 	mov		EAX, [EBP + 24]
 	push	EAX
 	mov		EAX, [EBP + 20]
@@ -525,25 +525,25 @@ rel_done_11:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jge		rel_true_12
+	jge		rel_true_10
 	push	0
-	jmp		rel_done_12
-rel_true_12:
+	jmp		rel_done_10
+rel_true_10:
 	push	1
-rel_done_12:
+rel_done_10:
 	pop		EAX
 	cmp		EAX, 0
-	je		log_false_early_3
+	je		log_false_early_1
 	pop		EAX
 	cmp		EAX, 0
-	je		log_false_3
+	je		log_false_1
 	push	1
-	jmp		log_done_3
-log_false_early_3:
+	jmp		log_done_1
+log_false_early_1:
 	pop		EAX
-log_false_3:
+log_false_1:
 	push	0
-log_done_3:
+log_done_1:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -562,12 +562,12 @@ else_8:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jle		rel_true_13
+	jle		rel_true_11
 	push	0
-	jmp		rel_done_13
-rel_true_13:
+	jmp		rel_done_11
+rel_true_11:
 	push	1
-rel_done_13:
+rel_done_11:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -609,12 +609,12 @@ end_if_8:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_14
+	jg		rel_true_12
 	push	0
-	jmp		rel_done_14
-rel_true_14:
+	jmp		rel_done_12
+rel_true_12:
 	push	1
-rel_done_14:
+rel_done_12:
 	mov		EAX, 10
 	push	EAX
 	mov		EAX, 10
@@ -622,25 +622,25 @@ rel_done_14:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jne		rel_true_15
+	jne		rel_true_13
 	push	0
-	jmp		rel_done_15
-rel_true_15:
+	jmp		rel_done_13
+rel_true_13:
 	push	1
-rel_done_15:
+rel_done_13:
 	pop		EAX
 	cmp		EAX, 1
-	je		log_true_early_4
+	je		log_true_early_2
 	pop		EAX
 	cmp		EAX, 1
-	je		log_true_4
+	je		log_true_2
 	push	0
-	jmp		log_done_4
-log_true_early_4:
+	jmp		log_done_2
+log_true_early_2:
 	pop		EAX
-log_true_4:
+log_true_2:
 	push	1
-log_done_4:
+log_done_2:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -659,12 +659,12 @@ else_10:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jle		rel_true_16
+	jle		rel_true_14
 	push	0
-	jmp		rel_done_16
-rel_true_16:
+	jmp		rel_done_14
+rel_true_14:
 	push	1
-rel_done_16:
+rel_done_14:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -697,7 +697,77 @@ end_if_10:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_17
+	jg		rel_true_15
+	push	0
+	jmp		rel_done_15
+rel_true_15:
+	push	1
+rel_done_15:
+	mov		EAX, [EBP + 24]
+	push	EAX
+	mov		EAX, [EBP + 20]
+	push	EAX
+	pop		EBX
+	pop		EAX
+	imul	EBX
+	push	EAX
+	mov		EAX, [EBP + 24]
+	push	EAX
+	mov		EAX, [EBP + 20]
+	push	EAX
+	pop		EBX
+	pop		EAX
+	imul	EBX
+	push	EAX
+	mov		EAX, 1
+	push	EAX
+	pop		EBX
+	pop		EAX
+	sub		EAX, EBX
+	push		EAX
+	pop		ECX
+	pop		EAX
+	cmp		EAX, ECX
+	je		rel_true_16
+	push	0
+	jmp		rel_done_16
+rel_true_16:
+	push	1
+rel_done_16:
+	pop		EAX
+	cmp		EAX, 1
+	je		log_true_early_3
+	pop		EAX
+	cmp		EAX, 1
+	je		log_true_3
+	push	0
+	jmp		log_done_3
+log_true_early_3:
+	pop		EAX
+log_true_3:
+	push	1
+log_done_3:
+	mov		EAX, 1
+	pop		ECX
+	cmp		EAX, ECX
+	jne		else_12
+	mov		EAX, 24
+	push	EAX
+	pop		EAX
+	print	str$(EAX)
+	call	nwln
+	jmp		end_if_12
+else_12:
+end_if_12:
+	print	OFFSET str16 
+	mov		EAX, 5
+	push	EAX
+	mov		EAX, 3
+	push	EAX
+	pop		ECX
+	pop		EAX
+	cmp		EAX, ECX
+	jl		rel_true_17
 	push	0
 	jmp		rel_done_17
 rel_true_17:
@@ -728,12 +798,38 @@ rel_done_17:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_18
+	jne		rel_true_18
 	push	0
 	jmp		rel_done_18
 rel_true_18:
 	push	1
 rel_done_18:
+	mov		EAX, 2
+	push	EAX
+	mov		EAX, 2
+	push	EAX
+	pop		ECX
+	pop		EAX
+	cmp		EAX, ECX
+	je		rel_true_19
+	push	0
+	jmp		rel_done_19
+rel_true_19:
+	push	1
+rel_done_19:
+	pop		EAX
+	cmp		EAX, 0
+	je		log_false_early_4
+	pop		EAX
+	cmp		EAX, 0
+	je		log_false_4
+	push	1
+	jmp		log_done_4
+log_false_early_4:
+	pop		EAX
+log_false_4:
+	push	0
+log_done_4:
 	pop		EAX
 	cmp		EAX, 1
 	je		log_true_early_5
@@ -747,102 +843,6 @@ log_true_early_5:
 log_true_5:
 	push	1
 log_done_5:
-	mov		EAX, 1
-	pop		ECX
-	cmp		EAX, ECX
-	jne		else_12
-	mov		EAX, 24
-	push	EAX
-	pop		EAX
-	print	str$(EAX)
-	call	nwln
-	jmp		end_if_12
-else_12:
-end_if_12:
-	print	OFFSET str16 
-	mov		EAX, 5
-	push	EAX
-	mov		EAX, 3
-	push	EAX
-	pop		ECX
-	pop		EAX
-	cmp		EAX, ECX
-	jl		rel_true_19
-	push	0
-	jmp		rel_done_19
-rel_true_19:
-	push	1
-rel_done_19:
-	mov		EAX, [EBP + 24]
-	push	EAX
-	mov		EAX, [EBP + 20]
-	push	EAX
-	pop		EBX
-	pop		EAX
-	imul	EBX
-	push	EAX
-	mov		EAX, [EBP + 24]
-	push	EAX
-	mov		EAX, [EBP + 20]
-	push	EAX
-	pop		EBX
-	pop		EAX
-	imul	EBX
-	push	EAX
-	mov		EAX, 1
-	push	EAX
-	pop		EBX
-	pop		EAX
-	sub		EAX, EBX
-	push		EAX
-	pop		ECX
-	pop		EAX
-	cmp		EAX, ECX
-	jne		rel_true_20
-	push	0
-	jmp		rel_done_20
-rel_true_20:
-	push	1
-rel_done_20:
-	mov		EAX, 2
-	push	EAX
-	mov		EAX, 2
-	push	EAX
-	pop		ECX
-	pop		EAX
-	cmp		EAX, ECX
-	je		rel_true_21
-	push	0
-	jmp		rel_done_21
-rel_true_21:
-	push	1
-rel_done_21:
-	pop		EAX
-	cmp		EAX, 0
-	je		log_false_early_6
-	pop		EAX
-	cmp		EAX, 0
-	je		log_false_6
-	push	1
-	jmp		log_done_6
-log_false_early_6:
-	pop		EAX
-log_false_6:
-	push	0
-log_done_6:
-	pop		EAX
-	cmp		EAX, 1
-	je		log_true_early_7
-	pop		EAX
-	cmp		EAX, 1
-	je		log_true_7
-	push	0
-	jmp		log_done_7
-log_true_early_7:
-	pop		EAX
-log_true_7:
-	push	1
-log_done_7:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -874,12 +874,12 @@ loop_begin_1:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_22
+	je		rel_true_20
 	push	0
-	jmp		rel_done_22
-rel_true_22:
+	jmp		rel_done_20
+rel_true_20:
 	push	1
-rel_done_22:
+rel_done_20:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -924,12 +924,12 @@ loop_begin_2:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_23
+	je		rel_true_21
 	push	0
-	jmp		rel_done_23
-rel_true_23:
+	jmp		rel_done_21
+rel_true_21:
 	push	1
-rel_done_23:
+rel_done_21:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
@@ -951,12 +951,12 @@ loop_begin_3:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_24
+	je		rel_true_22
 	push	0
-	jmp		rel_done_24
-rel_true_24:
+	jmp		rel_done_22
+rel_true_22:
 	push	1
-rel_done_24:
+rel_done_22:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX

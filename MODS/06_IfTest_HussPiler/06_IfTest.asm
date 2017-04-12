@@ -1,5 +1,5 @@
 ; HussPiler output for: 06_IfTest.mod
-; Created: Wednesday, April 12, 2017 12:07:34 AM
+; Created: Wednesday, April 12, 2017 3:41:53 PM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc

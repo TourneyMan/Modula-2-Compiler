@@ -11,6 +11,6 @@ VAR
         : INTEGER ;
 
 BEGIN
-    WRSTR ("Hello world!");
-    WRLN;
+	index := 11;
+	(*aiSquares[index] := index * index;*)
 END HelloWorld.

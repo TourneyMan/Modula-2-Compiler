@@ -291,20 +291,31 @@ namespace Compiler
         {
             //Store info about our ID in question
             string nameOfId = curTok.lexName;
-            Symbol.STORE_TYPE storeType = symTbl.RetrieveSymbolCurrScope(nameOfId).storeType;
-            int idMemOffset = symTbl.RetrieveSymbolCurrScope(nameOfId).memOffset;
-
+            Symbol sym = symTbl.RetrieveSymbolCurrScope(nameOfId);
             Match(Token.TOKENTYPE.ID);
 
-            //If we are assigning our id to something (not sure if there will be more options in the future)
-            if (curTok.tokType == Token.TOKENTYPE.ASSIGN) {
-                Match(Token.TOKENTYPE.ASSIGN);
+            int idMemOffset;
 
-                //If the ID corresponds to an integer variable, build the integer and assign the built int to the var
-                if (storeType == Symbol.STORE_TYPE.TYPE_INT) {
-                    BuildIntOnTopOfStack();
-                    emitter.AssignTopOfStackToIntVar(idMemOffset);
-                }
+            //Reading through array syntax and determining memoffset for specific array index
+            if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_ARRAY) {
+                Match(Token.TOKENTYPE.LEFT_BRACK);
+
+                int ndx = Convert.ToInt32(curTok.lexName);
+                DetermineIndexOffset(sym, ndx);
+                Match(Token.TOKENTYPE.INT_NUM);
+
+                Match(Token.TOKENTYPE.RIGHT_BRACK);
+                Match(Token.TOKENTYPE.ASSIGN);
+                BuildIntOnTopOfStack();
+                emitter.AssignTopOfStackIntToMemOnStack();
+            }
+
+            //If the ID corresponds to an integer variable, build the integer and assign the built int to the var
+            else
+            {
+                Match(Token.TOKENTYPE.ASSIGN);
+                BuildIntOnTopOfStack();
+                emitter.AssignTopOfStackToIntVar(sym.memOffset);
             }
 
             Match(Token.TOKENTYPE.SEMI_COLON);
@@ -635,6 +646,7 @@ namespace Compiler
 
                 //We have an ID we recognize
                 else if (symTbl.RetrieveSymbolInnerScope(curTok.lexName) != null) {
+                    Symbol sym = 
 
                     //We have a constant
                     if (symTbl.RetrieveSymbolInnerScope(curTok.lexName).symbolType == Symbol.SYMBOL_TYPE.TYPE_CONST) {
@@ -732,6 +744,33 @@ namespace Compiler
             else if (curOp == '%') { emitter.ModTopTwoInts(); }
             else { throw new Exception("Parser - DoIntOperation: Given char did not correspond to valid operation"); }
         } //DoIntOperation
+
+        /// <summary>
+        /// Calls the emitter to emit code to determine the given index
+        /// of the given array symbol. Throws runtime error if index is invalid
+        /// </summary>
+        private void DetermineIndexOffset(Symbol sym, int index)
+        {
+            //Put a 1/0 on top of stack to indicate if index is invalid w/ lowerBound
+            emitter.PutIntOnTopOfStack(sym.lowerBound);
+            emitter.PutIntOnTopOfStack(index);
+            emitter.GreaterTopTwoInts(relNum);
+            relNum++;
+
+            //Now checking upperBound
+            emitter.PutIntOnTopOfStack(sym.upperBound);
+            emitter.PutIntOnTopOfStack(index);
+            emitter.LessTopTwoInts(relNum);
+            relNum++;
+
+            //Or the results together
+            emitter.OrOperator(logNum);
+            logNum++;
+
+            //Determine offset (if valid index)
+            emitter.PutOffsetOnStack(index - sym.lowerBound, sym.memOffset, ifNum);
+            ifNum++;
+        } //DetermineIndexOffset
 
         /// <summary>
         /// stub function to test basic functions of our symbol table

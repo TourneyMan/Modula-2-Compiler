@@ -136,12 +136,23 @@ namespace Compiler
 
         /// <summary>
         /// PRE: Nothing important in EAX
-        /// POST: Emits the assembly code needed to take the assign the indicated int var to the int on the top of the stack
+        /// POST: Emits the assembly code needed to assign the indicated int var to the int on the top of the stack
         /// </summary>
         public void AssignTopOfStackToIntVar(int memOffset)
         {
             procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tmov\t\t[EBP + " +  memOffset + "], EAX\r\n";
         } // AssignTopOfStackToIntVar
+
+        /// <summary>
+        /// PRE: Nothing important in EAX, ECX, or EDX
+        /// POST: Emits the assembly code needed to take the assign the int var on top of the stack
+        /// to the offset in memory indicated by the next int on the stack
+        /// </summary>
+        public void AssignTopOfStackIntToMemOnStack()
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tpop\t\tECX\r\n" + "\tmov\t\tEDX, EBP\r\n" +
+                                                   "\tadd\t\tECX, EDX\r\n" + "\tmov\t\t[ECX], EAX\r\n";
+        } // AssignTopOfStackIntToMemOnStack
 
         /// <summary>
         /// PRE: Nothing important in EAX
@@ -314,6 +325,23 @@ namespace Compiler
         {
             procedureStrings[currentProcedure] += "end_if_" + ifNum + ":\r\n";
         } // EndIf
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to calculate the offset in memory a particular index will be
+        /// </summary>
+        public void PutOffsetOnStack(int index, int memOffset, int ifNum)
+        {
+            //determine if index is valid
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, 1\r\n" + "\tpop\t\tECX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tje\t\telse_" + ifNum + "\r\n";
+
+            //Stuff if valid
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + index + "\r\n" + "\timul\t4\r\n" + "\tadd\t\tEAX, " + memOffset + "\r\n" + "\tpush\tEAX\r\n";
+            procedureStrings[currentProcedure] += "\tjmp\t\tend_if_" + ifNum + "\r\n" + "else_" + ifNum + ":\r\n";
+
+            //Stuff if not valid
+            procedureStrings[currentProcedure] += "\tprint\t\"Run-time Error: Out of bounds index\"\r\n" + "end_if_" + ifNum + ":\r\n";
+        } // PutOffsetOnStack
 
         /// <summary>
         /// PRE: None
