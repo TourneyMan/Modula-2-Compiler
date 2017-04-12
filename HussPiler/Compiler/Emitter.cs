@@ -336,22 +336,29 @@ namespace Compiler
             procedureStrings[currentProcedure] += "end_if_" + ifNum + ":\r\n";
         } // EndIf
 
-        /*/// <summary>
-        /// PRE: Nothing important in EAX
-        /// POST: Emits the assembly code needed to calculate the offset in memory a particular index will be
+        /// <summary>
+        /// PRE: index of top of stack
+        /// POST: Emits the assembly code needed to print run-time error if index is not between lower and upper bounds
         /// </summary>
-        public void PutOffsetOnStack(int index, int memOffset, int ifNum)
+        public void CheckValidIndex(int lowerBound, int upperBound, int ifNum)
         {
-            //determine if index is valid
-            procedureStrings[currentProcedure] += "\tmov\t\tEAX, 1\r\n" + "\tpop\t\tECX\r\n" + "\tcmp\t\tEAX, ECX\r\n" + "\tje\t\telse_" + ifNum + "\r\n";
+            //Storing index in ECX
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpush\t\tECX\r\n";
 
-            //Stuff if valid
-            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + index + "\r\n" + "\timul\t4\r\n" + "\tadd\t\tEAX, " + memOffset + "\r\n" + "\tpush\tEAX\r\n";
+            //Checking lowerBound
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + lowerBound + " \r\n" + "\tpush\t\tECX\r\n" + "\tcmp\t\tEAX, ECX\r\n"
+                                               +  "\tjg\t\telse_" + ifNum + "\r\n";
+
+            //Checking upperBound
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + upperBound + " \r\n" + "\tpush\t\tECX\r\n" + "\tcmp\t\tEAX, ECX\r\n"
+                                               +  "\tjl\t\telse_" + ifNum + "\r\n";
+
+            //Jump to end if got this far - index is valid
             procedureStrings[currentProcedure] += "\tjmp\t\tend_if_" + ifNum + "\r\n" + "else_" + ifNum + ":\r\n";
 
-            //Stuff if not valid
+            //Error if not valid
             procedureStrings[currentProcedure] += "\tprint\t\"Run-time Error: Out of bounds index\"\r\n" + "end_if_" + ifNum + ":\r\n";
-        } // PutOffsetOnStack*/
+        } // PutOffsetOnStack
 
         /// <summary>
         /// PRE: index on top of stack

@@ -11,7 +11,5 @@ VAR
         : INTEGER ;
 
 BEGIN
-	index := 11;
-	aiSquares[index] := index * index;
-	WRINT(aiSquares[index]);
+	aiSquares[30] := 4;
 END HelloWorld.

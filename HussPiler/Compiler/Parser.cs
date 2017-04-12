@@ -303,6 +303,10 @@ namespace Compiler
                 //Put the index on top of the run-time stack
                 BuildIntOnTopOfStack();
 
+                //Prints out a run-time error if index on top of the stack is invalid
+                emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
+                ifNum++;
+
                 //Convert the index into an offset
                 emitter.PutOffsetOnStack(sym.lowerBound, sym.memOffset);
 
@@ -664,6 +668,11 @@ namespace Compiler
 
                         //Put the index on top of the run-time stack
                         BuildIntOnTopOfStack();
+
+                        //Prints out a run-time error if index on top of the stack is invalid
+                        emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
+                        ifNum++;
+
                         //Convert the index into an offset
                         emitter.PutOffsetOnStack(sym.lowerBound, sym.memOffset);
 
@@ -765,33 +774,6 @@ namespace Compiler
             else if (curOp == '%') { emitter.ModTopTwoInts(); }
             else { throw new Exception("Parser - DoIntOperation: Given char did not correspond to valid operation"); }
         } //DoIntOperation
-
-        /*/// <summary>
-        /// Calls the emitter to emit code to determine the given index
-        /// of the given array symbol. Throws runtime error if index is invalid
-        /// </summary>
-        private void DetermineIndexOffset(Symbol sym, int index)
-        {
-            //Put a 1/0 on top of stack to indicate if index is invalid w/ lowerBound
-            emitter.PutIntOnTopOfStack(sym.lowerBound);
-            emitter.PutIntOnTopOfStack(index);
-            emitter.GreaterTopTwoInts(relNum);
-            relNum++;
-
-            //Now checking upperBound
-            emitter.PutIntOnTopOfStack(sym.upperBound);
-            emitter.PutIntOnTopOfStack(index);
-            emitter.LessTopTwoInts(relNum);
-            relNum++;
-
-            //Or the results together
-            emitter.OrOperator(logNum);
-            logNum++;
-
-            //Determine offset (if valid index)
-            emitter.PutOffsetOnStack(index - sym.lowerBound, sym.memOffset, ifNum);
-            ifNum++;
-        } //DetermineIndexOffset*/
 
         /// <summary>
         /// stub function to test basic functions of our symbol table
