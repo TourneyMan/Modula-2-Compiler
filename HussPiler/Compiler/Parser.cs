@@ -436,17 +436,20 @@ namespace Compiler
                     BuildRelationalBoolean();
 
                     //Do all operations we are now ready to do
-                    while (boolOpStack.Count > 0 && ((char)boolOpStack.Peek() == '!' || (char)boolOpStack.Peek() == '&'))
+                    while ((boolOpStack.Count > 0 && ((char)boolOpStack.Peek() == '!' || (char)boolOpStack.Peek() == '&'))
+                        || (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN))
                     {
-                        if ((char)boolOpStack.Peek() == '!') { boolOpStack.Pop(); emitter.NotOperator(logNum); logNum++; }
-                        else if ((char)boolOpStack.Peek() == '&') { boolOpStack.Pop(); emitter.AndOperator(logNum); logNum++; }
+                        if (boolOpStack.Count > 0 && (char)boolOpStack.Peek() == '!') { boolOpStack.Pop(); emitter.NotOperator(logNum); logNum++; }
+                        else if (boolOpStack.Count > 0 && (char)boolOpStack.Peek() == '&') { boolOpStack.Pop(); emitter.AndOperator(logNum); logNum++; }
+
+                        //Get rid of excess Parentheses
+                        else
+                        {
+                            Match(Token.TOKENTYPE.RIGHT_PAREN);
+                            if ((char)boolOpStack.Pop() != '(') { throw new Exception("Parser - Match: Inappropriate use of parentheses"); }
+                        }
                     }
 
-                    //Get rid of excess Parentheses
-                    while (curTok.tokType == Token.TOKENTYPE.RIGHT_PAREN) {
-                        Match(Token.TOKENTYPE.RIGHT_PAREN);
-                        if ((char)boolOpStack.Pop() != '(') { throw new Exception("Parser - Match: Inappropriate use of parentheses"); }
-                    }
                 }
             }
 

@@ -1,5 +1,5 @@
 ; HussPiler output for: 00_MyTest.mod
-; Created: Tuesday, April 11, 2017 11:53:32 PM
+; Created: Wednesday, April 12, 2017 12:07:08 AM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc

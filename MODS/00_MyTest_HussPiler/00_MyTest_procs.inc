@@ -21,12 +21,12 @@ HussPiler_Main PROC	; Procedure definition
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jl		rel_true_3
+	jl		rel_true_0
 	push	0
-	jmp		rel_done_3
-rel_true_3:
+	jmp		rel_done_0
+rel_true_0:
 	push	1
-rel_done_3:
+rel_done_0:
 	mov		EAX, 2
 	push	EAX
 	mov		EAX, 2
@@ -34,25 +34,25 @@ rel_done_3:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_4
+	je		rel_true_1
 	push	0
-	jmp		rel_done_4
-rel_true_4:
+	jmp		rel_done_1
+rel_true_1:
 	push	1
-rel_done_4:
+rel_done_1:
 	pop		EAX
 	cmp		EAX, 0
-	je		log_false_early_2
+	je		log_false_early_0
 	pop		EAX
 	cmp		EAX, 0
-	je		log_false_2
+	je		log_false_0
 	push	1
-	jmp		log_done_2
-log_false_early_2:
+	jmp		log_done_0
+log_false_early_0:
 	pop		EAX
-log_false_2:
+log_false_0:
 	push	0
-log_done_2:
+log_done_0:
 	mov		EAX, 12
 	push	EAX
 	mov		EAX, 2
@@ -66,42 +66,42 @@ log_done_2:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_5
+	je		rel_true_2
 	push	0
-	jmp		rel_done_5
-rel_true_5:
+	jmp		rel_done_2
+rel_true_2:
 	push	1
-rel_done_5:
+rel_done_2:
 	pop		EAX
 	cmp		EAX, 1
-	je		log_true_early_3
+	je		log_true_early_1
 	pop		EAX
 	cmp		EAX, 1
-	je		log_true_3
+	je		log_true_1
 	push	0
-	jmp		log_done_3
-log_true_early_3:
+	jmp		log_done_1
+log_true_early_1:
 	pop		EAX
-log_true_3:
+log_true_1:
 	push	1
-log_done_3:
+log_done_1:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_1
+	jne		else_0
 	mov		EAX, 1
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	jmp		end_if_1
-else_1:
+	jmp		end_if_0
+else_0:
 	mov		EAX, 9999
 	push	EAX
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-end_if_1:
+end_if_0:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

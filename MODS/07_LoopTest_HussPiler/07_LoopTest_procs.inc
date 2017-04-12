@@ -21,20 +21,20 @@ loop_begin_4:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_23
+	jg		rel_true_26
 	push	0
-	jmp		rel_done_23
-rel_true_23:
+	jmp		rel_done_26
+rel_true_26:
 	push	1
-rel_done_23:
+rel_done_26:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_17
+	jne		else_18
 	jmp		loop_end_4
-	jmp		end_if_17
-else_17:
-end_if_17:
+	jmp		end_if_18
+else_18:
+end_if_18:
 	mov		EAX, [EBP + 12]
 	push	EAX
 	pop		EAX

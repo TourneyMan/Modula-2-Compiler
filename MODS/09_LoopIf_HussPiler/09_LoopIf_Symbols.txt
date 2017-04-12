@@ -1,3 +1,6 @@
+k                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       12        
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+m                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
 bad                  0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       12        
 good                 0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       16        
 k                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       24        
