@@ -357,8 +357,9 @@ namespace Compiler
             procedureStrings[currentProcedure] += "\tjmp\t\tend_if_" + ifNum + "\r\n" + "else_" + ifNum + ":\r\n";
 
             //Error if not valid
-            procedureStrings[currentProcedure] += "\tprint\t\"Run-time Error: Out of bounds index\"\r\n" + "end_if_" + ifNum + ":\r\n";
-        } // PutOffsetOnStack
+            procedureStrings[currentProcedure] += "\tprint\t\"Run-time Error: Out of bounds index\"\r\n" + "\tcall\tnwln\r\n"
+                                               +  "end_if_" + ifNum + ":\r\n";
+        } // CheckValidIndex
 
         /// <summary>
         /// PRE: index on top of stack

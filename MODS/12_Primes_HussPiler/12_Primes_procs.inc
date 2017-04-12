@@ -46,6 +46,7 @@ end_if_0:
 	jmp		end_if_1
 else_1:
 	print	"Run-time Error: Out of bounds index"
+	call	nwln
 end_if_1:
 	pop		EAX
 	sub		EAX, 2
@@ -151,6 +152,7 @@ end_if_3:
 	jmp		end_if_4
 else_4:
 	print	"Run-time Error: Out of bounds index"
+	call	nwln
 end_if_4:
 	pop		EAX
 	sub		EAX, 2
@@ -203,6 +205,7 @@ loop_begin_3:
 	jmp		end_if_6
 else_6:
 	print	"Run-time Error: Out of bounds index"
+	call	nwln
 end_if_6:
 	pop		EAX
 	sub		EAX, 2
@@ -279,6 +282,7 @@ end_if_7:
 	jmp		end_if_9
 else_9:
 	print	"Run-time Error: Out of bounds index"
+	call	nwln
 end_if_9:
 	pop		EAX
 	sub		EAX, 2

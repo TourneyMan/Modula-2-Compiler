@@ -11,5 +11,5 @@ VAR
         : INTEGER ;
 
 BEGIN
-	aiSquares[30] := 4;
+	aiSquares[31] := 4;
 END HelloWorld.
