@@ -125,6 +125,16 @@ namespace Compiler
         } // PutIntVarOnTopOfStack
 
         /// <summary>
+        /// PRE: Memory offset on top of stack
+        /// POST: Emits the assembly code needed to put a given int variable on top of the stack
+        /// from the memory offset currently on top of the stack
+        /// </summary>
+        public void PutIntOnStackFromMemOnStack()
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tmov\t\tEAX, [EBP + ECX]\r\n" + "\tpush\tEAX\r\n";
+        } // PutIntOnStackFromMemOnStack
+
+        /// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to take the top int on the stack, multiply it by -1, and put
         /// back on the stack
@@ -326,7 +336,7 @@ namespace Compiler
             procedureStrings[currentProcedure] += "end_if_" + ifNum + ":\r\n";
         } // EndIf
 
-        /// <summary>
+        /*/// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to calculate the offset in memory a particular index will be
         /// </summary>
@@ -341,6 +351,16 @@ namespace Compiler
 
             //Stuff if not valid
             procedureStrings[currentProcedure] += "\tprint\t\"Run-time Error: Out of bounds index\"\r\n" + "end_if_" + ifNum + ":\r\n";
+        } // PutOffsetOnStack*/
+
+        /// <summary>
+        /// PRE: index on top of stack
+        /// POST: Emits the assembly code needed to calculate the offset in memory a particular index will be
+        /// </summary>
+        public void PutOffsetOnStack(int lowerBound, int memOffset)
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tsub\t\tEAX, " + lowerBound + "\r\n" + "\tmov\t\tEBX, 4\r\n" + "\timul\tEBX\r\n"
+                                               +  "\tadd\t\tEAX, " + memOffset + "\r\n" + "\tpush\tEAX\r\n";
         } // PutOffsetOnStack
 
         /// <summary>

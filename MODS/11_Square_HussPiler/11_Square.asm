@@ -1,5 +1,5 @@
-; HussPiler output for: 00_MyTest.mod
-; Created: Wednesday, April 12, 2017 5:05:29 PM
+; HussPiler output for: 11_Square.mod
+; Created: Wednesday, April 12, 2017 5:05:53 PM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
@@ -8,10 +8,10 @@
 .stack 1000H
 
 .data
-	include 00_MyTest_strings.inc	; all string literals
+	include 11_Square_strings.inc	; all string literals
 
 .code
-	include 00_MyTest_procs.inc	; all program procedures
+	include 11_Square_procs.inc	; all program procedures
 	include helper.inc	; includes some helper functions for printing and debugging
 
 start:

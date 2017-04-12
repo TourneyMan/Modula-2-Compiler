@@ -12,5 +12,6 @@ VAR
 
 BEGIN
 	index := 11;
-	(*aiSquares[index] := index * index;*)
+	aiSquares[index] := index * index;
+	WRINT(aiSquares[index]);
 END HelloWorld.
