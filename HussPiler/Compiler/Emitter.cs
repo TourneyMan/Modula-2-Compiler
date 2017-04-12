@@ -95,7 +95,11 @@ namespace Compiler
         /// PRE: NONE
         /// POST: Emits assembly code needed to write the given string
         /// </summary>
-        public void WRSTR(string stringToWrite) { procedureStrings[currentProcedure] += "\tprint\t\"" + stringToWrite + "\"\r\n"; } // WRSTR
+        public void WRSTR(string stringToWrite) {
+            stringConstants += "str" + nextStringNum + " db  '" + stringToWrite + "',0\r\n";
+            procedureStrings[currentProcedure] += "\tprint\tOFFSET str" + nextStringNum + " \r\n";
+            nextStringNum++;
+        } // WRSTR
 
         /// <summary>
         /// PRE: Nothing important in EAX
@@ -281,7 +285,7 @@ namespace Compiler
         public void NotOperator(int logNum)
         {
             procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tcmp\t\tEAX, 1\r\n" +  "\tje\t\tlog_true_" + logNum + "\r\n"
-             + "\tpush\t0\r\n" + "\tjmp\t\tlog_done_" + logNum + "\r\n" + "log_true_" + logNum + ":\r\n" + "\tpush\t1\r\n" + "log_done_" + logNum + ":\r\n";
+             + "\tpush\t1\r\n" + "\tjmp\t\tlog_done_" + logNum + "\r\n" + "log_true_" + logNum + ":\r\n" + "\tpush\t0\r\n" + "log_done_" + logNum + ":\r\n";
         } // NotOperator
 
         /// <summary>

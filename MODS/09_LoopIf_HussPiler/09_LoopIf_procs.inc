@@ -33,7 +33,7 @@ HussPiler_Main PROC	; Procedure definition
 	push		EAX
 	pop		EAX
 	mov		[EBP + 16], EAX
-	print	"Enter 1 and press <return> to start: "
+	print	OFFSET str0 
 	mov		EAX, sval(input())
 	push	EAX
 	pop		EAX
@@ -60,7 +60,7 @@ rel_done_0:
 	jmp		end_if_0
 else_0:
 end_if_0:
-	print	"Invalid input...Enter 1 and press <return> to start: "
+	print	OFFSET str1 
 	mov		EAX, sval(input())
 	push	EAX
 	pop		EAX
@@ -68,7 +68,7 @@ end_if_0:
 	jmp		loop_begin_0
 loop_end_0:
 	cls
-	print	"42+7-31+1:           should be 19:          "
+	print	OFFSET str2 
 	mov		EAX, 42
 	push	EAX
 	mov		EAX, 7
@@ -92,7 +92,7 @@ loop_end_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"good * little:       should be 15:          "
+	print	OFFSET str3 
 	mov		EAX, [EBP + 16]
 	push	EAX
 	mov		EAX, 3
@@ -104,7 +104,7 @@ loop_end_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"42000 DIV 4200:      should be 10:          "
+	print	OFFSET str4 
 	mov		EAX, 42000
 	push	EAX
 	mov		EAX, 4200
@@ -117,7 +117,7 @@ loop_end_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"42042 MOD 100:       should be 42:          "
+	print	OFFSET str5 
 	mov		EAX, 42042
 	push	EAX
 	mov		EAX, 100
@@ -130,7 +130,7 @@ loop_end_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"20000 * 21000:       should be 420,000,000: "
+	print	OFFSET str6 
 	mov		EAX, 20000
 	push	EAX
 	mov		EAX, 21000
@@ -142,7 +142,7 @@ loop_end_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"6*7+2*little-1:      should be 47:          "
+	print	OFFSET str7 
 	mov		EAX, 6
 	push	EAX
 	mov		EAX, 7
@@ -172,7 +172,7 @@ loop_end_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"6*2+((1+2)*3-1)*2:   should be 28:          "
+	print	OFFSET str8 
 	mov		EAX, 6
 	push	EAX
 	mov		EAX, 2
@@ -215,7 +215,7 @@ loop_end_0:
 	print	str$(EAX)
 	call	nwln
 	call	nwln
-	print	"IF test:             should be  4:          "
+	print	OFFSET str9 
 	mov		EAX, 4
 	push	EAX
 	pop		EAX
@@ -254,7 +254,7 @@ else_1:
 	print	str$(EAX)
 	call	nwln
 end_if_1:
-	print	"IF test:             should be 17:          "
+	print	OFFSET str10 
 	mov		EAX, 4
 	push	EAX
 	pop		EAX
@@ -293,7 +293,7 @@ else_2:
 	print	str$(EAX)
 	call	nwln
 end_if_2:
-	print	"IF test:             should be 71:          "
+	print	OFFSET str11 
 	mov		EAX, 4
 	push	EAX
 	pop		EAX
@@ -364,7 +364,7 @@ else_4:
 end_if_4:
 end_if_3:
 	call	nwln
-	print	"AND test:            should be 21:          "
+	print	OFFSET str12 
 	mov		EAX, 4
 	push	EAX
 	pop		EAX
@@ -478,7 +478,7 @@ else_6:
 	call	nwln
 end_if_6:
 end_if_5:
-	print	"AND test:            should be 22:          "
+	print	OFFSET str13 
 	mov		EAX, 4
 	push	EAX
 	pop		EAX
@@ -593,7 +593,7 @@ else_8:
 end_if_8:
 end_if_7:
 	call	nwln
-	print	"OR test:             should be 23:          "
+	print	OFFSET str14 
 	mov		EAX, 4
 	push	EAX
 	pop		EAX
@@ -689,7 +689,7 @@ else_10:
 	call	nwln
 end_if_10:
 end_if_9:
-	print	"OR test:             should be 24:          "
+	print	OFFSET str15 
 	mov		EAX, 5
 	push	EAX
 	mov		EAX, 3
@@ -759,7 +759,7 @@ log_done_3:
 	jmp		end_if_11
 else_11:
 end_if_11:
-	print	"OR AND test:         should be 25:          "
+	print	OFFSET str16 
 	mov		EAX, 5
 	push	EAX
 	mov		EAX, 3
@@ -856,7 +856,7 @@ log_done_5:
 else_12:
 end_if_12:
 	call	nwln
-	print	"LOOP test:           should be 1-9:        "
+	print	OFFSET str17 
 	call	nwln
 	mov		EAX, 10
 	push	EAX
@@ -906,7 +906,7 @@ end_if_13:
 	jmp		loop_begin_1
 loop_end_1:
 	call	nwln
-	print	"LOOP test:           should be nice:       "
+	print	OFFSET str18 
 	call	nwln
 	mov		EAX, 10
 	push	EAX
@@ -943,7 +943,7 @@ end_if_14:
 	pop		EAX
 	mov		[EBP + 16], EAX
 loop_begin_3:
-	print	"@"
+	print	OFFSET str19 
 	mov		EAX, [EBP + 16]
 	push	EAX
 	mov		EAX, [EBP + 20]
