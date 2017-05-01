@@ -1,15 +1,22 @@
-MODULE HelloWorld;
+MODULE FirstProc ;
 
-TYPE
-    ListType = ARRAY [11 .. 30] OF INTEGER ;
-
-VAR
-    aiSquares
-        : ListType ;
-
-    index
-        : INTEGER ;
+(********************************************************************)
+(****  L I T T L E ** L I T T L E **  L I T T L E ** L I T T L E ****)
+(********************************************************************)
+PROCEDURE little ( ) ;
 
 BEGIN
-	aiSquares[31] := 4;
-END HelloWorld.
+    
+	WRSTR ("Hello Procedure!");
+    WRLN ;
+	
+END little ;
+
+(********************************************************************)
+(****     M A I N ** M A I N ** M A I N ** M A I N ** M A I N    ****)
+(********************************************************************)
+BEGIN
+	
+	little (  ) ;
+
+END FirstProc.

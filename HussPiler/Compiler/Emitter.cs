@@ -408,6 +408,15 @@ namespace Compiler
         } // ReadInt
 
         /// <summary>
+        /// PRE: None
+        /// POST: Emits the assembly code needed to call a procedure
+        /// </summary>
+        public void CallProc(string procName)
+        {
+            procedureStrings[currentProcedure] += "\tcall\t" + procName + "\r\n";
+        } // ReadInt
+
+        /// <summary>
         /// PRE: NONE
         /// POST: Code emitted to clear the screen
         /// </summary>
@@ -681,7 +690,6 @@ namespace Compiler
             fm.FileAFile(strHelper, "helper.inc");
 
         } // BuildHelperInclude
-
 
     } // Emitter Class
 

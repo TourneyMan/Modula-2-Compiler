@@ -143,7 +143,8 @@ namespace Compiler
 
             Match(Token.TOKENTYPE.BEGIN);
 
-            while (curTok.tokType != Token.TOKENTYPE.END || controlStructureStack.Count > 0) { Submodule(); }
+            int preControlCount = controlStructureStack.Count;
+            while (curTok.tokType != Token.TOKENTYPE.END || controlStructureStack.Count > preControlCount) { Submodule(); }
 
             Match(Token.TOKENTYPE.END);
 
@@ -176,6 +177,7 @@ namespace Compiler
             else if (curTok.tokType == Token.TOKENTYPE.RDINT) { RDINTSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.CLS) { CLSSubmodule(); }
             else if (curTok.tokType == Token.TOKENTYPE.TYPE) { TYPESubmodule(); }
+            else if (curTok.tokType == Token.TOKENTYPE.PROCEDURE) { PROCEDURESubmodule(); }
         } // Submodule
 
         /// <summary>
@@ -294,8 +296,6 @@ namespace Compiler
             Symbol sym = symTbl.RetrieveSymbolCurrScope(nameOfId);
             Match(Token.TOKENTYPE.ID);
 
-            int idMemOffset;
-
             //Reading through array syntax and determining memoffset for specific array index
             if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_ARRAY) {
                 Match(Token.TOKENTYPE.LEFT_BRACK);
@@ -314,6 +314,13 @@ namespace Compiler
                 Match(Token.TOKENTYPE.ASSIGN);
                 BuildIntOnTopOfStack();
                 emitter.AssignTopOfStackIntToMemOnStack();
+            }
+
+            else if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_PROC)
+            {
+                emitter.CallProc(nameOfId);
+                Match(Token.TOKENTYPE.LEFT_PAREN);
+                Match(Token.TOKENTYPE.RIGHT_PAREN);
             }
 
             //If the ID corresponds to an integer variable, build the integer and assign the built int to the var
@@ -492,6 +499,68 @@ namespace Compiler
 
             catch (Exception e) { throw new Exception("Parser - TYPESubmodule: Invalid type definition"); }
         } // TYPESubmodule
+
+        /// <summary>
+        /// Pre: Expecting an PROCEDURE submodule
+        /// Reads in the next PROCEDURE submodule
+        /// </summary>
+        /// ******************INCOMPLETE***************** ///
+        private void PROCEDURESubmodule()
+        {
+            string procName;
+
+            Match(Token.TOKENTYPE.PROCEDURE);
+            procName = curTok.lexName;
+
+            symTbl.EnterProcScope(procName);
+            emitter.ProcPreamble(procName);
+
+            Match(Token.TOKENTYPE.ID);
+            Match(Token.TOKENTYPE.LEFT_PAREN);
+
+            //Reading in parameters
+            if (curTok.tokType !=  Token.TOKENTYPE.RIGHT_PAREN)
+            {
+                Stack parameterNames = new Stack();
+
+                parameterNames.Push(curTok.lexName);
+                Match(Token.TOKENTYPE.ID);
+
+                while (curTok.tokType != Token.TOKENTYPE.COLON)
+                {
+                    Match(Token.TOKENTYPE.COMMA);
+                    parameterNames.Push(curTok.lexName);
+                    Match(Token.TOKENTYPE.ID);
+                }
+                Match(Token.TOKENTYPE.COLON);
+
+
+                Match(Token.TOKENTYPE.INTEGER);
+                symTbl.RetrieveSymbolInnerScope(procName).paramVarList.PARAM_COUNT = parameterNames.Count;
+                while (parameterNames.Count > 0)
+                {
+                    string nextParam = (string) parameterNames.Pop();
+                    symTbl.RetrieveSymbolInnerScope(procName).paramVarList.VAR_LIST.Add(nextParam);
+                }
+            }
+
+            Match(Token.TOKENTYPE.RIGHT_PAREN);
+            Match(Token.TOKENTYPE.SEMI_COLON);
+
+            while (curTok.tokType != Token.TOKENTYPE.BEGIN) { Submodule(); }
+            Match(Token.TOKENTYPE.BEGIN);
+
+            int preControlCount = controlStructureStack.Count;
+            while (curTok.tokType != Token.TOKENTYPE.END || controlStructureStack.Count > preControlCount) { Submodule(); }
+
+            Match(Token.TOKENTYPE.END);
+            emitter.ProcPostamble(procName, symTbl.ExitProcScope());
+
+            if (curTok.lexName != procName) throw new Exception("Procedure name not repeated at close of procedure.");
+            Match(Token.TOKENTYPE.ID);
+
+            Match(Token.TOKENTYPE.SEMI_COLON);
+        } // PROCEDURESubmodule
 
         /// <summary>
         /// Pre: Expecting an boolean to form from the upcoming tokens

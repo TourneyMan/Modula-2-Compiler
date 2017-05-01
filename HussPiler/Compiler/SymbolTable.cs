@@ -182,6 +182,9 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
     public class ProcVarList
     {
         string procName;
+        int totalMemUsed = 0;
+        int paramCount = 0;
+        ArrayList varList = new ArrayList();
 
         /// <summary>
         /// block default constructor
@@ -201,7 +204,20 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         public string PROC_NAME
         { get { return procName; } } // PROC_NAME
 
+        public int MEM_USED
+        {
+            get { return totalMemUsed; }
+            set { totalMemUsed = value; }
+        } // MEM_USED
 
+        public int PARAM_COUNT
+        {
+            get { return paramCount; }
+            set { paramCount = value; }
+        } // PARAM_COUNT
+
+        public ArrayList VAR_LIST
+        { get { return varList; } } // PROC_NAME
 
     } // ProcVarList class
 
