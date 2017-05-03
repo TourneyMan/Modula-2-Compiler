@@ -181,7 +181,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
     /// </summary>
     public class ProcVarList
     {
-        string procName;
+        //string procName;
         int totalMemUsed = 0;
         int paramCount = 0;
         ArrayList varList = new ArrayList();
@@ -195,14 +195,14 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         /// only public constructor
         /// </summary>
         /// <param name="name"></param>
-        public ProcVarList(string name)
+        /*public ProcVarList(string name)
         {
             procName = name;
 
-        } // ProcVarList
+        } // ProcVarList*/
 
-        public string PROC_NAME
-        { get { return procName; } } // PROC_NAME
+        /*public string PROC_NAME
+        { get { return procName; } } // PROC_NAME*/
 
         public int MEM_USED
         {
@@ -348,6 +348,14 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         } // AddASymbol
 
         /// <summary>
+        /// Adds a symbol to the symbol table
+        /// </summary>
+        public void AddASymbol(String nameOfSymbol, Symbol newSymbol)
+        {
+            TOP_SCOPE.SYMBOLS.Add(nameOfSymbol, newSymbol); //Add the symbol to the table
+        } // AddASymbol
+
+        /// <summary>
         /// Adds a symbol to the symbol table (with beginning and end indices for arrays)
         /// </summary>
         public void AddASymbol(String nameOfSymbol, Symbol.SYMBOL_TYPE symType, Symbol.STORE_TYPE stType, Symbol.PARM_TYPE parType, int lowerBound, int upperBound)
@@ -447,7 +455,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
                     fm.SYMBOL_LIST += symbol.ToString();
                 }
 
-                return leavingScope.MEM_OFFSET;
+                return leavingScope.MEM_OFFSET - 8;
             }
             return -1;
         } // ExitProcScope

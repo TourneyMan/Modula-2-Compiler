@@ -1,4 +1,4 @@
-; These are all the procedures for 13_FirstProc.mod. Main is first.
+; These are all the procedures for 14_ProcTest.mod. Main is first.
 
 ;============== BEGIN PROCEDURE ============
 HussPiler_Main PROC	; Procedure definition
@@ -15,7 +15,17 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
+	print	OFFSET str2 
+	call	nwln
+	mov		EAX, [EBP + 8]
+	push	EAX
 	call	little
+	print	OFFSET str3 
+	mov		EAX, [EBP + 8]
+	push	EAX
+	pop		EAX
+	print	str$(EAX)
+	call	nwln
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
@@ -28,11 +38,29 @@ little PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
+	mov		EAX, [EBP + 8]
+	push	EAX
+	pop		EAX
+	print	str$(EAX)
 	print	OFFSET str0 
+	mov		EAX, [EBP + 8]
+	push	EAX
+	mov		EAX, 4
+	push	EAX
+	pop		EBX
+	pop		EAX
+	imul	EBX
+	push	EAX
+	pop		EAX
+	mov		[EBP + 8], EAX
+	mov		EAX, [EBP + 8]
+	push	EAX
+	pop		EAX
+	print	str$(EAX)
 	call	nwln
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	0
+	ret	4
 little endp
 ;=============== END PROCEDURE =============

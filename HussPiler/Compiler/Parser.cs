@@ -316,13 +316,24 @@ namespace Compiler
                 emitter.AssignTopOfStackIntToMemOnStack();
             }
 
+            //For Procedures
             else if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_PROC)
             {
-                emitter.CallProc(nameOfId);
+                //Grab all the parameters
                 Match(Token.TOKENTYPE.LEFT_PAREN);
+                while (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
+                {
+                    BuildIntOnTopOfStack();
+                    if (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
+                    {
+                        Match(Token.TOKENTYPE.COMMA);
+                    }
+                }
                 Match(Token.TOKENTYPE.RIGHT_PAREN);
+                emitter.CallProc(nameOfId);
             }
 
+            //For assignments
             //If the ID corresponds to an integer variable, build the integer and assign the built int to the var
             else
             {
@@ -507,6 +518,8 @@ namespace Compiler
         /// ******************INCOMPLETE***************** ///
         private void PROCEDURESubmodule()
         {
+            //Symbol procSymbol = new Symbol();
+            //procSymbol.symbolType = Symbol.SYMBOL_TYPE.TYPE_PROC;
             string procName;
 
             Match(Token.TOKENTYPE.PROCEDURE);
@@ -519,7 +532,7 @@ namespace Compiler
             Match(Token.TOKENTYPE.LEFT_PAREN);
 
             //Reading in parameters
-            if (curTok.tokType !=  Token.TOKENTYPE.RIGHT_PAREN)
+            if (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
             {
                 Stack parameterNames = new Stack();
 
@@ -534,18 +547,29 @@ namespace Compiler
                 }
                 Match(Token.TOKENTYPE.COLON);
 
-
-                Match(Token.TOKENTYPE.INTEGER);
-                symTbl.RetrieveSymbolInnerScope(procName).paramVarList.PARAM_COUNT = parameterNames.Count;
-                while (parameterNames.Count > 0)
+                //Integer is the only option I know of at the moment
+                if (curTok.tokType == Token.TOKENTYPE.INTEGER)
                 {
-                    string nextParam = (string) parameterNames.Pop();
-                    symTbl.RetrieveSymbolInnerScope(procName).paramVarList.VAR_LIST.Add(nextParam);
+                    Match(Token.TOKENTYPE.INTEGER);
+
+                    //procSymbol.paramVarList.PARAM_COUNT = parameterNames.Count;
+                    while (parameterNames.Count > 0)
+                    {
+                        string nextParam = (string)parameterNames.Pop();
+
+                        //Add each parameter name to this procedure's paramVarList
+                        //procSymbol.paramVarList.VAR_LIST.Add(nextParam);
+
+                        //Adding the parameters to this scope's symbol table
+                        Symbol varSymbol = new Symbol();
+                        symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM);
+                    }
                 }
             }
 
             Match(Token.TOKENTYPE.RIGHT_PAREN);
             Match(Token.TOKENTYPE.SEMI_COLON);
+            //End of reading in parameters
 
             while (curTok.tokType != Token.TOKENTYPE.BEGIN) { Submodule(); }
             Match(Token.TOKENTYPE.BEGIN);
@@ -554,6 +578,8 @@ namespace Compiler
             while (curTok.tokType != Token.TOKENTYPE.END || controlStructureStack.Count > preControlCount) { Submodule(); }
 
             Match(Token.TOKENTYPE.END);
+
+            //procSymbol.paramVarList.MEM_USED = 0; //(symTbl.TOP_SCOPE.MEM_OFFSET - 8) + (procSymbol.paramVarList.PARAM_COUNT * 4);
             emitter.ProcPostamble(procName, symTbl.ExitProcScope());
 
             if (curTok.lexName != procName) throw new Exception("Procedure name not repeated at close of procedure.");
