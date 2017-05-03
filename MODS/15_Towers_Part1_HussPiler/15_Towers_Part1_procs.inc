@@ -1,4 +1,4 @@
-; These are all the procedures for 00_MyTest.mod. Main is first.
+; These are all the procedures for 15_Towers_Part1.mod. Main is first.
 
 ;============== BEGIN PROCEDURE ============
 HussPiler_Main PROC	; Procedure definition
@@ -14,6 +14,13 @@ HussPiler_Main PROC	; Procedure definition
 	mov		[EBP + 8], EAX
 	print	OFFSET str4 
 	call	nwln
+	mov		EAX, [EBP + 8]
+	push	EAX
+	mov		EAX, 1
+	push	EAX
+	mov		EAX, 3
+	push	EAX
+	call	TowersOfHanoi
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

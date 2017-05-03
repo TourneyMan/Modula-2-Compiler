@@ -297,6 +297,7 @@ namespace Compiler
             Match(Token.TOKENTYPE.ID);
 
             //Reading through array syntax and determining memoffset for specific array index
+            System.Diagnostics.Debug.WriteLine(nameOfId);
             if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_ARRAY) {
                 Match(Token.TOKENTYPE.LEFT_BRACK);
 
