@@ -1,0 +1,8 @@
+i                    1      TYPE_SIMPLE     TYPE_INT        REF_PARM        12        
+j                    1      TYPE_SIMPLE     TYPE_INT        REF_PARM        8         
+TowersOfHanoi        1      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+k                    1      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       20        
+n                    1      TYPE_SIMPLE     TYPE_INT        REF_PARM        16        
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+TowersOfHanoi        0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+numDisks             0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         

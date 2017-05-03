@@ -436,6 +436,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
             {
                 AddASymbol(name, Symbol.SYMBOL_TYPE.TYPE_PROC, Symbol.STORE_TYPE.STORE_NONE, Symbol.PARM_TYPE.VAL_PARM);
                 scopeStack.Push(new Scope());
+                AddASymbol(name, Symbol.SYMBOL_TYPE.TYPE_PROC, Symbol.STORE_TYPE.STORE_NONE, Symbol.PARM_TYPE.VAL_PARM);
             }
 
         } // EnterNewScope
