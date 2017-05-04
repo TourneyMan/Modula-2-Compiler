@@ -25,6 +25,7 @@ namespace Compiler
         private static int relNum = 0;
         private static int logNum = 0;
         Stack boolOpStack = new Stack();
+        Stack procNames = new Stack();
 
         // The single object instance for this class.
         private static Parser pInstance;
@@ -135,6 +136,7 @@ namespace Compiler
             Match(Token.TOKENTYPE.MODULE);
 
             string moduleName = curTok.lexName;
+            procNames.Push(moduleName);
 
             Match(Token.TOKENTYPE.ID);
             Match(Token.TOKENTYPE.SEMI_COLON);
@@ -254,7 +256,13 @@ namespace Compiler
                 //Read in variable type and add to the symbol table accordingly
                 if (curTok.tokType == Token.TOKENTYPE.INTEGER) {
                     while (tokenStack.Count != 0) {
-                        symTbl.AddASymbol(((Token)tokenStack.Pop()).lexName, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+                        string idName = ((Token)tokenStack.Pop()).lexName;
+                        symTbl.AddASymbol(idName, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
+
+                        if (symTbl.RetrieveSymbolCurrScope((string)procNames.Peek()) != null)
+                        {
+                            symTbl.RetrieveSymbolCurrScope((string)procNames.Peek()).localVarMem += 4;
+                        }
                     }
                     Match(Token.TOKENTYPE.INTEGER);
                 }
@@ -297,7 +305,6 @@ namespace Compiler
             Match(Token.TOKENTYPE.ID);
 
             //Reading through array syntax and determining memoffset for specific array index
-            System.Diagnostics.Debug.WriteLine(nameOfId);
             if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_ARRAY) {
                 Match(Token.TOKENTYPE.LEFT_BRACK);
 
@@ -320,6 +327,12 @@ namespace Compiler
             //For Procedures
             else if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_PROC)
             {
+                //System.Diagnostics.Debug.WriteLine(sym.localVarMem);
+                for (int i = 0; i < sym.localVarMem / 4; i++)
+                {
+                    emitter.PushZero();
+                }
+
                 //Grab all the parameters
                 Match(Token.TOKENTYPE.LEFT_PAREN);
                 while (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
@@ -528,6 +541,7 @@ namespace Compiler
 
             symTbl.EnterProcScope(procName);
             emitter.ProcPreamble(procName);
+            procNames.Push(procName);
 
             Match(Token.TOKENTYPE.ID);
             Match(Token.TOKENTYPE.LEFT_PAREN);
@@ -553,7 +567,6 @@ namespace Compiler
                 {
                     Match(Token.TOKENTYPE.INTEGER);
 
-                    //procSymbol.paramVarList.PARAM_COUNT = parameterNames.Count;
                     while (parameterNames.Count > 0)
                     {
                         string nextParam = (string)parameterNames.Pop();
@@ -581,7 +594,11 @@ namespace Compiler
             Match(Token.TOKENTYPE.END);
 
             //procSymbol.paramVarList.MEM_USED = 0; //(symTbl.TOP_SCOPE.MEM_OFFSET - 8) + (procSymbol.paramVarList.PARAM_COUNT * 4);
+            int locMemUsed = symTbl.RetrieveSymbolCurrScope(procName).localVarMem;
             emitter.ProcPostamble(procName, symTbl.ExitProcScope());
+            symTbl.RetrieveSymbolCurrScope(procName).localVarMem = locMemUsed;
+
+            procNames.Pop();
 
             if (curTok.lexName != procName) throw new Exception("Procedure name not repeated at close of procedure.");
             Match(Token.TOKENTYPE.ID);

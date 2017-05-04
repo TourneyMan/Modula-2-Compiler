@@ -14,6 +14,7 @@ HussPiler_Main PROC	; Procedure definition
 	mov		[EBP + 8], EAX
 	call	nwln
 	call	nwln
+	push	0
 	mov		EAX, [EBP + 8]
 	push	EAX
 	mov		EAX, 1
@@ -80,6 +81,7 @@ else_0:
 	push		EAX
 	pop		EAX
 	mov		[EBP + 20], EAX
+	push	0
 	mov		EAX, [EBP + 16]
 	push	EAX
 	mov		EAX, 1
@@ -93,6 +95,7 @@ else_0:
 	mov		EAX, [EBP + 20]
 	push	EAX
 	call	TowersOfHanoi
+	push	0
 	mov		EAX, 1
 	push	EAX
 	mov		EAX, [EBP + 12]
@@ -100,6 +103,7 @@ else_0:
 	mov		EAX, [EBP + 8]
 	push	EAX
 	call	TowersOfHanoi
+	push	0
 	mov		EAX, [EBP + 16]
 	push	EAX
 	mov		EAX, 1

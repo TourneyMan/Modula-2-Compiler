@@ -418,6 +418,12 @@ namespace Compiler
 
         /// <summary>
         /// PRE: NONE
+        /// POST: Code emitted to push a 0 to the run-time stack
+        /// </summary>
+        public void PushZero() { procedureStrings[currentProcedure] += "\tpush\t0\r\n"; } // CLS
+
+        /// <summary>
+        /// PRE: NONE
         /// POST: Code emitted to clear the screen
         /// </summary>
         public void CLS() { procedureStrings[currentProcedure] += "\tcls\r\n"; } // CLS

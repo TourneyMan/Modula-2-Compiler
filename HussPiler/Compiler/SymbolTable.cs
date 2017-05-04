@@ -120,7 +120,8 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
                     constIntValue,  // value for a constant integer
                     memOffset,      // offset in bytes within current stack frame
                     lowerBound,     // array lower limit
-                    upperBound;     // array upper limit
+                    upperBound,     // array upper limit
+                    localVarMem;    // number of local variables
 
         // for procedures only, used to retain information about parameters used
         public ProcVarList paramVarList;
@@ -128,7 +129,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
         /// <summary>
         /// Create an empty Symbol with scope retrieved from SymbolTable.
         /// </summary>
-        public Symbol() { scopeNumber = SymbolTable.CUR_SCOPE; } // Symbol
+        public Symbol() { scopeNumber = SymbolTable.CUR_SCOPE; localVarMem = 0; } // Symbol
 
         /// <summary>
         /// copy constructor
@@ -145,7 +146,8 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
             lowerBound = sym.lowerBound;
             upperBound = sym.upperBound;
             paramVarList = sym.paramVarList;
-            memOffset = sym.memOffset; //  Warning...shallow copy
+            memOffset = sym.memOffset;
+            localVarMem = sym.localVarMem; //  Warning...shallow copy
         } // Symbol
 
         /// <summary>
@@ -163,7 +165,8 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
             lowerBound = sym.lowerBound;
             upperBound = sym.upperBound;
             paramVarList = sym.paramVarList;
-            memOffset = sym.memOffset; //  Warning...shallow copy
+            memOffset = sym.memOffset;
+            localVarMem = sym.localVarMem; //  Warning...shallow copy
 
         } // Copy
 
