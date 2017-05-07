@@ -335,14 +335,26 @@ namespace Compiler
 
                 //Grab all the parameters
                 Match(Token.TOKENTYPE.LEFT_PAREN);
+
+                Stack tempIsRef = new Stack();
                 while (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
                 {
-                    BuildIntOnTopOfStack();
+                    tempIsRef.Push(symTbl.RetrieveSymbolCurrScope(nameOfId).isRef.Pop());
+
+                    if ((bool) tempIsRef.Peek()) {
+                        emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset + symTbl.RetrieveSymbolCurrScope(nameOfId).memOffset);
+                        Match(Token.TOKENTYPE.ID);
+                    }
+
+                    else { BuildIntOnTopOfStack(); }    
+
                     if (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
                     {
                         Match(Token.TOKENTYPE.COMMA);
                     }
                 }
+
+                while (tempIsRef.Count > 0) { symTbl.RetrieveSymbolCurrScope(nameOfId).isRef.Push(tempIsRef.Pop()); }
                 Match(Token.TOKENTYPE.RIGHT_PAREN);
                 emitter.CallProc(nameOfId);
             }
@@ -353,7 +365,12 @@ namespace Compiler
             {
                 Match(Token.TOKENTYPE.ASSIGN);
                 BuildIntOnTopOfStack();
-                emitter.AssignTopOfStackToIntVar(sym.memOffset);
+
+                if (sym.paramType == Symbol.PARM_TYPE.REF_PARM)
+                    emitter.AssignTopOfStackToReferredVar(sym.memOffset);
+
+                else
+                    emitter.AssignTopOfStackToIntVar(sym.memOffset);
             }
 
             Match(Token.TOKENTYPE.SEMI_COLON);
@@ -546,17 +563,22 @@ namespace Compiler
             Match(Token.TOKENTYPE.ID);
             Match(Token.TOKENTYPE.LEFT_PAREN);
 
+            Stack isRef = new Stack();
+            Stack parameterNames = new Stack();
             //Reading in parameters
             if (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
             {
-                Stack parameterNames = new Stack();
-
-                parameterNames.Push(curTok.lexName);
-                Match(Token.TOKENTYPE.ID);
-
                 while (curTok.tokType != Token.TOKENTYPE.COLON)
                 {
-                    Match(Token.TOKENTYPE.COMMA);
+                    if (curTok.tokType == Token.TOKENTYPE.COMMA) { Match(Token.TOKENTYPE.COMMA); }
+
+                    if (curTok.tokType == Token.TOKENTYPE.VAR) {
+                        Match(Token.TOKENTYPE.VAR);
+                        isRef.Push(true);
+                        symTbl.RetrieveSymbolCurrScope(procName).isRef.Push(true);
+                    }
+                    else { isRef.Push(false); symTbl.RetrieveSymbolCurrScope(procName).isRef.Push(false); }
+
                     parameterNames.Push(curTok.lexName);
                     Match(Token.TOKENTYPE.ID);
                 }
@@ -567,17 +589,20 @@ namespace Compiler
                 {
                     Match(Token.TOKENTYPE.INTEGER);
 
+                    Stack tempIsRef = new Stack();
                     while (parameterNames.Count > 0)
                     {
                         string nextParam = (string)parameterNames.Pop();
-
+                        
                         //Add each parameter name to this procedure's paramVarList
                         //procSymbol.paramVarList.VAR_LIST.Add(nextParam);
 
                         //Adding the parameters to this scope's symbol table
-                        Symbol varSymbol = new Symbol();
-                        symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM);
+                        tempIsRef.Push(isRef.Pop());
+                        if ((bool)tempIsRef.Peek()) { symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM); }
+                        else { symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM); }
                     }
+                    while (tempIsRef.Count > 0) { isRef.Push(tempIsRef.Pop()); }
                 }
             }
 
@@ -594,9 +619,15 @@ namespace Compiler
             Match(Token.TOKENTYPE.END);
 
             //procSymbol.paramVarList.MEM_USED = 0; //(symTbl.TOP_SCOPE.MEM_OFFSET - 8) + (procSymbol.paramVarList.PARAM_COUNT * 4);
-            int locMemUsed = symTbl.RetrieveSymbolCurrScope(procName).localVarMem;
+            int locVarMem = symTbl.RetrieveSymbolCurrScope(procName).localVarMem;
+            int memOffset = symTbl.RetrieveSymbolCurrScope(procName).memOffset;
             emitter.ProcPostamble(procName, symTbl.ExitProcScope());
-            symTbl.RetrieveSymbolCurrScope(procName).localVarMem = locMemUsed;
+            symTbl.RetrieveSymbolCurrScope(procName).localVarMem = locVarMem;
+            symTbl.RetrieveSymbolCurrScope(procName).localVarMem = memOffset;
+            symTbl.RetrieveSymbolCurrScope(procName).isRef = isRef;
+
+            Stack tempStack = new Stack();
+            //while (isRef.Count > 0) { }
 
             procNames.Pop();
 
@@ -796,7 +827,11 @@ namespace Compiler
 
                     //We have a variable
                     else {
-                        emitter.PutIntVarOnTopOfStack(sym.memOffset);
+                        //If this variable is actually a reference to other memory
+                        if (sym.paramType == Symbol.PARM_TYPE.REF_PARM) { emitter.PutReferredVarOnStack(sym.memOffset); }
+                        //Regular variable
+                        else { emitter.PutIntVarOnTopOfStack(sym.memOffset); }
+
                         Match(Token.TOKENTYPE.ID);
                     }
                 }

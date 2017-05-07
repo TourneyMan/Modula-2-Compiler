@@ -1,5 +1,5 @@
 ; HussPiler output for: 10_FullExpr.mod
-; Created: Wednesday, April 12, 2017 3:42:30 PM
+; Created: Saturday, May 6, 2017 6:41:25 PM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
@@ -17,7 +17,7 @@
 start:
 
 	cls
-	sub	ESP,28	; Room for main proc local vars
+	sub	ESP,20	; Room for main proc local vars
 	call HussPiler_Main
 	inkey
 	exit

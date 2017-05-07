@@ -125,6 +125,16 @@ namespace Compiler
         } // PutIntVarOnTopOfStack
 
         /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to put a given int variable on top of the stack
+        /// </summary>
+        public void PutReferredVarOnStack(int memOffset)
+        {
+            procedureStrings[currentProcedure] += "\tmov\t\tEBX, [EBP + " + memOffset + "]\r\n"
+                                               + "\tmov\t\tEAX, [EBP + EBX]\r\n" + "\tpush\tEAX\r\n";
+        } // PutIntVarOnTopOfStack
+
+        /// <summary>
         /// PRE: Memory offset on top of stack
         /// POST: Emits the assembly code needed to put a given int variable on top of the stack
         /// from the memory offset currently on top of the stack
@@ -151,6 +161,16 @@ namespace Compiler
         public void AssignTopOfStackToIntVar(int memOffset)
         {
             procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tmov\t\t[EBP + " +  memOffset + "], EAX\r\n";
+        } // AssignTopOfStackToIntVar
+
+        /// <summary>
+        /// PRE: Nothing important in EAX
+        /// POST: Emits the assembly code needed to assign the indicated int var to the int on the top of the stack
+        /// </summary>
+        public void AssignTopOfStackToReferredVar(int memOffset)
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tmov\t\t EBX, [EBP + " + memOffset + "]\r\n"
+                                               + "\tmov\t\t[EBP + EBX], EAX\r\n";
         } // AssignTopOfStackToIntVar
 
         /// <summary>

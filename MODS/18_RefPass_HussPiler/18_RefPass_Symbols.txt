@@ -1,5 +1,5 @@
 little               1      TYPE_PROC       STORE_NONE      VAL_PARM        0         
-i                    1      TYPE_SIMPLE     TYPE_INT        REF_PARM        8         
+j                    1      TYPE_SIMPLE     TYPE_INT        REF_PARM        8         
 HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
-k                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
 little               0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+temp                 0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
