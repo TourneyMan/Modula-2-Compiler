@@ -342,7 +342,7 @@ namespace Compiler
                     tempIsRef.Push(symTbl.RetrieveSymbolCurrScope(nameOfId).isRef.Pop());
 
                     if ((bool) tempIsRef.Peek()) {
-                        emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset + symTbl.RetrieveSymbolCurrScope(nameOfId).memOffset);
+                        emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset/* + symTbl.RetrieveSymbolCurrScope(nameOfId).memOffset*/);
                         Match(Token.TOKENTYPE.ID);
                     }
 
@@ -367,7 +367,7 @@ namespace Compiler
                 BuildIntOnTopOfStack();
 
                 if (sym.paramType == Symbol.PARM_TYPE.REF_PARM)
-                    emitter.AssignTopOfStackToReferredVar(sym.memOffset);
+                    emitter.AssignTopOfStackToReferredVar(sym.memOffset, SymbolTable.MEM_OFFSET_TOP_SCOPE);
 
                 else
                     emitter.AssignTopOfStackToIntVar(sym.memOffset);
@@ -828,7 +828,9 @@ namespace Compiler
                     //We have a variable
                     else {
                         //If this variable is actually a reference to other memory
-                        if (sym.paramType == Symbol.PARM_TYPE.REF_PARM) { emitter.PutReferredVarOnStack(sym.memOffset); }
+                        if (sym.paramType == Symbol.PARM_TYPE.REF_PARM) { emitter.PutReferredVarOnStack(sym.memOffset, SymbolTable.MEM_OFFSET_TOP_SCOPE); }
+
+
                         //Regular variable
                         else { emitter.PutIntVarOnTopOfStack(sym.memOffset); }
 

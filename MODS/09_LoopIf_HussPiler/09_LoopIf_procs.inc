@@ -994,6 +994,6 @@ loop_end_2:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	28
+	ret	20
 HussPiler_Main endp
 ;=============== END PROCEDURE =============

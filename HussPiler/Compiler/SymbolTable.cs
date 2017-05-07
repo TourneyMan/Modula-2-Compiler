@@ -490,6 +490,14 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
             }
         } // CUR_SCOPE
 
+        public static int MEM_OFFSET_TOP_SCOPE
+        {
+            get
+            {
+                return ((Scope)scopeStack.Peek()).MEM_OFFSET;
+            }
+        }
+
     } // SymbolTable class
 
 } // Compiler namespace

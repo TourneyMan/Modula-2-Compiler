@@ -128,9 +128,10 @@ namespace Compiler
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to put a given int variable on top of the stack
         /// </summary>
-        public void PutReferredVarOnStack(int memOffset)
+        public void PutReferredVarOnStack(int memOffset, int memToPrevProc)
         {
             procedureStrings[currentProcedure] += "\tmov\t\tEBX, [EBP + " + memOffset + "]\r\n"
+                                               + "\tadd\t\tEBX, " + memToPrevProc + "\r\n"
                                                + "\tmov\t\tEAX, [EBP + EBX]\r\n" + "\tpush\tEAX\r\n";
         } // PutIntVarOnTopOfStack
 
@@ -167,9 +168,10 @@ namespace Compiler
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to assign the indicated int var to the int on the top of the stack
         /// </summary>
-        public void AssignTopOfStackToReferredVar(int memOffset)
+        public void AssignTopOfStackToReferredVar(int memOffset, int memToPrevProc)
         {
             procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tmov\t\t EBX, [EBP + " + memOffset + "]\r\n"
+                                               + "\tadd\t\tEBX, " + memToPrevProc + "\r\n"
                                                + "\tmov\t\t[EBP + EBX], EAX\r\n";
         } // AssignTopOfStackToIntVar
 

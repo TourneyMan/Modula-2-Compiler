@@ -38,6 +38,7 @@ little PROC	; Procedure definition
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
 	print	OFFSET str0 
 	mov		EBX, [EBP + 8]
+	add		EBX, 12
 	mov		EAX, [EBP + EBX]
 	push	EAX
 	pop		EAX
@@ -47,9 +48,11 @@ little PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		 EBX, [EBP + 8]
+	add		EBX, 12
 	mov		[EBP + EBX], EAX
 	print	OFFSET str1 
 	mov		EBX, [EBP + 8]
+	add		EBX, 12
 	mov		EAX, [EBP + EBX]
 	push	EAX
 	pop		EAX
