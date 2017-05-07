@@ -9,7 +9,7 @@ HussPiler_Main PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-loop_begin_0:
+loop_begin_11:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	mov		EAX, 30
@@ -17,20 +17,20 @@ loop_begin_0:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_0
+	jg		rel_true_58
 	push	0
-	jmp		rel_done_0
-rel_true_0:
+	jmp		rel_done_58
+rel_true_58:
 	push	1
-rel_done_0:
+rel_done_58:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_0
-	jmp		loop_end_0
-	jmp		end_if_0
-else_0:
-end_if_0:
+	jne		else_40
+	jmp		loop_end_11
+	jmp		end_if_40
+else_40:
+end_if_40:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	pop		EAX
@@ -49,8 +49,7 @@ end_if_0:
 	push	EAX
 	pop		EAX
 	pop		ECX
-	mov		EDX, EBP
-	add		ECX, EDX
+	add		ECX, EBP
 	mov		[ECX], EAX
 	mov		EAX, [EBP + 88]
 	push	EAX
@@ -62,13 +61,13 @@ end_if_0:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-	jmp		loop_begin_0
-loop_end_0:
+	jmp		loop_begin_11
+loop_end_11:
 	mov		EAX, 11
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-loop_begin_1:
+loop_begin_12:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	mov		EAX, 30
@@ -76,20 +75,20 @@ loop_begin_1:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_1
+	jg		rel_true_59
 	push	0
-	jmp		rel_done_1
-rel_true_1:
+	jmp		rel_done_59
+rel_true_59:
 	push	1
-rel_done_1:
+rel_done_59:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_1
-	jmp		loop_end_1
-	jmp		end_if_1
-else_1:
-end_if_1:
+	jne		else_41
+	jmp		loop_end_12
+	jmp		end_if_41
+else_41:
+end_if_41:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	pop		EAX
@@ -120,11 +119,11 @@ end_if_1:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-	jmp		loop_begin_1
-loop_end_1:
+	jmp		loop_begin_12
+loop_end_12:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	92
+	ret	84
 HussPiler_Main endp
 ;=============== END PROCEDURE =============

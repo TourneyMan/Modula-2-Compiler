@@ -44,6 +44,6 @@ HussPiler_Main PROC	; Procedure definition
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	16
+	ret	8
 HussPiler_Main endp
 ;=============== END PROCEDURE =============

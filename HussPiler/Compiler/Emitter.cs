@@ -146,6 +146,22 @@ namespace Compiler
         } // PutIntOnStackFromMemOnStack
 
         /// <summary>
+        /// PRE: Memory offset on top of stack
+        /// POST: Emits the assembly code needed to put a given int variable on top of the stack
+        /// from the memory offset currently on top of the stack
+        /// </summary>
+        public void PutIntOnStackFromMemOfRefOnStack(int memToPrevProc)
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" +
+                                                   "\tadd\t\tECX, EBP\r\n" +
+                                                   "\tadd\t\tECX, 8\r\n" +
+                                                   "\tmov\t\tEBX, [ECX]\r\n" +
+                                                   "\tadd\t\tEBX, " + memToPrevProc + "\r\n" +
+                                                   "\tmov\t\tEAX, [EBP + EBX]\r\n" +
+                                                   "\tpush\tEAX\r\n";
+        } // PutIntOnStackFromMemOnStack
+
+        /// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to take the top int on the stack, multiply it by -1, and put
         /// back on the stack
@@ -182,9 +198,24 @@ namespace Compiler
         /// </summary>
         public void AssignTopOfStackIntToMemOnStack()
         {
-            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tpop\t\tECX\r\n" + "\tmov\t\tEDX, EBP\r\n" +
-                                                   "\tadd\t\tECX, EDX\r\n" + "\tmov\t\t[ECX], EAX\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tpop\t\tECX\r\n" + 
+                                                   "\tadd\t\tECX, EBP\r\n" + "\tmov\t\t[ECX], EAX\r\n";
         } // AssignTopOfStackIntToMemOnStack
+
+        /// <summary>
+        /// PRE: Nothing important in EAX, ECX, or EDX
+        /// POST: Emits the assembly code needed to take the assign the int var on top of the stack
+        /// to the memory referred to by the value at the offset in memory indicated by the next int on the stack
+        /// </summary>
+        public void AssignTopOfStackIntToRefAtMemOnStack(int memToPrevProc)
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tEAX\r\n" + "\tpop\t\tECX\r\n" +
+                                                   "\tadd\t\tECX, EBP\r\n" +
+                                                   "\tadd\t\tECX, 8\r\n" +
+                                                   "\tmov\t\tEBX, [ECX]\r\n" +
+                                                   "\tadd\t\tEBX, " + memToPrevProc + "\r\n" +
+                                                   "\tmov\t\t[EBP + EBX], EAX\r\n";
+        } // AssignTopOfStackIntToRefAtMemOnStack
 
         /// <summary>
         /// PRE: Nothing important in EAX
@@ -365,14 +396,14 @@ namespace Compiler
         public void CheckValidIndex(int lowerBound, int upperBound, int ifNum)
         {
             //Storing index in ECX
-            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpush\t\tECX\r\n";
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" + "\tpush\tECX\r\n";
 
             //Checking lowerBound
-            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + lowerBound + " \r\n" + "\tpush\t\tECX\r\n" + "\tcmp\t\tEAX, ECX\r\n"
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + lowerBound + " \r\n" + "\tcmp\t\tEAX, ECX\r\n"
                                                +  "\tjg\t\telse_" + ifNum + "\r\n";
 
             //Checking upperBound
-            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + upperBound + " \r\n" + "\tpush\t\tECX\r\n" + "\tcmp\t\tEAX, ECX\r\n"
+            procedureStrings[currentProcedure] += "\tmov\t\tEAX, " + upperBound + " \r\n" + "\tcmp\t\tEAX, ECX\r\n"
                                                +  "\tjl\t\telse_" + ifNum + "\r\n";
 
             //Jump to end if got this far - index is valid

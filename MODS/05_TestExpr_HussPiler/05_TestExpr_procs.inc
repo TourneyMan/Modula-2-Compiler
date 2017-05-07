@@ -33,9 +33,9 @@ HussPiler_Main PROC	; Procedure definition
 	push		EAX
 	pop		EAX
 	mov		[EBP + 16], EAX
-	print	"Testing expressions:"
+	print	OFFSET str0 
 	call	nwln
-	print	"42+7-31+1: should be 19: "
+	print	OFFSET str1 
 	mov		EAX, 42
 	push	EAX
 	mov		EAX, 7
@@ -59,7 +59,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"good * lowest: should be 15: "
+	print	OFFSET str2 
 	mov		EAX, [EBP + 16]
 	push	EAX
 	mov		EAX, 3
@@ -71,7 +71,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"-good * lowest: should be -15: "
+	print	OFFSET str3 
 	mov		EAX, [EBP + 16]
 	push	EAX
 	pop		EAX
@@ -87,7 +87,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"42000 DIV 4200: should be 10: "
+	print	OFFSET str4 
 	mov		EAX, 42000
 	push	EAX
 	mov		EAX, 4200
@@ -100,7 +100,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"42042 MOD 100: should be 42: "
+	print	OFFSET str5 
 	mov		EAX, 42042
 	push	EAX
 	mov		EAX, 100
@@ -113,7 +113,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"20000 * 21000: should be 420,000,000: "
+	print	OFFSET str6 
 	mov		EAX, 20000
 	push	EAX
 	mov		EAX, 21000
@@ -125,7 +125,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"-20000 * 21000: should be -420,000,000: "
+	print	OFFSET str7 
 	mov		EAX, 20000
 	push	EAX
 	pop		EAX
@@ -141,7 +141,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"6*7+2*lowest-1: should be 47: "
+	print	OFFSET str8 
 	mov		EAX, 6
 	push	EAX
 	mov		EAX, 7
@@ -171,7 +171,7 @@ HussPiler_Main PROC	; Procedure definition
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	print	"6*2+((1+2)*3-1)*2: should be 28: "
+	print	OFFSET str9 
 	mov		EAX, 6
 	push	EAX
 	mov		EAX, 2
@@ -216,6 +216,6 @@ HussPiler_Main PROC	; Procedure definition
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	20
+	ret	12
 HussPiler_Main endp
 ;=============== END PROCEDURE =============

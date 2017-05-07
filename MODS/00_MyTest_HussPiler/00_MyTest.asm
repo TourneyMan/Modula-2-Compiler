@@ -1,5 +1,5 @@
 ; HussPiler output for: 00_MyTest.mod
-; Created: Wednesday, May 3, 2017 12:41:28 PM
+; Created: Sunday, May 7, 2017 5:27:09 PM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
@@ -17,7 +17,7 @@
 start:
 
 	cls
-	sub	ESP,4	; Room for main proc local vars
+	sub	ESP,40	; Room for main proc local vars
 	call HussPiler_Main
 	inkey
 	exit

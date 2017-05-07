@@ -259,6 +259,7 @@ namespace Compiler
                         string idName = ((Token)tokenStack.Pop()).lexName;
                         symTbl.AddASymbol(idName, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.LOCAL_VAR);
 
+                        //System.Diagnostics.Debug.WriteLine(symTbl.RetrieveSymbolCurrScope((string)procNames.Peek()) != null);
                         if (symTbl.RetrieveSymbolCurrScope((string)procNames.Peek()) != null)
                         {
                             symTbl.RetrieveSymbolCurrScope((string)procNames.Peek()).localVarMem += 4;
@@ -284,7 +285,6 @@ namespace Compiler
                     Match(Token.TOKENTYPE.ID);
                 }
 
-                //We only accept INTEGER vars for now
                 else {
                     throw new Exception("Parser - VARSubmodule: Invalid variable type");
                 }
@@ -312,8 +312,8 @@ namespace Compiler
                 BuildIntOnTopOfStack();
 
                 //Prints out a run-time error if index on top of the stack is invalid
-                emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
-                ifNum++;
+                //emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
+                //ifNum++;
 
                 //Convert the index into an offset
                 emitter.PutOffsetOnStack(sym.lowerBound, sym.memOffset);
@@ -321,13 +321,16 @@ namespace Compiler
                 Match(Token.TOKENTYPE.RIGHT_BRACK);
                 Match(Token.TOKENTYPE.ASSIGN);
                 BuildIntOnTopOfStack();
-                emitter.AssignTopOfStackIntToMemOnStack();
+
+                if (sym.paramType == Symbol.PARM_TYPE.REF_PARM) { emitter.AssignTopOfStackIntToRefAtMemOnStack(SymbolTable.MEM_OFFSET_TOP_SCOPE); }
+                else { emitter.AssignTopOfStackIntToMemOnStack(); }
             }
 
-            //For Procedures
+            //For calling Procedures
             else if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_PROC)
             {
-                //System.Diagnostics.Debug.WriteLine(sym.localVarMem);
+                //Make room for local variables
+                System.Diagnostics.Debug.WriteLine(sym.localVarMem);
                 for (int i = 0; i < sym.localVarMem / 4; i++)
                 {
                     emitter.PushZero();
@@ -342,7 +345,24 @@ namespace Compiler
                     tempIsRef.Push(symTbl.RetrieveSymbolCurrScope(nameOfId).isRef.Pop());
 
                     if ((bool) tempIsRef.Peek()) {
-                        emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset/* + symTbl.RetrieveSymbolCurrScope(nameOfId).memOffset*/);
+
+                        Symbol referredSymbol = symTbl.RetrieveSymbolCurrScope(curTok.lexName);
+
+                        //For passing in integers by reference
+                        if (referredSymbol.symbolType == Symbol.SYMBOL_TYPE.TYPE_SIMPLE)
+                        {
+                            emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset);
+                        }
+
+                        //For passing in arrays
+                        else
+                        {
+                            for (int i = referredSymbol.upperBound - referredSymbol.lowerBound; i >= 0; i--)
+                            {
+                                emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset + (4 * i));
+                            }
+                        }
+
                         Match(Token.TOKENTYPE.ID);
                     }
 
@@ -565,6 +585,7 @@ namespace Compiler
 
             Stack isRef = new Stack();
             Stack parameterNames = new Stack();
+
             //Reading in parameters
             if (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
             {
@@ -593,9 +614,6 @@ namespace Compiler
                     while (parameterNames.Count > 0)
                     {
                         string nextParam = (string)parameterNames.Pop();
-                        
-                        //Add each parameter name to this procedure's paramVarList
-                        //procSymbol.paramVarList.VAR_LIST.Add(nextParam);
 
                         //Adding the parameters to this scope's symbol table
                         tempIsRef.Push(isRef.Pop());
@@ -603,6 +621,23 @@ namespace Compiler
                         else { symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM); }
                     }
                     while (tempIsRef.Count > 0) { isRef.Push(tempIsRef.Pop()); }
+                }
+
+                //For arrays
+                else
+                {
+                    Symbol arrayType = symTbl.RetrieveSymbolInnerScope(curTok.lexName);
+                    Match(Token.TOKENTYPE.ID);
+
+                    while (parameterNames.Count > 0)
+                    {
+                        string nextParam = (string)parameterNames.Pop();
+                        symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_ARRAY, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM);
+                        Symbol paramArray = symTbl.RetrieveSymbolCurrScope(nextParam);
+                        paramArray.lowerBound = arrayType.lowerBound;
+                        paramArray.upperBound = arrayType.upperBound;
+                        SymbolTable.MEM_OFFSET_TOP_SCOPE += ((paramArray.upperBound - paramArray.lowerBound + 1) * 4);
+                    }
                 }
             }
 
@@ -620,14 +655,14 @@ namespace Compiler
 
             //procSymbol.paramVarList.MEM_USED = 0; //(symTbl.TOP_SCOPE.MEM_OFFSET - 8) + (procSymbol.paramVarList.PARAM_COUNT * 4);
             int locVarMem = symTbl.RetrieveSymbolCurrScope(procName).localVarMem;
+            System.Diagnostics.Debug.WriteLine(locVarMem);
             int memOffset = symTbl.RetrieveSymbolCurrScope(procName).memOffset;
             emitter.ProcPostamble(procName, symTbl.ExitProcScope());
             symTbl.RetrieveSymbolCurrScope(procName).localVarMem = locVarMem;
-            symTbl.RetrieveSymbolCurrScope(procName).localVarMem = memOffset;
+            //symTbl.RetrieveSymbolCurrScope(procName).localVarMem = memOffset;
             symTbl.RetrieveSymbolCurrScope(procName).isRef = isRef;
 
             Stack tempStack = new Stack();
-            //while (isRef.Count > 0) { }
 
             procNames.Pop();
 
@@ -814,13 +849,14 @@ namespace Compiler
                         BuildIntOnTopOfStack();
 
                         //Prints out a run-time error if index on top of the stack is invalid
-                        emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
-                        ifNum++;
+                        //emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
+                        //ifNum++;
 
                         //Convert the index into an offset
                         emitter.PutOffsetOnStack(sym.lowerBound, sym.memOffset);
 
-                        emitter.PutIntOnStackFromMemOnStack();
+                        if (sym.paramType == Symbol.PARM_TYPE.REF_PARM) { emitter.PutIntOnStackFromMemOfRefOnStack(SymbolTable.MEM_OFFSET_TOP_SCOPE); }
+                        else { emitter.PutIntOnStackFromMemOnStack(); }   
 
                         Match(Token.TOKENTYPE.RIGHT_BRACK);
                     }

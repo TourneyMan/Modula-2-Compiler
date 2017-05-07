@@ -14,6 +14,7 @@ HussPiler_Main PROC	; Procedure definition
 	mov		[EBP + 8], EAX
 	print	OFFSET str4 
 	call	nwln
+	push	0
 	mov		EAX, [EBP + 8]
 	push	EAX
 	mov		EAX, 1

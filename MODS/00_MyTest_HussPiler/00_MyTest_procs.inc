@@ -5,45 +5,59 @@ HussPiler_Main PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
-	print	OFFSET str2 
-	call	nwln
-	print	OFFSET str3 
-	mov		EAX, sval(input())
+	mov		EAX, 44
 	push	EAX
-	pop		EAX
-	mov		[EBP + 8], EAX
-	print	OFFSET str4 
-	call	nwln
+	mov		EAX, 40
+	push	EAX
+	mov		EAX, 36
+	push	EAX
+	mov		EAX, 32
+	push	EAX
+	mov		EAX, 28
+	push	EAX
+	mov		EAX, 24
+	push	EAX
+	mov		EAX, 20
+	push	EAX
+	mov		EAX, 16
+	push	EAX
+	mov		EAX, 12
+	push	EAX
+	mov		EAX, 8
+	push	EAX
+	call	Fill
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	4
+	ret	40
 HussPiler_Main endp
 ;=============== END PROCEDURE =============
 
 ;============== BEGIN PROCEDURE ============
-TowersOfHanoi PROC	; Procedure definition
+Fill PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
-	mov		EAX, [EBP + 16]
+	mov		EAX, 1
 	push	EAX
 	pop		EAX
-	print	str$(EAX)
-	print	OFFSET str0 
-	mov		EAX, [EBP + 12]
+	sub		EAX, 1
+	mov		EBX, 4
+	imul	EBX
+	add		EAX, 0
+	push	EAX
+	mov		EAX, 42
 	push	EAX
 	pop		EAX
-	print	str$(EAX)
-	print	OFFSET str1 
-	mov		EAX, [EBP + 8]
-	push	EAX
-	pop		EAX
-	print	str$(EAX)
-	call	nwln
+	pop		ECX
+	add		ECX, EBP
+	add		ECX, 8
+	mov		EBX, [ECX]
+	add		EBX, 48
+	mov		[EBP + EBX], EAX ;
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	16
-TowersOfHanoi endp
+	ret	40
+Fill endp
 ;=============== END PROCEDURE =============

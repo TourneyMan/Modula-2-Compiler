@@ -1,5 +1,5 @@
 ; HussPiler output for: 08_ReadTest.mod
-; Created: Wednesday, April 12, 2017 3:42:02 PM
+; Created: Sunday, May 7, 2017 5:31:11 PM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc
@@ -17,7 +17,7 @@
 start:
 
 	cls
-	sub	ESP,16	; Room for main proc local vars
+	sub	ESP,8	; Room for main proc local vars
 	call HussPiler_Main
 	inkey
 	exit

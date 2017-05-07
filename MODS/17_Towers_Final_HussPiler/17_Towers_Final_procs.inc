@@ -14,6 +14,7 @@ HussPiler_Main PROC	; Procedure definition
 	mov		[EBP + 8], EAX
 	call	nwln
 	call	nwln
+	push	0
 	mov		EAX, [EBP + 8]
 	push	EAX
 	mov		EAX, 1
@@ -40,16 +41,16 @@ TowersOfHanoi PROC	; Procedure definition
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_0
+	je		rel_true_8
 	push	0
-	jmp		rel_done_0
-rel_true_0:
+	jmp		rel_done_8
+rel_true_8:
 	push	1
-rel_done_0:
+rel_done_8:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_0
+	jne		else_8
 	print	OFFSET str0 
 	mov		EAX, [EBP + 12]
 	push	EAX
@@ -62,8 +63,8 @@ rel_done_0:
 	print	str$(EAX)
 	print	OFFSET str2 
 	call	nwln
-	jmp		end_if_0
-else_0:
+	jmp		end_if_8
+else_8:
 	mov		EAX, 6
 	push	EAX
 	mov		EAX, [EBP + 12]
@@ -116,7 +117,7 @@ else_0:
 	mov		EAX, [EBP + 8]
 	push	EAX
 	call	TowersOfHanoi
-end_if_0:
+end_if_8:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

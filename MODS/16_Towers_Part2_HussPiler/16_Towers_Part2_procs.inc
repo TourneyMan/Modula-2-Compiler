@@ -12,6 +12,7 @@ HussPiler_Main PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 8], EAX
+	push	0
 	mov		EAX, [EBP + 8]
 	push	EAX
 	mov		EAX, 1

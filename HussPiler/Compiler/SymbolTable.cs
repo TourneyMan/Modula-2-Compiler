@@ -492,10 +492,8 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
 
         public static int MEM_OFFSET_TOP_SCOPE
         {
-            get
-            {
-                return ((Scope)scopeStack.Peek()).MEM_OFFSET;
-            }
+            get { return ((Scope)scopeStack.Peek()).MEM_OFFSET; }
+            set { ((Scope)scopeStack.Peek()).MEM_OFFSET = value; }
         }
 
     } // SymbolTable class

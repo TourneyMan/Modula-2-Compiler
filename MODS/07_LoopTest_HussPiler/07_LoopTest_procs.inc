@@ -13,7 +13,7 @@ HussPiler_Main PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 12], EAX
-loop_begin_4:
+loop_begin_0:
 	mov		EAX, [EBP + 12]
 	push	EAX
 	mov		EAX, [EBP + 8]
@@ -21,20 +21,20 @@ loop_begin_4:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_26
+	jg		rel_true_1
 	push	0
-	jmp		rel_done_26
-rel_true_26:
+	jmp		rel_done_1
+rel_true_1:
 	push	1
-rel_done_26:
+rel_done_1:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_18
-	jmp		loop_end_4
-	jmp		end_if_18
-else_18:
-end_if_18:
+	jne		else_1
+	jmp		loop_end_0
+	jmp		end_if_1
+else_1:
+end_if_1:
 	mov		EAX, [EBP + 12]
 	push	EAX
 	pop		EAX
@@ -50,11 +50,11 @@ end_if_18:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 12], EAX
-	jmp		loop_begin_4
-loop_end_4:
+	jmp		loop_begin_0
+loop_end_0:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	16
+	ret	8
 HussPiler_Main endp
 ;=============== END PROCEDURE =============
