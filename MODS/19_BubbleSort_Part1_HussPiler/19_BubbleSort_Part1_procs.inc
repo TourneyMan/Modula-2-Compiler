@@ -65,7 +65,7 @@ Fill PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-loop_begin_0:
+loop_begin_5:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	mov		EAX, 10
@@ -73,22 +73,35 @@ loop_begin_0:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_1
+	jg		rel_true_11
 	push	0
-	jmp		rel_done_1
-rel_true_1:
+	jmp		rel_done_11
+rel_true_11:
 	push	1
-rel_done_1:
+rel_done_11:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_1
-	jmp		loop_end_0
-	jmp		end_if_1
-else_1:
-end_if_1:
+	jne		else_15
+	jmp		loop_end_5
+	jmp		end_if_15
+else_15:
+end_if_15:
 	mov		EAX, [EBP + 48]
 	push	EAX
+	pop		ECX
+	push	ECX
+	mov		EAX, 1 
+	cmp		EAX, ECX
+	jg		else_16
+	mov		EAX, 10 
+	cmp		EAX, ECX
+	jl		else_16
+	jmp		end_if_16
+else_16:
+	print	"Run-time Error: Out of bounds index"
+	call	nwln
+end_if_16:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -114,8 +127,8 @@ end_if_1:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-	jmp		loop_begin_0
-loop_end_0:
+	jmp		loop_begin_5
+loop_end_5:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
@@ -132,7 +145,7 @@ Print PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-loop_begin_1:
+loop_begin_6:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	mov		EAX, 10
@@ -140,22 +153,35 @@ loop_begin_1:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_2
+	jg		rel_true_12
 	push	0
-	jmp		rel_done_2
-rel_true_2:
+	jmp		rel_done_12
+rel_true_12:
 	push	1
-rel_done_2:
+rel_done_12:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_2
-	jmp		loop_end_1
-	jmp		end_if_2
-else_2:
-end_if_2:
+	jne		else_17
+	jmp		loop_end_6
+	jmp		end_if_17
+else_17:
+end_if_17:
 	mov		EAX, [EBP + 48]
 	push	EAX
+	pop		ECX
+	push	ECX
+	mov		EAX, 1 
+	cmp		EAX, ECX
+	jg		else_18
+	mov		EAX, 10 
+	cmp		EAX, ECX
+	jl		else_18
+	jmp		end_if_18
+else_18:
+	print	"Run-time Error: Out of bounds index"
+	call	nwln
+end_if_18:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -182,8 +208,8 @@ end_if_2:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-	jmp		loop_begin_1
-loop_end_1:
+	jmp		loop_begin_6
+loop_end_6:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

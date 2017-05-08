@@ -162,6 +162,21 @@ namespace Compiler
         } // PutIntOnStackFromMemOnStack
 
         /// <summary>
+        /// PRE: Memory offset on top of stack
+        /// POST: Emits the assembly code needed to put a given int variable on top of the stack
+        /// from the memory offset currently on top of the stack
+        /// </summary>
+        public void AddRefToStackAsDeeperRef(int memOfCurrScope)
+        {
+            procedureStrings[currentProcedure] += "\tpop\t\tECX\r\n" +
+                                                   "\tadd\t\tECX, EBP\r\n" +
+                                                   "\tadd\t\tECX, 8\r\n" +
+                                                   "\tmov\t\tEBX, [ECX]\r\n" +
+                                                   "\tadd\t\tEBX, " + memOfCurrScope + "\r\n" +
+                                                   "\tpush\tEBX\r\n";
+        } // PutIntOnStackFromMemOnStack
+
+        /// <summary>
         /// PRE: Nothing important in EAX
         /// POST: Emits the assembly code needed to take the top int on the stack, multiply it by -1, and put
         /// back on the stack

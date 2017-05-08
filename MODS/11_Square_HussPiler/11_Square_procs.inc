@@ -33,6 +33,19 @@ else_40:
 end_if_40:
 	mov		EAX, [EBP + 88]
 	push	EAX
+	pop		ECX
+	push	ECX
+	mov		EAX, 11 
+	cmp		EAX, ECX
+	jg		else_41
+	mov		EAX, 30 
+	cmp		EAX, ECX
+	jl		else_41
+	jmp		end_if_41
+else_41:
+	print	"Run-time Error: Out of bounds index"
+	call	nwln
+end_if_41:
 	pop		EAX
 	sub		EAX, 11
 	mov		EBX, 4
@@ -84,11 +97,11 @@ rel_done_59:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_41
+	jne		else_42
 	jmp		loop_end_12
-	jmp		end_if_41
-else_41:
-end_if_41:
+	jmp		end_if_42
+else_42:
+end_if_42:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	pop		EAX
@@ -96,6 +109,19 @@ end_if_41:
 	print	OFFSET str0 
 	mov		EAX, [EBP + 88]
 	push	EAX
+	pop		ECX
+	push	ECX
+	mov		EAX, 11 
+	cmp		EAX, ECX
+	jg		else_43
+	mov		EAX, 30 
+	cmp		EAX, ECX
+	jl		else_43
+	jmp		end_if_43
+else_43:
+	print	"Run-time Error: Out of bounds index"
+	call	nwln
+end_if_43:
 	pop		EAX
 	sub		EAX, 11
 	mov		EBX, 4

@@ -446,6 +446,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
 
                 AddASymbol(name, symbolToAdd);
 
+                //Save all the procedures in the current scope
                 Hashtable procsToPassIn = new Hashtable();
                 foreach (DictionaryEntry symbol in TOP_SCOPE.SYMBOLS)
                 {
@@ -457,6 +458,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
 
                 scopeStack.Push(new Scope());
 
+                //And pass those procedures into the new scope so they can be called
                 foreach (DictionaryEntry symbol in procsToPassIn)
                 {
                     AddASymbol((string)symbol.Key, (Symbol)symbol.Value);

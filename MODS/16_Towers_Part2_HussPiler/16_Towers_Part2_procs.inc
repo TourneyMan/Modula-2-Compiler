@@ -39,16 +39,16 @@ TowersOfHanoi PROC	; Procedure definition
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_0
+	jg		rel_true_8
 	push	0
-	jmp		rel_done_0
-rel_true_0:
+	jmp		rel_done_8
+rel_true_8:
 	push	1
-rel_done_0:
+rel_done_8:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_0
+	jne		else_12
 	mov		EAX, [EBP + 16]
 	push	EAX
 	pop		EAX
@@ -59,8 +59,8 @@ rel_done_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	jmp		end_if_0
-else_0:
+	jmp		end_if_12
+else_12:
 	mov		EAX, [EBP + 8]
 	push	EAX
 	pop		EAX
@@ -71,7 +71,7 @@ else_0:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-end_if_0:
+end_if_12:
 	mov		EAX, [EBP + 16]
 	push	EAX
 	mov		EAX, [EBP + 16]
@@ -79,16 +79,16 @@ end_if_0:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_1
+	je		rel_true_9
 	push	0
-	jmp		rel_done_1
-rel_true_1:
+	jmp		rel_done_9
+rel_true_9:
 	push	1
-rel_done_1:
+rel_done_9:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_1
+	jne		else_13
 	mov		EAX, [EBP + 16]
 	push	EAX
 	pop		EAX
@@ -99,8 +99,8 @@ rel_done_1:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-	jmp		end_if_1
-else_1:
+	jmp		end_if_13
+else_13:
 	mov		EAX, [EBP + 16]
 	push	EAX
 	pop		EAX
@@ -111,7 +111,7 @@ else_1:
 	pop		EAX
 	print	str$(EAX)
 	call	nwln
-end_if_1:
+end_if_13:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

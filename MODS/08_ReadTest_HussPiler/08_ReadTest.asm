@@ -1,5 +1,5 @@
 ; HussPiler output for: 08_ReadTest.mod
-; Created: Sunday, May 7, 2017 5:31:11 PM
+; Created: Monday, May 8, 2017 2:24:22 AM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc

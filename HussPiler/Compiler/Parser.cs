@@ -301,7 +301,6 @@ namespace Compiler
         {
             //Store info about our ID in question
             string nameOfId = curTok.lexName;
-            System.Diagnostics.Debug.WriteLine(nameOfId);
             Symbol sym = symTbl.RetrieveSymbolCurrScope(nameOfId);
             Match(Token.TOKENTYPE.ID);
 
@@ -313,15 +312,15 @@ namespace Compiler
                 BuildIntOnTopOfStack();
 
                 //Prints out a run-time error if index on top of the stack is invalid
-                //emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
-                //ifNum++;
+                emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
+                ifNum++;
 
                 //Convert the index into an offset
                 emitter.PutOffsetOnStack(sym.lowerBound, sym.memOffset);
 
                 Match(Token.TOKENTYPE.RIGHT_BRACK);
                 Match(Token.TOKENTYPE.ASSIGN);
-                BuildIntOnTopOfStack();
+                BuildIntOnTopOfStack(); //Value to be assigned to the spot in the array
 
                 if (sym.paramType == Symbol.PARM_TYPE.REF_PARM) { emitter.AssignTopOfStackIntToRefAtMemOnStack(SymbolTable.MEM_OFFSET_TOP_SCOPE); }
                 else { emitter.AssignTopOfStackIntToMemOnStack(); }
@@ -331,7 +330,6 @@ namespace Compiler
             else if (sym.symbolType == Symbol.SYMBOL_TYPE.TYPE_PROC)
             {
                 //Make room for local variables
-                System.Diagnostics.Debug.WriteLine(sym.localVarMem);
                 for (int i = 0; i < sym.localVarMem / 4; i++)
                 {
                     emitter.PushZero();
@@ -344,26 +342,50 @@ namespace Compiler
                 {
                     if (symTbl.RetrieveSymbolCurrScope(nameOfId).isRef) {
 
+                        //Save important info about this Token before our Parser continues
                         Symbol referredSymbol = symTbl.RetrieveSymbolCurrScope(curTok.lexName);
+                        string referredSymbolName = curTok.lexName;
+                        Match(Token.TOKENTYPE.ID);
 
                         //For passing in integers by reference
                         if (referredSymbol.symbolType == Symbol.SYMBOL_TYPE.TYPE_SIMPLE)
                         {
-                            emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset);
+                            emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(referredSymbolName).memOffset);
                         }
 
                         //For passing in arrays
                         else
                         {
-                            for (int i = referredSymbol.upperBound - referredSymbol.lowerBound; i >= 0; i--)
+                            //For passing in a specific array position by reference
+                            if (curTok.tokType == Token.TOKENTYPE.LEFT_BRACK)
                             {
-                                emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(curTok.lexName).memOffset + (4 * i));
+                                Match(Token.TOKENTYPE.LEFT_BRACK);
+
+                                //Building the offset to our reference
+                                BuildIntOnTopOfStack();
+                                emitter.CheckValidIndex(referredSymbol.lowerBound, referredSymbol.upperBound, ifNum);
+                                ifNum++;
+                                emitter.PutOffsetOnStack(referredSymbol.lowerBound, referredSymbol.memOffset);
+
+                                //Take the reference value being referred to by the int on top of the stack and turn it into
+                                //a value that the next scope level will be able to use to refer to the original value
+                                emitter.AddRefToStackAsDeeperRef(SymbolTable.MEM_OFFSET_TOP_SCOPE);
+                                
+                                Match(Token.TOKENTYPE.RIGHT_BRACK);
+                            }
+
+                            //For passing in an entire array
+                            else
+                            {
+                                for (int i = referredSymbol.upperBound - referredSymbol.lowerBound; i >= 0; i--)
+                                {
+                                    emitter.PutIntOnTopOfStack(symTbl.RetrieveSymbolCurrScope(referredSymbolName).memOffset + (4 * i));
+                                }
                             }
                         }
-
-                        Match(Token.TOKENTYPE.ID);
                     }
 
+                    //For things not passed in by reference, just build the int you are passing in onto the stack
                     else { BuildIntOnTopOfStack(); }    
 
                     if (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
@@ -836,8 +858,8 @@ namespace Compiler
                         BuildIntOnTopOfStack();
 
                         //Prints out a run-time error if index on top of the stack is invalid
-                        //emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
-                        //ifNum++;
+                        emitter.CheckValidIndex(sym.lowerBound, sym.upperBound, ifNum);
+                        ifNum++;
 
                         //Convert the index into an offset
                         emitter.PutOffsetOnStack(sym.lowerBound, sym.memOffset);

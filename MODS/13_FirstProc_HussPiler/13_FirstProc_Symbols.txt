@@ -5,7 +5,8 @@ currPrime            0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       212
 maxIntInSqrt         0      TYPE_CONST      TYPE_INT        VAL_PARM        0         
 index                0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       204       
 ListType             0      TYPE_TYPE_ARRAY STORE_NONE      VAL_PARM        0         
-little               1      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+little               0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
 HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
 k                    0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
 little               0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
