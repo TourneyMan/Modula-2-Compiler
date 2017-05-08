@@ -339,12 +339,9 @@ namespace Compiler
                 //Grab all the parameters
                 Match(Token.TOKENTYPE.LEFT_PAREN);
 
-                Stack tempIsRef = new Stack();
                 while (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
                 {
-                    tempIsRef.Push(symTbl.RetrieveSymbolCurrScope(nameOfId).isRef.Pop());
-
-                    if ((bool) tempIsRef.Peek()) {
+                    if (symTbl.RetrieveSymbolCurrScope(nameOfId).isRef) {
 
                         Symbol referredSymbol = symTbl.RetrieveSymbolCurrScope(curTok.lexName);
 
@@ -374,7 +371,6 @@ namespace Compiler
                     }
                 }
 
-                while (tempIsRef.Count > 0) { symTbl.RetrieveSymbolCurrScope(nameOfId).isRef.Push(tempIsRef.Pop()); }
                 Match(Token.TOKENTYPE.RIGHT_PAREN);
                 emitter.CallProc(nameOfId);
             }
@@ -583,26 +579,24 @@ namespace Compiler
             Match(Token.TOKENTYPE.ID);
             Match(Token.TOKENTYPE.LEFT_PAREN);
 
-            Stack isRef = new Stack();
             Stack parameterNames = new Stack();
+            symTbl.RetrieveSymbolCurrScope(procName).isRef = true;
 
             //Reading in parameters
             if (curTok.tokType != Token.TOKENTYPE.RIGHT_PAREN)
             {
+                //Determine whether or not they are references
+                if (curTok.tokType == Token.TOKENTYPE.VAR) { Match(Token.TOKENTYPE.VAR); }
+                else { symTbl.RetrieveSymbolCurrScope(procName).isRef = false; }
+
+
                 while (curTok.tokType != Token.TOKENTYPE.COLON)
                 {
                     if (curTok.tokType == Token.TOKENTYPE.COMMA) { Match(Token.TOKENTYPE.COMMA); }
-
-                    if (curTok.tokType == Token.TOKENTYPE.VAR) {
-                        Match(Token.TOKENTYPE.VAR);
-                        isRef.Push(true);
-                        symTbl.RetrieveSymbolCurrScope(procName).isRef.Push(true);
-                    }
-                    else { isRef.Push(false); symTbl.RetrieveSymbolCurrScope(procName).isRef.Push(false); }
-
                     parameterNames.Push(curTok.lexName);
                     Match(Token.TOKENTYPE.ID);
                 }
+
                 Match(Token.TOKENTYPE.COLON);
 
                 //Integer is the only option I know of at the moment
@@ -616,11 +610,11 @@ namespace Compiler
                         string nextParam = (string)parameterNames.Pop();
 
                         //Adding the parameters to this scope's symbol table
-                        tempIsRef.Push(isRef.Pop());
-                        if ((bool)tempIsRef.Peek()) { symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM); }
+                        if (symTbl.RetrieveSymbolCurrScope(procName).isRef == true) {
+                            symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.REF_PARM);
+                        }
                         else { symTbl.AddASymbol(nextParam, Symbol.SYMBOL_TYPE.TYPE_SIMPLE, Symbol.STORE_TYPE.TYPE_INT, Symbol.PARM_TYPE.VAL_PARM); }
                     }
-                    while (tempIsRef.Count > 0) { isRef.Push(tempIsRef.Pop()); }
                 }
 
                 //For arrays
@@ -653,13 +647,10 @@ namespace Compiler
 
             Match(Token.TOKENTYPE.END);
 
-            //procSymbol.paramVarList.MEM_USED = 0; //(symTbl.TOP_SCOPE.MEM_OFFSET - 8) + (procSymbol.paramVarList.PARAM_COUNT * 4);
             int locVarMem = symTbl.RetrieveSymbolCurrScope(procName).localVarMem;
-            System.Diagnostics.Debug.WriteLine(locVarMem);
-            int memOffset = symTbl.RetrieveSymbolCurrScope(procName).memOffset;
+            bool isRef = symTbl.RetrieveSymbolCurrScope(procName).isRef;
             emitter.ProcPostamble(procName, symTbl.ExitProcScope());
             symTbl.RetrieveSymbolCurrScope(procName).localVarMem = locVarMem;
-            //symTbl.RetrieveSymbolCurrScope(procName).localVarMem = memOffset;
             symTbl.RetrieveSymbolCurrScope(procName).isRef = isRef;
 
             Stack tempStack = new Stack();

@@ -123,7 +123,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
                     upperBound,     // array upper limit
                     localVarMem;    // number of local variables
 
-        public Stack isRef = new Stack();
+        public bool isRef = false;
 
         // for procedures only, used to retain information about parameters used
         public ProcVarList paramVarList;
