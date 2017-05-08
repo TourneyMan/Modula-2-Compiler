@@ -647,12 +647,7 @@ namespace Compiler
             while (curTok.tokType != Token.TOKENTYPE.END || controlStructureStack.Count > preControlCount) { Submodule(); }
 
             Match(Token.TOKENTYPE.END);
-
-            int locVarMem = symTbl.RetrieveSymbolCurrScope(procName).localVarMem;
-            bool isRef = symTbl.RetrieveSymbolCurrScope(procName).isRef;
             emitter.ProcPostamble(procName, symTbl.ExitProcScope());
-            symTbl.RetrieveSymbolCurrScope(procName).localVarMem = locVarMem;
-            symTbl.RetrieveSymbolCurrScope(procName).isRef = isRef;
 
             Stack tempStack = new Stack();
 

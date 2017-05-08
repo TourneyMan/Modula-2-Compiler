@@ -445,8 +445,22 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
                 symbolToAdd.storeType = Symbol.STORE_TYPE.STORE_NONE;
 
                 AddASymbol(name, symbolToAdd);
+
+                Hashtable procsToPassIn = new Hashtable();
+                foreach (DictionaryEntry symbol in TOP_SCOPE.SYMBOLS)
+                {
+                    if (((Symbol)symbol.Value).symbolType == Symbol.SYMBOL_TYPE.TYPE_PROC)
+                    {
+                        procsToPassIn.Add(symbol.Key, symbol.Value);
+                    }
+                }
+
                 scopeStack.Push(new Scope());
-                AddASymbol(name, symbolToAdd);
+
+                foreach (DictionaryEntry symbol in procsToPassIn)
+                {
+                    AddASymbol((string)symbol.Key, (Symbol)symbol.Value);
+                }
             }
 
         } // EnterNewScope

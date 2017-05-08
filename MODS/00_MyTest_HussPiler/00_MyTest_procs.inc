@@ -1,10 +1,11 @@
-; These are all the procedures for 19_BubbleSort_Part1.mod. Main is first.
+; These are all the procedures for 00_MyTest.mod. Main is first.
 
 ;============== BEGIN PROCEDURE ============
 HussPiler_Main PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
+	push	0
 	push	0
 	mov		EAX, 44
 	push	EAX
@@ -49,6 +50,7 @@ HussPiler_Main PROC	; Procedure definition
 	mov		EAX, 8
 	push	EAX
 	call	Print
+	call	nwln
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
@@ -57,37 +59,84 @@ HussPiler_Main endp
 ;=============== END PROCEDURE =============
 
 ;============== BEGIN PROCEDURE ============
+Random PROC	; Procedure definition
+	push	EBP	; save EBP since we use it 
+	mov	EBP,ESP
+;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
+	mov		EBX, [EBP + 8]
+	add		EBX, 16
+	mov		EAX, [EBP + EBX]
+	push	EAX
+	mov		EAX, 4361
+	push	EAX
+	pop		EBX
+	pop		EAX
+	imul	EBX
+	push	EAX
+	mov		EAX, 3899
+	push	EAX
+	pop		EBX
+	pop		EAX
+	add		EAX, EBX
+	push	EAX
+	mov		EAX, 8192
+	push	EAX
+	mov		EDX, 0
+	pop		ECX
+	pop		EAX
+	idiv	ECX
+	push	EDX
+	pop		EAX
+	mov		[EBP + 12], EAX
+	mov		EAX, [EBP + 12]
+	push	EAX
+	pop		EAX
+	mov		 EBX, [EBP + 8]
+	add		EBX, 16
+	mov		[EBP + EBX], EAX
+;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
+	mov	ESP,EBP
+	pop	EBP
+	ret	8
+Random endp
+;=============== END PROCEDURE =============
+
+;============== BEGIN PROCEDURE ============
 Fill PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
-	mov		EAX, 1
+	mov		EAX, 29
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-loop_begin_0:
-	mov		EAX, [EBP + 48]
+	mov		EAX, 1
+	push	EAX
+	pop		EAX
+	mov		[EBP + 52], EAX
+loop_begin_2:
+	mov		EAX, [EBP + 52]
 	push	EAX
 	mov		EAX, 10
 	push	EAX
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_1
+	jg		rel_true_3
 	push	0
-	jmp		rel_done_1
-rel_true_1:
+	jmp		rel_done_3
+rel_true_3:
 	push	1
-rel_done_1:
+rel_done_3:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_1
-	jmp		loop_end_0
-	jmp		end_if_1
-else_1:
-end_if_1:
-	mov		EAX, [EBP + 48]
+	jne		else_3
+	jmp		loop_end_2
+	jmp		end_if_3
+else_3:
+end_if_3:
+	mov		EAX, [EBP + 52]
 	push	EAX
 	pop		EAX
 	sub		EAX, 1
@@ -97,14 +146,24 @@ end_if_1:
 	push	EAX
 	mov		EAX, [EBP + 48]
 	push	EAX
+	mov		EAX, 1000
+	push	EAX
+	pop		EBX
+	pop		EAX
+	add		EAX, EBX
+	push	EAX
 	pop		EAX
 	pop		ECX
 	add		ECX, EBP
 	add		ECX, 8
 	mov		EBX, [ECX]
-	add		EBX, 52
+	add		EBX, 56
 	mov		[EBP + EBX], EAX
-	mov		EAX, [EBP + 48]
+	push	0
+	mov		EAX, 48
+	push	EAX
+	call	Random
+	mov		EAX, [EBP + 52]
 	push	EAX
 	mov		EAX, 1
 	push	EAX
@@ -113,13 +172,13 @@ end_if_1:
 	add		EAX, EBX
 	push	EAX
 	pop		EAX
-	mov		[EBP + 48], EAX
-	jmp		loop_begin_0
-loop_end_0:
+	mov		[EBP + 52], EAX
+	jmp		loop_begin_2
+loop_end_2:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
-	ret	44
+	ret	48
 Fill endp
 ;=============== END PROCEDURE =============
 
@@ -132,7 +191,7 @@ Print PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-loop_begin_1:
+loop_begin_3:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	mov		EAX, 10
@@ -140,20 +199,20 @@ loop_begin_1:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_2
+	jg		rel_true_4
 	push	0
-	jmp		rel_done_2
-rel_true_2:
+	jmp		rel_done_4
+rel_true_4:
 	push	1
-rel_done_2:
+rel_done_4:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_2
-	jmp		loop_end_1
-	jmp		end_if_2
-else_2:
-end_if_2:
+	jne		else_4
+	jmp		loop_end_3
+	jmp		end_if_4
+else_4:
+end_if_4:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	pop		EAX
@@ -182,8 +241,8 @@ end_if_2:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-	jmp		loop_begin_1
-loop_end_1:
+	jmp		loop_begin_3
+loop_end_3:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
