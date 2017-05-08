@@ -41,16 +41,16 @@ TowersOfHanoi PROC	; Procedure definition
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_10
+	je		rel_true_5
 	push	0
-	jmp		rel_done_10
-rel_true_10:
+	jmp		rel_done_5
+rel_true_5:
 	push	1
-rel_done_10:
+rel_done_5:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_14
+	jne		else_11
 	print	OFFSET str0 
 	mov		EAX, [EBP + 12]
 	push	EAX
@@ -63,8 +63,8 @@ rel_done_10:
 	print	str$(EAX)
 	print	OFFSET str2 
 	call	nwln
-	jmp		end_if_14
-else_14:
+	jmp		end_if_11
+else_11:
 	mov		EAX, 6
 	push	EAX
 	mov		EAX, [EBP + 12]
@@ -117,7 +117,7 @@ else_14:
 	mov		EAX, [EBP + 8]
 	push	EAX
 	call	TowersOfHanoi
-end_if_14:
+end_if_11:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

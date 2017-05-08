@@ -108,7 +108,7 @@ namespace Compiler
         } // Match
 
         /// <summary>
-        /// 
+        /// Overarching function for parsing the modulo-2 code
         /// </summary>
         public void Parse()
         {
@@ -129,7 +129,9 @@ namespace Compiler
         } // Parse
 
         /// <summary>
-        /// Reads through .mod file
+        /// Reads through .mod file, breaking it into 'submodules'. Submodules are chunks of code that can be defined by the
+        /// type of the first token in that submodule.  Each submodule does one thing and generally represents one line of
+        /// modulo-2 code
         /// </summary>
         private void Module()
         {
@@ -190,7 +192,8 @@ namespace Compiler
         {
             Match(Token.TOKENTYPE.WRSTR);
             Match(Token.TOKENTYPE.LEFT_PAREN);
-            string stringToDisplay = GetStringFromTokens();
+            string stringToDisplay = curTok.lexName;
+            Match(Token.TOKENTYPE.STRING);
             Match(Token.TOKENTYPE.RIGHT_PAREN);
             Match(Token.TOKENTYPE.SEMI_COLON);
             emitter.WRSTR(stringToDisplay);
@@ -767,20 +770,6 @@ namespace Compiler
         } // BuildRelationalBoolean
 
         /// <summary>
-        /// Pre: Expecting a String to form from the upcoming tokens
-        /// WARNING: Currently assumes that your string will not be a concatenation of multiple strings
-        /// Reads in the next Tokens until a String is formed.
-        /// </summary>
-        /// <returns>Returns the formed string</returns>
-        private string GetStringFromTokens()
-        {
-            string stringToReturn = curTok.lexName;
-            Match(Token.TOKENTYPE.STRING);
-            return stringToReturn;
-
-        } // GetStringFromTokens
-
-        /// <summary>
         /// Pre: Expecting an int to form from the upcoming tokens
         /// Reads in the next Tokens until a int is formed.
         /// </summary>
@@ -914,7 +903,7 @@ namespace Compiler
                 //else if (boolOpStack.Count > 0 && (char)boolOpStack.Peek() == '(') { boolOpStack.Pop(); } //Good for popping off left parens
                 else { break; }
             }
-        }
+        } // BuildIntegerPortion
 
         /// <summary>
         /// Builds the portion of an integer expression that involves reading in operator Tokens
@@ -942,7 +931,7 @@ namespace Compiler
             }
 
             else { throw new Exception("Error - Expected operator"); }
-        }
+        } // BuildOperatorPortion
 
         /// <summary>
         /// Determines whether or not an int expression continues

@@ -9,7 +9,7 @@ HussPiler_Main PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-loop_begin_11:
+loop_begin_15:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	mov		EAX, 30
@@ -17,35 +17,35 @@ loop_begin_11:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_58
+	jg		rel_true_80
 	push	0
-	jmp		rel_done_58
-rel_true_58:
+	jmp		rel_done_80
+rel_true_80:
 	push	1
-rel_done_58:
+rel_done_80:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_40
-	jmp		loop_end_11
-	jmp		end_if_40
-else_40:
-end_if_40:
+	jne		else_56
+	jmp		loop_end_15
+	jmp		end_if_56
+else_56:
+end_if_56:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	pop		ECX
 	push	ECX
 	mov		EAX, 11 
 	cmp		EAX, ECX
-	jg		else_41
+	jg		else_57
 	mov		EAX, 30 
 	cmp		EAX, ECX
-	jl		else_41
-	jmp		end_if_41
-else_41:
+	jl		else_57
+	jmp		end_if_57
+else_57:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_41:
+end_if_57:
 	pop		EAX
 	sub		EAX, 11
 	mov		EBX, 4
@@ -74,13 +74,13 @@ end_if_41:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-	jmp		loop_begin_11
-loop_end_11:
+	jmp		loop_begin_15
+loop_end_15:
 	mov		EAX, 11
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-loop_begin_12:
+loop_begin_16:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	mov		EAX, 30
@@ -88,20 +88,20 @@ loop_begin_12:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_59
+	jg		rel_true_81
 	push	0
-	jmp		rel_done_59
-rel_true_59:
+	jmp		rel_done_81
+rel_true_81:
 	push	1
-rel_done_59:
+rel_done_81:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_42
-	jmp		loop_end_12
-	jmp		end_if_42
-else_42:
-end_if_42:
+	jne		else_58
+	jmp		loop_end_16
+	jmp		end_if_58
+else_58:
+end_if_58:
 	mov		EAX, [EBP + 88]
 	push	EAX
 	pop		EAX
@@ -113,15 +113,15 @@ end_if_42:
 	push	ECX
 	mov		EAX, 11 
 	cmp		EAX, ECX
-	jg		else_43
+	jg		else_59
 	mov		EAX, 30 
 	cmp		EAX, ECX
-	jl		else_43
-	jmp		end_if_43
-else_43:
+	jl		else_59
+	jmp		end_if_59
+else_59:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_43:
+end_if_59:
 	pop		EAX
 	sub		EAX, 11
 	mov		EBX, 4
@@ -145,8 +145,8 @@ end_if_43:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 88], EAX
-	jmp		loop_begin_12
-loop_end_12:
+	jmp		loop_begin_16
+loop_end_16:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

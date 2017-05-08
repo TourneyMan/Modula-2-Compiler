@@ -65,7 +65,7 @@ Fill PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-loop_begin_5:
+loop_begin_24:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	mov		EAX, 10
@@ -73,35 +73,35 @@ loop_begin_5:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_11
+	jg		rel_true_93
 	push	0
-	jmp		rel_done_11
-rel_true_11:
+	jmp		rel_done_93
+rel_true_93:
 	push	1
-rel_done_11:
+rel_done_93:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_15
-	jmp		loop_end_5
-	jmp		end_if_15
-else_15:
-end_if_15:
+	jne		else_77
+	jmp		loop_end_24
+	jmp		end_if_77
+else_77:
+end_if_77:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	pop		ECX
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_16
+	jg		else_78
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_16
-	jmp		end_if_16
-else_16:
+	jl		else_78
+	jmp		end_if_78
+else_78:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_16:
+end_if_78:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -127,8 +127,8 @@ end_if_16:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-	jmp		loop_begin_5
-loop_end_5:
+	jmp		loop_begin_24
+loop_end_24:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
@@ -145,7 +145,7 @@ Print PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-loop_begin_6:
+loop_begin_25:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	mov		EAX, 10
@@ -153,35 +153,35 @@ loop_begin_6:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_12
+	jg		rel_true_94
 	push	0
-	jmp		rel_done_12
-rel_true_12:
+	jmp		rel_done_94
+rel_true_94:
 	push	1
-rel_done_12:
+rel_done_94:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_17
-	jmp		loop_end_6
-	jmp		end_if_17
-else_17:
-end_if_17:
+	jne		else_79
+	jmp		loop_end_25
+	jmp		end_if_79
+else_79:
+end_if_79:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	pop		ECX
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_18
+	jg		else_80
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_18
-	jmp		end_if_18
-else_18:
+	jl		else_80
+	jmp		end_if_80
+else_80:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_18:
+end_if_80:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -208,8 +208,8 @@ end_if_18:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-	jmp		loop_begin_6
-loop_end_6:
+	jmp		loop_begin_25
+loop_end_25:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP

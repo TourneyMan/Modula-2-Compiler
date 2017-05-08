@@ -162,9 +162,9 @@ namespace Compiler
         } // PutIntOnStackFromMemOnStack
 
         /// <summary>
-        /// PRE: Memory offset on top of stack
-        /// POST: Emits the assembly code needed to put a given int variable on top of the stack
-        /// from the memory offset currently on top of the stack
+        /// PRE: the total memory of the current scope is passed in
+        /// POST: Emits the assembly code needed to take a variable currently referring to a variable in a higher scope
+        /// and send that variable to a deeper scope, still referring to the original variable
         /// </summary>
         public void AddRefToStackAsDeeperRef(int memOfCurrScope)
         {

@@ -1,5 +1,5 @@
 ; HussPiler output for: 05_TestExpr.mod
-; Created: Monday, May 8, 2017 2:23:49 AM
+; Created: Monday, May 8, 2017 3:43:41 AM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc

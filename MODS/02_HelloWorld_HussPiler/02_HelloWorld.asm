@@ -1,5 +1,5 @@
 ; HussPiler output for: 02_HelloWorld.mod
-; Created: Monday, May 8, 2017 2:23:29 AM
+; Created: Monday, May 8, 2017 3:43:16 AM
 
 ; ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 	include C:\masm32\include\masm32rt.inc

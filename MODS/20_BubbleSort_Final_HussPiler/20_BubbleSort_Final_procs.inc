@@ -191,7 +191,7 @@ Fill PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 52], EAX
-loop_begin_7:
+loop_begin_0:
 	mov		EAX, [EBP + 52]
 	push	EAX
 	mov		EAX, 10
@@ -199,35 +199,35 @@ loop_begin_7:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_13
+	jg		rel_true_0
 	push	0
-	jmp		rel_done_13
-rel_true_13:
+	jmp		rel_done_0
+rel_true_0:
 	push	1
-rel_done_13:
+rel_done_0:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_19
-	jmp		loop_end_7
-	jmp		end_if_19
-else_19:
-end_if_19:
+	jne		else_0
+	jmp		loop_end_0
+	jmp		end_if_0
+else_0:
+end_if_0:
 	mov		EAX, [EBP + 52]
 	push	EAX
 	pop		ECX
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_20
+	jg		else_1
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_20
-	jmp		end_if_20
-else_20:
+	jl		else_1
+	jmp		end_if_1
+else_1:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_20:
+end_if_1:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -263,8 +263,8 @@ end_if_20:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 52], EAX
-	jmp		loop_begin_7
-loop_end_7:
+	jmp		loop_begin_0
+loop_end_0:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
@@ -277,7 +277,7 @@ Sort PROC	; Procedure definition
 	push	EBP	; save EBP since we use it 
 	mov	EBP,ESP
 ;~~~~~~~~~~~~~ PREAMBLE END ~~~~~~~~~~~~~~~~
-loop_begin_8:
+loop_begin_1:
 	mov		EAX, 0
 	push	EAX
 	pop		EAX
@@ -286,7 +286,7 @@ loop_begin_8:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 52], EAX
-loop_begin_9:
+loop_begin_2:
 	mov		EAX, [EBP + 52]
 	push	EAX
 	mov		EAX, 9
@@ -294,35 +294,35 @@ loop_begin_9:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_14
+	jg		rel_true_1
 	push	0
-	jmp		rel_done_14
-rel_true_14:
+	jmp		rel_done_1
+rel_true_1:
 	push	1
-rel_done_14:
+rel_done_1:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_21
-	jmp		loop_end_9
-	jmp		end_if_21
-else_21:
-end_if_21:
+	jne		else_2
+	jmp		loop_end_2
+	jmp		end_if_2
+else_2:
+end_if_2:
 	mov		EAX, [EBP + 52]
 	push	EAX
 	pop		ECX
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_23
+	jg		else_4
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_23
-	jmp		end_if_23
-else_23:
+	jl		else_4
+	jmp		end_if_4
+else_4:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_23:
+end_if_4:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -348,15 +348,15 @@ end_if_23:
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_24
+	jg		else_5
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_24
-	jmp		end_if_24
-else_24:
+	jl		else_5
+	jmp		end_if_5
+else_5:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_24:
+end_if_5:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -373,16 +373,16 @@ end_if_24:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_15
+	jg		rel_true_2
 	push	0
-	jmp		rel_done_15
-rel_true_15:
+	jmp		rel_done_2
+rel_true_2:
 	push	1
-rel_done_15:
+rel_done_2:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_22
+	jne		else_3
 	push	0
 	mov		EAX, [EBP + 52]
 	push	EAX
@@ -390,15 +390,15 @@ rel_done_15:
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_25
+	jg		else_6
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_25
-	jmp		end_if_25
-else_25:
+	jl		else_6
+	jmp		end_if_6
+else_6:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_25:
+end_if_6:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -423,15 +423,15 @@ end_if_25:
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_26
+	jg		else_7
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_26
-	jmp		end_if_26
-else_26:
+	jl		else_7
+	jmp		end_if_7
+else_7:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_26:
+end_if_7:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -449,9 +449,9 @@ end_if_26:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-	jmp		end_if_22
-else_22:
-end_if_22:
+	jmp		end_if_3
+else_3:
+end_if_3:
 	mov		EAX, [EBP + 52]
 	push	EAX
 	mov		EAX, 1
@@ -462,8 +462,8 @@ end_if_22:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 52], EAX
-	jmp		loop_begin_9
-loop_end_9:
+	jmp		loop_begin_2
+loop_end_2:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	mov		EAX, 0
@@ -471,22 +471,22 @@ loop_end_9:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	je		rel_true_16
+	je		rel_true_3
 	push	0
-	jmp		rel_done_16
-rel_true_16:
+	jmp		rel_done_3
+rel_true_3:
 	push	1
-rel_done_16:
+rel_done_3:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_27
-	jmp		loop_end_8
-	jmp		end_if_27
-else_27:
-end_if_27:
-	jmp		loop_begin_8
-loop_end_8:
+	jne		else_8
+	jmp		loop_end_1
+	jmp		end_if_8
+else_8:
+end_if_8:
+	jmp		loop_begin_1
+loop_end_1:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
@@ -503,7 +503,7 @@ Print PROC	; Procedure definition
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-loop_begin_10:
+loop_begin_3:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	mov		EAX, 10
@@ -511,35 +511,35 @@ loop_begin_10:
 	pop		ECX
 	pop		EAX
 	cmp		EAX, ECX
-	jg		rel_true_17
+	jg		rel_true_4
 	push	0
-	jmp		rel_done_17
-rel_true_17:
+	jmp		rel_done_4
+rel_true_4:
 	push	1
-rel_done_17:
+rel_done_4:
 	mov		EAX, 1
 	pop		ECX
 	cmp		EAX, ECX
-	jne		else_28
-	jmp		loop_end_10
-	jmp		end_if_28
-else_28:
-end_if_28:
+	jne		else_9
+	jmp		loop_end_3
+	jmp		end_if_9
+else_9:
+end_if_9:
 	mov		EAX, [EBP + 48]
 	push	EAX
 	pop		ECX
 	push	ECX
 	mov		EAX, 1 
 	cmp		EAX, ECX
-	jg		else_29
+	jg		else_10
 	mov		EAX, 10 
 	cmp		EAX, ECX
-	jl		else_29
-	jmp		end_if_29
-else_29:
+	jl		else_10
+	jmp		end_if_10
+else_10:
 	print	"Run-time Error: Out of bounds index"
 	call	nwln
-end_if_29:
+end_if_10:
 	pop		EAX
 	sub		EAX, 1
 	mov		EBX, 4
@@ -566,8 +566,8 @@ end_if_29:
 	push	EAX
 	pop		EAX
 	mov		[EBP + 48], EAX
-	jmp		loop_begin_10
-loop_end_10:
+	jmp		loop_begin_3
+loop_end_3:
 ;~~~~~~~~~~~~~ POSTAMBLE BEGIN ~~~~~~~~~~~~~
 	mov	ESP,EBP
 	pop	EBP
