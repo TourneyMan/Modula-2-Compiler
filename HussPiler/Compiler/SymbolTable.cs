@@ -347,7 +347,7 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
                 TOP_SCOPE.MEM_OFFSET += 4;
             }
 
-            else { symbolToAdd.memOffset = 0; }
+            //else { symbolToAdd.memOffset = 0; }
 
             TOP_SCOPE.SYMBOLS.Add(nameOfSymbol, symbolToAdd); //Add the symbol to the table
         } // AddASymbol
@@ -439,9 +439,14 @@ Note too that the stack grows downward. Tom wrote a test program ("C:\classes\cs
 
             else //Otherwise we make a new PROC symbol and THEN go into our new scope
             {
-                AddASymbol(name, Symbol.SYMBOL_TYPE.TYPE_PROC, Symbol.STORE_TYPE.STORE_NONE, Symbol.PARM_TYPE.VAL_PARM);
+                Symbol symbolToAdd = new Symbol();
+                symbolToAdd.symbolType = Symbol.SYMBOL_TYPE.TYPE_PROC; //Simply take in the symbol, store, and parm type
+                symbolToAdd.paramType = Symbol.PARM_TYPE.VAL_PARM;
+                symbolToAdd.storeType = Symbol.STORE_TYPE.STORE_NONE;
+
+                AddASymbol(name, symbolToAdd);
                 scopeStack.Push(new Scope());
-                AddASymbol(name, Symbol.SYMBOL_TYPE.TYPE_PROC, Symbol.STORE_TYPE.STORE_NONE, Symbol.PARM_TYPE.VAL_PARM);
+                AddASymbol(name, symbolToAdd);
             }
 
         } // EnterNewScope

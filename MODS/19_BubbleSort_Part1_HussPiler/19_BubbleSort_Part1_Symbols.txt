@@ -1,10 +1,15 @@
+little               0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+j                    1      TYPE_SIMPLE     TYPE_INT        REF_PARM        8         
+HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+little               0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+temp                 0      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       8         
 startSeed            1      TYPE_CONST      TYPE_INT        VAL_PARM        0         
-Fill                 1      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+Fill                 0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
 list                 1      TYPE_ARRAY      TYPE_INT        REF_PARM        0         
 index                1      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       48        
 list                 2      TYPE_ARRAY      TYPE_INT        REF_PARM        0         
 index                2      TYPE_SIMPLE     TYPE_INT        LOCAL_VAR       48        
-Print                2      TYPE_PROC       STORE_NONE      VAL_PARM        0         
+Print                0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
 thisList             0      TYPE_ARRAY      TYPE_INT        LOCAL_VAR       8         
 Fill                 0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
 HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         

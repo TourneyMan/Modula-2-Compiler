@@ -1,7 +1,0 @@
-HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
-Fill                 1      TYPE_PROC       STORE_NONE      VAL_PARM        0         
-list                 1      TYPE_ARRAY      TYPE_INT        REF_PARM        0         
-thisList             0      TYPE_ARRAY      TYPE_INT        LOCAL_VAR       8         
-Fill                 0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
-HussPiler_Main       0      TYPE_PROC       STORE_NONE      VAL_PARM        0         
-ListType             0      TYPE_TYPE_ARRAY STORE_NONE      VAL_PARM        0         

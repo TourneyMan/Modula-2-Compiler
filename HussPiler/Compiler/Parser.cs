@@ -301,6 +301,7 @@ namespace Compiler
         {
             //Store info about our ID in question
             string nameOfId = curTok.lexName;
+            System.Diagnostics.Debug.WriteLine(nameOfId);
             Symbol sym = symTbl.RetrieveSymbolCurrScope(nameOfId);
             Match(Token.TOKENTYPE.ID);
 
